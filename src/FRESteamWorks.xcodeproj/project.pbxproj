@@ -139,7 +139,7 @@
 				ORGANIZATIONNAME = "Level Up Labs";
 				TargetAttributes = {
 					121432FD15298AAF003FF426 = {
-						DevelopmentTeam = 526XPMU7HW;
+						DevelopmentTeam = GP6884DK6K;
 						ProvisioningStyle = Manual;
 					};
 				};
@@ -370,12 +370,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_WEAK = YES;
-				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_IDENTITY = "Developer ID Application";
 				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = 526XPMU7HW;
+				DEVELOPMENT_TEAM = GP6884DK6K;
 				INFOPLIST_FILE = "$(SRCROOT)/FRESteamWorks/Info.plist";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
-				PRODUCT_BUNDLE_IDENTIFIER = "";
+				PRODUCT_BUNDLE_IDENTIFIER = com.amanitadesign.FRESteamWorks;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Debug;
@@ -384,9 +384,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_WEAK = YES;
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "Developer ID Application";
 				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = GP6884DK6K;
 				INFOPLIST_FILE = "$(SRCROOT)/FRESteamWorks/Info.plist";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				PRODUCT_BUNDLE_IDENTIFIER = com.amanitadesign.FRESteamWorks;
