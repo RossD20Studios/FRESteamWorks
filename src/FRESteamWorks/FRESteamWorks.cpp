@@ -1629,6 +1629,30 @@ AIR_FUNC(AIRSteam_SetEnv) {
 	return FREBool(ret == 0);
 }
 
+/*
+ * input
+ */
+AIR_FUNC(AIRSteam_InputInit) {
+	ARG_CHECK(0, FREBool(false));
+
+	return FREBool(g_Steam->InitInput());
+}
+AIR_FUNC(AIRSteam_GetControllerForGamepadIndex) {
+	ARG_CHECK(1, FREInt(0));
+
+	int32 index;
+	if (!FREGetInt32(argv[0], &index)) return FREUint64(0);
+
+	return FREUint64(g_Steam->GetControllerForGamepadIndex(index));
+}
+AIR_FUNC(AIRSteam_ShowBindingPanel) {
+	ARG_CHECK(1, FREBool(false));
+
+	uint64 inputHandle;
+	if (!FREGetUint64(argv[0], &inputHandle)) return FREBool(false);
+
+	return FREBool(g_Steam->ShowBindingPanel(inputHandle));
+}
 
 	//============================
 

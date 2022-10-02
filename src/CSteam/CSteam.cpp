@@ -990,6 +990,25 @@ bool CSteam::MicroTxnResult(MicroTxnAuthorizationResponse_t* out) {
 	return false;
 }
 
+
+
+// input
+bool CSteam::InitInput() {
+    if (!m_bInitialized) return false;
+    m_ctx.SteamInput()->Init(false);    //Contrary to online SteamAPI docs, this actually has a parameter (See Init definition notes in isteaminput.h)
+    return true;
+}
+uint64_t CSteam::GetControllerForGamepadIndex(int index) {
+    if (!m_bInitialized) return 0;
+    return m_ctx.SteamInput()->GetControllerForGamepadIndex(index);
+}
+bool CSteam::ShowBindingPanel(uint64 inputHandle) {
+    if (!m_bInitialized) return false;
+    return m_ctx.SteamInput()->ShowBindingPanel(inputHandle);
+}
+
+
+
 void CSteam::DispatchEvent(const int req_type, const int response) {
 	char type[5];
 	char value[5];

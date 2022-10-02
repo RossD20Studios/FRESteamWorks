@@ -629,6 +629,19 @@ package com.amanitadesign.steam {
 			return _ExtensionContext.call("AIRSteam_MicroTxnResult") as MicroTxnAuthorizationResponse;
 		}
 
+		/********************/
+		/* Input */
+		/********************/
+		public function inputInit():Boolean {
+			return _ExtensionContext.call("AIRSteam_InputInit") as Boolean;
+		}
+		public function getControllerForGamepadIndex(index:int):String {
+			return _ExtensionContext.call("AIRSteam_GetControllerForGamepadIndex", index) as String;
+		}
+		public function showBindingPanel(inputHandle:String):Boolean {
+			return _ExtensionContext.call("AIRSteam_ShowBindingPanel", inputHandle) as Boolean;
+		}
+
 		/**********************************/
 		/* Other non-Steamworks functions */
 		/**********************************/

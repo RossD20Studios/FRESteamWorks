@@ -196,6 +196,11 @@ public:
 
 	// Microtransaction
 	bool MicroTxnResult(MicroTxnAuthorizationResponse_t* out);
+    
+    // input
+    bool InitInput();
+    uint64_t GetControllerForGamepadIndex(int index);
+    bool ShowBindingPanel(uint64 inputHandle);
 
 protected:
 	virtual void DispatchEvent(char* code, char* level) = 0;

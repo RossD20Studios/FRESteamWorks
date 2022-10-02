@@ -157,4 +157,10 @@ X(AIRSteam_MicroTxnResult) /* = 121 */
 /**********************************/
 X(AIRSteam_GetEnv) /* = 122 */
 X(AIRSteam_SetEnv) /* = 123 */
+/********************/
+/* Input */
+/********************/
+X(AIRSteam_InputInit)                       /* = 124 */
+X(AIRSteam_GetControllerForGamepadIndex)    /* = 125 */
+X(AIRSteam_ShowBindingPanel)                /* = 126 */
 /* END GENERATED CODE */
