@@ -1653,6 +1653,30 @@ AIR_FUNC(AIRSteam_ShowBindingPanel) {
 
 	return FREBool(g_Steam->ShowBindingPanel(inputHandle));
 }
+AIR_FUNC(AIRSteam_GetActionSetHandle) {
+	ARG_CHECK(1, FREBool(false));
+
+	std::string actionSetName;
+	if (!FREGetString(argv[0], actionSetName)) return FREUint64(0);
+
+	return FREUint64(g_Steam->GetActionSetHandle(actionSetName));
+}
+AIR_FUNC(AIRSteam_GetDigitalActionHandle) {
+	ARG_CHECK(1, FREBool(false));
+
+	std::string actionName;
+	if (!FREGetString(argv[0], actionName)) return FREUint64(0);
+
+	return FREUint64(g_Steam->GetDigitalActionHandle(actionName));
+}
+AIR_FUNC(AIRSteam_GetAnalogActionHandle) {
+	ARG_CHECK(1, FREBool(false));
+
+	std::string actionName;
+	if (!FREGetString(argv[0], actionName)) return FREUint64(0);
+
+	return FREUint64(g_Steam->GetAnalogActionHandle(actionName));
+}
 
 	//============================
 

@@ -641,6 +641,15 @@ package com.amanitadesign.steam {
 		public function showBindingPanel(inputHandle:String):Boolean {
 			return _ExtensionContext.call("AIRSteam_ShowBindingPanel", inputHandle) as Boolean;
 		}
+		public function getActionSetHandle(actionSetName:String):String {
+			return _ExtensionContext.call("AIRSteam_GetActionSetHandle", actionSetName) as String;
+		}
+		public function getDigitalActionHandle(actionName:String):String {
+			return _ExtensionContext.call("AIRSteam_GetDigitalActionHandle", actionName) as String;
+		}
+		public function getAnalogActionHandle(actionName:String):String {
+			return _ExtensionContext.call("AIRSteam_GetAnalogActionHandle", actionName) as String;
+		}
 
 		/**********************************/
 		/* Other non-Steamworks functions */

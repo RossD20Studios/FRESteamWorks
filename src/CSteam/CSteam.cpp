@@ -1006,6 +1006,18 @@ bool CSteam::ShowBindingPanel(uint64 inputHandle) {
     if (!m_bInitialized) return false;
     return m_ctx.SteamInput()->ShowBindingPanel(inputHandle);
 }
+uint64_t CSteam::GetActionSetHandle(std::string actionSetName) {
+    if (!m_bInitialized) return 0;
+    return m_ctx.SteamInput()->GetActionSetHandle(actionSetName.c_str());
+}
+uint64_t CSteam::GetDigitalActionHandle(std::string actionName) {
+    if (!m_bInitialized) return 0;
+    return m_ctx.SteamInput()->GetDigitalActionHandle(actionName.c_str());
+}
+uint64_t CSteam::GetAnalogActionHandle(std::string actionName) {
+    if (!m_bInitialized) return 0;
+    return m_ctx.SteamInput()->GetAnalogActionHandle(actionName.c_str());
+}
 
 
 

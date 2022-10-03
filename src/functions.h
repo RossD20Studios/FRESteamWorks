@@ -163,4 +163,7 @@ X(AIRSteam_SetEnv) /* = 123 */
 X(AIRSteam_InputInit)                       /* = 124 */
 X(AIRSteam_GetControllerForGamepadIndex)    /* = 125 */
 X(AIRSteam_ShowBindingPanel)                /* = 126 */
+X(AIRSteam_GetActionSetHandle)              /* = 127 */
+X(AIRSteam_GetDigitalActionHandle)          /* = 128 */
+X(AIRSteam_GetAnalogActionHandle)           /* = 129 */
 /* END GENERATED CODE */

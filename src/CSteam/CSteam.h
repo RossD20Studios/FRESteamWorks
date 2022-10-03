@@ -201,6 +201,9 @@ public:
     bool InitInput();
     uint64_t GetControllerForGamepadIndex(int index);
     bool ShowBindingPanel(uint64 inputHandle);
+    uint64_t GetActionSetHandle(std::string actionSetName);
+    uint64_t GetDigitalActionHandle(std::string actionName);
+    uint64_t GetAnalogActionHandle(std::string actionName);
 
 protected:
 	virtual void DispatchEvent(char* code, char* level) = 0;
