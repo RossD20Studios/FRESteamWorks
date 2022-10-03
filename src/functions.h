@@ -166,4 +166,7 @@ X(AIRSteam_ShowBindingPanel)                /* = 126 */
 X(AIRSteam_GetActionSetHandle)              /* = 127 */
 X(AIRSteam_GetDigitalActionHandle)          /* = 128 */
 X(AIRSteam_GetAnalogActionHandle)           /* = 129 */
+X(AIRSteam_GetDigitalActionData)            /* = 130 */
+X(AIRSteam_GetAnalogActionData)             /* = 131 */
+X(AIRSteam_RunFrame)                        /* = 132 */
 /* END GENERATED CODE */

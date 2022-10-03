@@ -1018,7 +1018,17 @@ uint64_t CSteam::GetAnalogActionHandle(std::string actionName) {
     if (!m_bInitialized) return 0;
     return m_ctx.SteamInput()->GetAnalogActionHandle(actionName.c_str());
 }
-
+InputDigitalActionData_t CSteam::GetDigitalActionData( uint64 inputHandle, uint64 digitalActionHandle){
+    return m_ctx.SteamInput()->GetDigitalActionData(inputHandle, digitalActionHandle);
+}
+InputAnalogActionData_t CSteam::GetAnalogActionData(uint64 inputHandle, uint64 analogActionHandle){
+    return m_ctx.SteamInput()->GetAnalogActionData(inputHandle, analogActionHandle);
+}
+bool CSteam::RunFrame(){
+    if (!m_bInitialized) return false;
+    m_ctx.SteamInput()->RunFrame();
+    return true;
+}
 
 
 void CSteam::DispatchEvent(const int req_type, const int response) {

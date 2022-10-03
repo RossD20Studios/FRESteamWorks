@@ -1677,6 +1677,51 @@ AIR_FUNC(AIRSteam_GetAnalogActionHandle) {
 
 	return FREUint64(g_Steam->GetAnalogActionHandle(actionName));
 }
+AIR_FUNC(AIRSteam_GetDigitalActionData) {
+	ARG_CHECK(2, nullptr);
+
+	uint64 inputHandle;
+	uint64 digitalActionHandle;
+	
+	if (!FREGetUint64(argv[0], &inputHandle)) return FREBool(false);
+	if (!FREGetUint64(argv[1], &digitalActionHandle)) return FREBool(false);
+
+	InputDigitalActionData_t response = g_Steam->GetDigitalActionData(inputHandle, digitalActionHandle);
+
+	FREObject result;
+	FRENewObject((const uint8_t*)"com.amanitadesign.steam.InputDigitalActionData", 0, NULL, &result, NULL);
+
+	SET_PROP(result, "bState", FREBool(response.bState));
+	SET_PROP(result, "bActive", FREBool(response.bState));
+
+	return result;
+}
+AIR_FUNC(AIRSteam_GetAnalogActionData) {
+	ARG_CHECK(2, nullptr);
+
+	uint64 inputHandle;
+	uint64 analogActionHandle;
+	
+	if (!FREGetUint64(argv[0], &inputHandle)) return FREBool(false);
+	if (!FREGetUint64(argv[1], &analogActionHandle)) return FREBool(false);
+
+	InputAnalogActionData_t response = g_Steam->GetAnalogActionData(inputHandle, analogActionHandle);
+
+	FREObject result;
+	FRENewObject((const uint8_t*)"com.amanitadesign.steam.InputAnalogActionData", 0, NULL, &result, NULL);
+
+	SET_PROP(result, "eMode", FREInt(response.eMode));
+	SET_PROP(result, "x", FREDouble(response.x));
+	SET_PROP(result, "y", FREDouble(response.y));
+	SET_PROP(result, "bActive", FREBool(response.bActive));
+
+	return result;
+}
+AIR_FUNC(AIRSteam_RunFrame) {
+	ARG_CHECK(0, FREBool(false));
+
+	return FREBool(g_Steam->RunFrame());
+}
 
 	//============================
 

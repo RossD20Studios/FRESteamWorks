@@ -204,6 +204,9 @@ public:
     uint64_t GetActionSetHandle(std::string actionSetName);
     uint64_t GetDigitalActionHandle(std::string actionName);
     uint64_t GetAnalogActionHandle(std::string actionName);
+    InputDigitalActionData_t GetDigitalActionData(uint64 inputHandle, uint64 digitalActionHandle);
+    InputAnalogActionData_t GetAnalogActionData(uint64 inputHandle, uint64 analogActionHandle);
+    bool RunFrame();
 
 protected:
 	virtual void DispatchEvent(char* code, char* level) = 0;

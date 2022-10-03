@@ -650,6 +650,15 @@ package com.amanitadesign.steam {
 		public function getAnalogActionHandle(actionName:String):String {
 			return _ExtensionContext.call("AIRSteam_GetAnalogActionHandle", actionName) as String;
 		}
+		public function getDigitalActionData(inputHandle:String, actionHandle:String):InputDigitalActionData{
+			return _ExtensionContext.call("AIRSteam_GetDigitalActionData", inputHandle, actionHandle) as InputDigitalActionData;
+		}
+		public function getAnalogActionData(inputHandle:String, actionHandle:String):InputAnalogActionData{
+			return _ExtensionContext.call("AIRSteam_GetAnalogActionData", inputHandle, actionHandle) as InputAnalogActionData;
+		}
+		public function runFrame():Boolean {
+			return _ExtensionContext.call("AIRSteam_RunFrame") as Boolean;
+		}
 
 		/**********************************/
 		/* Other non-Steamworks functions */
