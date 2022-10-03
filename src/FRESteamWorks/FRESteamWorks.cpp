@@ -1722,6 +1722,19 @@ AIR_FUNC(AIRSteam_RunFrame) {
 
 	return FREBool(g_Steam->RunFrame());
 }
+AIR_FUNC(AIRSteam_GetConnectedControllers) {
+	ARG_CHECK(0, FREArray(0));
+
+	// See how many Steam Controllers are active. 
+	ControllerHandle_t pHandles[STEAM_CONTROLLER_MAX_COUNT];
+	int const nNumActive = g_Steam->GetConnectedControllers(pHandles);
+
+	FREObject array = FREArray(nNumActive);
+	for (int i = 0; i < nNumActive; ++i) {
+		FRESetArrayElementAt(array, i, FREUint64(pHandles[i]));
+	}
+	return array;
+}
 
 	//============================
 

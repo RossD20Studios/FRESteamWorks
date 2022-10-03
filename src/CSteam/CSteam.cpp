@@ -1029,6 +1029,9 @@ bool CSteam::RunFrame(){
     m_ctx.SteamInput()->RunFrame();
     return true;
 }
+int CSteam::GetConnectedControllers(InputHandle_t *handlesOut) {
+	return m_ctx.SteamInput()->GetConnectedControllers(handlesOut);
+}
 
 
 void CSteam::DispatchEvent(const int req_type, const int response) {

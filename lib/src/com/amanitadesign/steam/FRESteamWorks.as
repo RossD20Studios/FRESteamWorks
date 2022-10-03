@@ -659,6 +659,9 @@ package com.amanitadesign.steam {
 		public function runFrame():Boolean {
 			return _ExtensionContext.call("AIRSteam_RunFrame") as Boolean;
 		}
+		public function getConnectedControllers():Array {
+			return _ExtensionContext.call("AIRSteam_GetConnectedControllers") as Array;
+		}
 
 		/**********************************/
 		/* Other non-Steamworks functions */
