@@ -1032,6 +1032,12 @@ bool CSteam::RunFrame(){
 int CSteam::GetConnectedControllers(InputHandle_t *handlesOut) {
 	return m_ctx.SteamInput()->GetConnectedControllers(handlesOut);
 }
+void CSteam::ActivateActionSet(uint64 inputHandle, uint64 actionSetHandle) {
+    m_ctx.SteamInput()->ActivateActionSet(inputHandle, actionSetHandle);
+}
+uint64_t CSteam::GetHandleAllControllers() {
+    return STEAM_INPUT_HANDLE_ALL_CONTROLLERS;
+}
 
 
 void CSteam::DispatchEvent(const int req_type, const int response) {

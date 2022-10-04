@@ -662,6 +662,12 @@ package com.amanitadesign.steam {
 		public function getConnectedControllers():Array {
 			return _ExtensionContext.call("AIRSteam_GetConnectedControllers") as Array;
 		}
+		public function activateActionSet(inputHandle:String, actionSetHandle:String):Boolean {
+			return _ExtensionContext.call("AIRSteam_ActivateActionSet", inputHandle, actionSetHandle) as Boolean;
+		}
+		public function getHandleAllControllers():String{
+			return _ExtensionContext.call("AIRSteam_GetHandleAllControllers") as String;
+		}
 
 		/**********************************/
 		/* Other non-Steamworks functions */

@@ -208,6 +208,9 @@ public:
     InputAnalogActionData_t GetAnalogActionData(uint64 inputHandle, uint64 analogActionHandle);
     bool RunFrame();
 	int GetConnectedControllers(InputHandle_t *handlesOut);
+    void ActivateActionSet(uint64 inputHandle, uint64 actionSetHandle);
+    uint64_t GetHandleAllControllers();
+    
 
 protected:
 	virtual void DispatchEvent(char* code, char* level) = 0;

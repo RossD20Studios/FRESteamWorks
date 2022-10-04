@@ -1735,6 +1735,21 @@ AIR_FUNC(AIRSteam_GetConnectedControllers) {
 	}
 	return array;
 }
+AIR_FUNC(AIRSteam_ActivateActionSet) {
+	ARG_CHECK(2, FREBool(false));
+	
+	uint64 inputHandle;
+	uint64 actionSetHandle;
+	if (!FREGetUint64(argv[0], &inputHandle)) return FREBool(false);
+	if (!FREGetUint64(argv[1], &actionSetHandle)) return FREBool(false);
+	
+	g_Steam->ActivateActionSet(inputHandle, actionSetHandle);
+	
+	return FREBool(true);
+}
+AIR_FUNC(AIRSteam_GetHandleAllControllers) {
+	return FREUint64(g_Steam->GetHandleAllControllers());
+}
 
 	//============================
 
