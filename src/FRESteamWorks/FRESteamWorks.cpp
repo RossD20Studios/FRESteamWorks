@@ -1855,6 +1855,10 @@ AIR_FUNC(AIRSteam_ShowFloatingGamepadTextInput) {
 	
 	return FREBool(g_Steam->ShowFloatingGamepadTextInput(EFloatingGamepadTextInputMode(eKeyboardMode), nTextFieldXPosition, nTextFieldYPosition, nTextFieldWidth, nTextFieldHeight));
 }
+AIR_FUNC(AIRSteam_SteamInputShutDown) {
+	ARG_CHECK(0, FREBool(false));
+	return FREBool(g_Steam->SteamInputShutDown());
+}
 
 	//============================
 

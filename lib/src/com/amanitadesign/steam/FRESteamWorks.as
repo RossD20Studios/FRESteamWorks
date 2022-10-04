@@ -689,6 +689,9 @@ package com.amanitadesign.steam {
 		public function showFloatingGamepadTextInput(eKeyboardMode:int, nTextFieldXPosition:int, nTextFieldYPosition:int, nTextFieldWidth:int, nTextFieldHeight:int):Boolean{
 			return _ExtensionContext.call("AIRSteam_ShowFloatingGamepadTextInput", eKeyboardMode, nTextFieldXPosition, nTextFieldYPosition, nTextFieldWidth, nTextFieldHeight) as Boolean;
 		}
+		public function steamInputShutdown():Boolean{
+			return _ExtensionContext.call("AIRSteam_SteamInputShutdown") as Boolean;
+		}
 
 		/**********************************/
 		/* Other non-Steamworks functions */

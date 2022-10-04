@@ -179,4 +179,5 @@ X(AIRSteam_GetGlyphPNGForActionOrigin)      /* = 139 */
 X(AIRSteam_GetStringForActionOrigin)        /* = 140 */
 X(AIRSteam_ShowGamepadTextInput)            /* = 141 */
 X(AIRSteam_ShowFloatingGamepadTextInput)    /* = 142 */
+X(AIRSteam_SteamInputShutDown)              /* = 143 */
 /* END GENERATED CODE */
