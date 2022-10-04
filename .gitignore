@@ -36,3 +36,5 @@ Desktop.ini
 .DS_Store
 /src/*.aps
 /src/.editorconfig
+/src/AdobeAIRSDK
+/src/SteamSDK
