@@ -668,6 +668,27 @@ package com.amanitadesign.steam {
 		public function getHandleAllControllers():String{
 			return _ExtensionContext.call("AIRSteam_GetHandleAllControllers") as String;
 		}
+		public function getDigitalActionOrigins(inputHandle:String, actionSetHandle:String, digitalActionHandle:String):Array{
+			return _ExtensionContext.call("AIRSteam_GetDigitalActionOrigins", inputHandle, actionSetHandle, digitalActionHandle) as Array;
+		}
+		public function getAnalogActionOrigins(inputHandle:String, actionSetHandle:String, analogActionHandle:String):Array{
+			return _ExtensionContext.call("AIRSteam_GetAnalogActionOrigins", inputHandle, actionSetHandle, analogActionHandle) as Array;
+		}
+		public function getGlyphSVGForActionOrigin(eOrigin:String, flags:int):String{
+			return _ExtensionContext.call("AIRSteam_GetGlyphSVGForActionOrigin", eOrigin, flags) as String;
+		}
+		public function GetGlyphPNGForActionOrigin(eOrigin:String, eSize:int, flags:int):String{
+			return _ExtensionContext.call("AIRSteam_GetGlyphPNGForActionOrigin", eOrigin, eSize, flags) as String;
+		}
+		public function getStringForActionOrigin(eOrigin:String):String{
+			return _ExtensionContext.call("AIRSteam_GetStringForActionOrigin", eOrigin) as String;
+		}
+		public function showGamepadTextInput(eInputMode:int, eLineInputMode:int, pchDescription:String, unCharMax:int, pchExistingText:String):Boolean{
+			return _ExtensionContext.call("AIRSteam_ShowGamepadTextInput", eInputMode, eLineInputMode, pchDescription, unCharMax, pchExistingText) as Boolean;
+		}
+		public function showFloatingGamepadTextInput(eKeyboardMode:int, nTextFieldXPosition:int, nTextFieldYPosition:int, nTextFieldWidth:int, nTextFieldHeight:int):Boolean{
+			return _ExtensionContext.call("AIRSteam_ShowFloatingGamepadTextInput", eKeyboardMode, nTextFieldXPosition, nTextFieldYPosition, nTextFieldWidth, nTextFieldHeight) as Boolean;
+		}
 
 		/**********************************/
 		/* Other non-Steamworks functions */

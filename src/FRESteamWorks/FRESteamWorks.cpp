@@ -1750,6 +1750,111 @@ AIR_FUNC(AIRSteam_ActivateActionSet) {
 AIR_FUNC(AIRSteam_GetHandleAllControllers) {
 	return FREUint64(g_Steam->GetHandleAllControllers());
 }
+AIR_FUNC(AIRSteam_GetDigitalActionOrigins) {
+	ARG_CHECK(3, FREArray(0));
+	
+	uint64 inputHandle;
+	uint64 actionSetHandle;
+	uint64 actionHandle;
+	if (!FREGetUint64(argv[0], &inputHandle)) return FREArray(0);
+	if (!FREGetUint64(argv[1], &actionSetHandle)) return FREArray(0);
+	if (!FREGetUint64(argv[0], &actionHandle)) return FREArray(0);
+
+	EInputActionOrigin originsOut[STEAM_INPUT_MAX_ORIGINS];
+	int const numOrigins = g_Steam->GetDigitalActionOrigins(inputHandle, actionSetHandle, actionHandle, originsOut);
+
+	FREObject array = FREArray(numOrigins);
+	for (int i = 0; i < numOrigins; ++i) {
+		FRESetArrayElementAt(array, i, FREUint64(originsOut[i]));
+	}
+	return array;
+}
+AIR_FUNC(AIRSteam_GetAnalogActionOrigins) {
+	ARG_CHECK(3, FREArray(0));
+	
+	uint64 inputHandle;
+	uint64 actionSetHandle;
+	uint64 actionHandle;
+	if (!FREGetUint64(argv[0], &inputHandle)) return FREArray(0);
+	if (!FREGetUint64(argv[1], &actionSetHandle)) return FREArray(0);
+	if (!FREGetUint64(argv[0], &actionHandle)) return FREArray(0);
+
+	EInputActionOrigin originsOut[STEAM_INPUT_MAX_ORIGINS];
+	int const numOrigins = g_Steam->GetAnalogActionOrigins(inputHandle, actionSetHandle, actionHandle, originsOut);
+
+	FREObject array = FREArray(numOrigins);
+	for (int i = 0; i < numOrigins; ++i) {
+		FRESetArrayElementAt(array, i, FREUint64(originsOut[i]));
+	}
+	return array;
+}
+AIR_FUNC(AIRSteam_GetGlyphSVGForActionOrigin) {
+	ARG_CHECK(2, FREString(""));
+	
+	uint32 eOrigin;
+	uint32 unFlags;
+	if (!FREGetUint32(argv[0], &eOrigin)) return FREString("");
+	if (!FREGetUint32(argv[1], &unFlags)) return FREString("");
+	
+	return FREString(g_Steam->GetGlyphSVGForActionOrigin(EInputActionOrigin(eOrigin), unFlags));
+}
+AIR_FUNC(AIRSteam_GetGlyphPNGForActionOrigin) {
+	ARG_CHECK(3, FREString(""));
+	
+	uint32 eOrigin;
+	uint32 eSize;
+	uint32 unFlags;
+	if (!FREGetUint32(argv[0], &eOrigin)) return FREString("");
+	if (!FREGetUint32(argv[1], &eSize))   return FREString("");
+	if (!FREGetUint32(argv[2], &unFlags)) return FREString("");
+	
+	return FREString(g_Steam->GetGlyphPNGForActionOrigin(EInputActionOrigin(eOrigin), ESteamInputGlyphSize(eSize), unFlags));
+}
+AIR_FUNC(AIRSteam_GetStringForActionOrigin) {
+	ARG_CHECK(1, FREString(""));
+	
+	uint32 eOrigin;
+	if (!FREGetUint32(argv[0], &eOrigin)) return FREString("");
+	
+	return FREString(g_Steam->GetStringForActionOrigin(EInputActionOrigin(eOrigin)));
+}
+AIR_FUNC(AIRSteam_ShowGamepadTextInput) {
+	ARG_CHECK(5, FREBool(false));
+	
+	uint32 eInputMode;
+	uint32 eLineInputMode;
+	std::string pchDescription;
+	uint32 unCharMax;
+	std::string pchExistingText;
+	
+	if (!FREGetUint32(argv[0], &eInputMode)) 		return FREBool(false);
+	if (!FREGetUint32(argv[1], &eLineInputMode))   	return FREBool(false);
+	if (!FREGetString(argv[2], pchDescription)) 	return FREBool(false);
+	if (!FREGetUint32(argv[3], &unCharMax)) 		return FREBool(false);
+	if (!FREGetString(argv[4], pchExistingText)) 	return FREBool(false);
+	
+	const char* pchDescriptionChar = ::getenv(pchDescription.c_str());
+	const char* pchExistingTextChar = ::getenv(pchExistingText.c_str());
+	
+	return FREBool(g_Steam->ShowGamepadTextInput(EGamepadTextInputMode(eInputMode), EGamepadTextInputLineMode(eLineInputMode), pchDescriptionChar, unCharMax, pchExistingTextChar));
+}
+AIR_FUNC(AIRSteam_ShowFloatingGamepadTextInput) {
+	ARG_CHECK(5, FREBool(false));
+	
+	uint32 eKeyboardMode;
+	uint32 nTextFieldXPosition;
+	uint32 nTextFieldYPosition;
+	uint32 nTextFieldWidth;
+	uint32 nTextFieldHeight;
+	
+	if (!FREGetUint32(argv[0], &eKeyboardMode)) 		return FREBool(false);
+	if (!FREGetUint32(argv[1], &nTextFieldXPosition))   return FREBool(false);
+	if (!FREGetUint32(argv[2], &nTextFieldYPosition)) 	return FREBool(false);
+	if (!FREGetUint32(argv[3], &nTextFieldWidth)) 		return FREBool(false);
+	if (!FREGetUint32(argv[4], &nTextFieldHeight)) 		return FREBool(false);
+	
+	return FREBool(g_Steam->ShowFloatingGamepadTextInput(EFloatingGamepadTextInputMode(eKeyboardMode), nTextFieldXPosition, nTextFieldYPosition, nTextFieldWidth, nTextFieldHeight));
+}
 
 	//============================
 

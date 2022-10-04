@@ -1038,6 +1038,27 @@ void CSteam::ActivateActionSet(uint64 inputHandle, uint64 actionSetHandle) {
 uint64_t CSteam::GetHandleAllControllers() {
     return STEAM_INPUT_HANDLE_ALL_CONTROLLERS;
 }
+int CSteam::GetDigitalActionOrigins(InputHandle_t inputHandle, InputActionSetHandle_t actionSetHandle, InputDigitalActionHandle_t digitalActionHandle, EInputActionOrigin *originsOut) {
+    return m_ctx.SteamInput()->GetDigitalActionOrigins(inputHandle, actionSetHandle, digitalActionHandle, originsOut);
+}
+int CSteam::GetAnalogActionOrigins(InputHandle_t inputHandle, InputActionSetHandle_t actionSetHandle, InputAnalogActionHandle_t analogActionHandle, EInputActionOrigin *originsOut) {
+    return m_ctx.SteamInput()->GetAnalogActionOrigins(inputHandle, actionSetHandle, analogActionHandle, originsOut);
+}
+const char * CSteam::GetGlyphSVGForActionOrigin(EInputActionOrigin eOrigin, uint32 unFlags) {
+    return m_ctx.SteamInput()->GetGlyphSVGForActionOrigin(eOrigin, unFlags);
+}
+const char * CSteam::GetGlyphPNGForActionOrigin(EInputActionOrigin eOrigin, ESteamInputGlyphSize eSize, uint32 unFlags) {
+    return m_ctx.SteamInput()->GetGlyphPNGForActionOrigin(eOrigin, eSize, unFlags);
+}
+const char * CSteam::GetStringForActionOrigin(EInputActionOrigin eOrigin) {
+    return m_ctx.SteamInput()->GetStringForActionOrigin(eOrigin);
+}
+bool CSteam::ShowGamepadTextInput( EGamepadTextInputMode eInputMode, EGamepadTextInputLineMode eLineInputMode, const char *pchDescription, uint32 unCharMax, const char *pchExistingText){
+    return m_ctx.SteamUtils()->ShowGamepadTextInput(eInputMode, eLineInputMode, pchDescription, unCharMax, pchExistingText);
+}
+bool CSteam::ShowFloatingGamepadTextInput(EFloatingGamepadTextInputMode eKeyboardMode, int nTextFieldXPosition, int nTextFieldYPosition, int nTextFieldWidth, int nTextFieldHeight){
+    return m_ctx.SteamUtils()->ShowFloatingGamepadTextInput(eKeyboardMode, nTextFieldXPosition, nTextFieldYPosition, nTextFieldWidth, nTextFieldHeight);
+}
 
 
 void CSteam::DispatchEvent(const int req_type, const int response) {
