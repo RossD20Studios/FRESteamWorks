@@ -1062,6 +1062,9 @@ bool CSteam::ShowFloatingGamepadTextInput(EFloatingGamepadTextInputMode eKeyboar
 bool CSteam::SteamInputShutDown(){
     return m_ctx.SteamInput()->Shutdown();
 }
+bool CSteam::DismissFloatingGamepadTextInput(){
+    return m_ctx.SteamUtils()->DismissFloatingGamepadTextInput();
+}
 
 
 void CSteam::DispatchEvent(const int req_type, const int response) {

@@ -1859,6 +1859,10 @@ AIR_FUNC(AIRSteam_SteamInputShutDown) {
 	ARG_CHECK(0, FREBool(false));
 	return FREBool(g_Steam->SteamInputShutDown());
 }
+AIR_FUNC(AIRSteam_DismissFloatingGamepadTextInput) {
+	ARG_CHECK(0, FREBool(false));
+	return FREBool(g_Steam->DismissFloatingGamepadTextInput());
+}
 
 	//============================
 

@@ -692,6 +692,9 @@ package com.amanitadesign.steam {
 		public function steamInputShutdown():Boolean{
 			return _ExtensionContext.call("AIRSteam_SteamInputShutDown") as Boolean;
 		}
+		public function dismissFloatingGamepadTextInput():Boolean{
+			return _ExtensionContext.call("AIRSteam_DismissFloatingGamepadTextInput") as Boolean;
+		}
 
 		/**********************************/
 		/* Other non-Steamworks functions */
