@@ -8,11 +8,11 @@ OS X and Linux.
 # RossD20Studios :: Steam Input API #
 I forked waveofthought's fork of this project to add Steam Input API (gamepad controller) support to this ANE.
 
-Steam Input API Documentation can be [read here] (https://partner.steamgames.com/doc/features/steam_controller/getting_started_for_devs)
+Steam Input API Documentation can be [read here](https://partner.steamgames.com/doc/features/steam_controller/getting_started_for_devs)
 
-A working ANE with Steam Input support for Windows/macOS can be [downloaded here] (https://d20studios.com/FRESteamWorks/)
+A working ANE with Steam Input support for Windows/macOS can be [downloaded here](https://d20studios.com/FRESteamWorks/)
 
-You can try out my game, Summoners Fate, on Steam (free demo) to [see the ANE in action here] (https://store.steampowered.com/app/1681840/Summoners_Fate/)
+You can try out my game, Summoners Fate, on Steam (free demo) to [see the ANE in action here](https://store.steampowered.com/app/1681840/Summoners_Fate/)
 
 # waveofthought ::  64Bit + expanded API #
 I forked this project to both extend available Steamworks API *and* output 64-bit capability for Windows.  All of the Ventero instructions/examples/tests should still work (see below, under "Ventero"), but as of this writing I have not yet updated the Ventero tests to reflect the new API.
