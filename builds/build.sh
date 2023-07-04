@@ -21,6 +21,7 @@ for type in Debug Release; do
 
 	[ ! -d "FRESteamWorks.framework" ] && die "$dir/FRESteamWorks.framework missing"
 	[ ! -f "FRESteamWorks.dll" ] && die "$dir/FRESteamWorks.dll missing"
+	[ ! -f "FRESteamWorks.so" ] && die "$dir/FRESteamWorks.so missing"
 
 	if [ "$type" = "Debug" ]; then
 		compc_flags="-debug=true"
@@ -43,6 +44,7 @@ for type in Debug Release; do
 	                   -swc FRESteamWorksLib.swc \
 	                   -platform Windows-x86 library.swf FRESteamWorks.dll \
 	                   -platform MacOS-x86-64 library.swf FRESteamWorks.framework \
+	                   -platform Linux-x86-64 library.swf FRESteamWorks.so \
 	                   -platform default library.swf
 
 	rm -f library.swf catalog.xml
@@ -61,13 +63,8 @@ https://github.com/Ventero/FRESteamWorks/commits/${target}
 Built against Steam SDK ${steam_sdk_version} and ${air_sdk_version}.
 EOD
 
-pushd "../../lib/bin/"
-./compileLinuxSWC.sh
-popd
-
 cp Debug/FRESteamWorks.ane FRESteamWorks-Debug.ane
 cp Release/FRESteamWorks.ane FRESteamWorks.ane
-cp ../../lib/bin/FRESteamWorksLibLinux.swc .
 popd
 
 

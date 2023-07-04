@@ -19,7 +19,7 @@ I forked this project to both extend available Steamworks API *and* output 64-bi
 
 A working ANE for Windows/macOS can be [downloaded here](https://waveofthought.com/FRESteamWorks).
 
-The Linux SWC has not been updated, as I do not have a Linux machine.  You'll have to build it yourself if you need Linux support.
+Rather than using the Linux SWC and wrapper as a workaround, with support now available for AIR Native Extensions on Linux, the ANE now supports Linux-x86-64. There is a makefile for building the library in the 'src' folder and it can be included in the ANE from a macOS build.
 
 ### Additional API ###
 The steam API docs can be [found here](https://partner.steamgames.com/doc/api).
