@@ -94,8 +94,8 @@
     <IntDir>$(SolutionDir)\$(Configuration)\Intermediate_$(Platform)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Label="UserMacros">
-    <AirSDK>C:\Users\Ross\Documents\SDKs\AIRSDK_MacOS\</AirSDK>
-    <SteamSDK>C:\Users\Ross\Documents\SDKs\steamworks_sdk_155\sdk\</SteamSDK>
+    <AirSDK>C:\SDKS\AIRSDK\</AirSDK>
+    <SteamSDK>C:\SDKS\SteamSDK\</SteamSDK>
   </PropertyGroup>
   <ItemGroup>
     <BuildMacro Include="AirSDK">
@@ -114,15 +114,15 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>USE_BREAKPAD_HANDLER;VERSION_SAFE_STEAM_API_INTERFACES;WIN32;_DEBUG;_WINDOWS;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)AdobeAIRSDK\include;$(SolutionDir)SteamSDK\public;$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(AirSDK)include;$(SteamSDK)public;$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <DisableSpecificWarnings>4068</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)AdobeAIRSDK\lib\win;$(SolutionDir)SteamSDK\redistributable_bin;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>steam_api.lib;FlashRuntimeExtensions.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(AirSDK)lib\win;$(SteamSDK)redistributable_bin;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -132,15 +132,15 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>USE_BREAKPAD_HANDLER;VERSION_SAFE_STEAM_API_INTERFACES;WIN32;_DEBUG;_WINDOWS;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)AdobeAIRSDK\include;$(SolutionDir)SteamSDK\public;$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(AirSDK)include;$(SteamSDK)public;$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <DisableSpecificWarnings>4068</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)AdobeAIRSDK\lib\win64;$(SolutionDir)SteamSDK\redistributable_bin\win64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>steam_api.lib;FlashRuntimeExtensions.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>steam_api64.lib;FlashRuntimeExtensions.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(AirSDK)lib\win64;$(SteamSDK)redistributable_bin\win64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
