@@ -22,11 +22,17 @@ if [ ! -f FRESteamWorks-64.dll ]; then
 	touch FRESteamWorks-64.dll
 fi
 
+if [ ! -f FRESteamWorks.so ]; then
+	echo "Creating dummy FRESteamWorks.so"
+	touch FRESteamWorks.so
+fi
+
 "$AIR_SDK"/bin/adt -package -target ane FRESteamWorks.ane descriptor.xml \
                    -swc FRESteamWorksLib.swc \
                    -platform Windows-x86 library.swf FRESteamWorks.dll \
                    -platform Windows-x86-64 library.swf FRESteamWorks-64.dll \
                    -platform MacOS-x86-64 library.swf FRESteamWorks.framework \
+                   -platform Linux-x86-64 library.swf FRESteamWorks.so \
                    -platform default library.swf
 
 rm -rf FRESteamWorks.Unpacked.ane

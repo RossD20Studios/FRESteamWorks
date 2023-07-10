@@ -147,12 +147,7 @@ bool FREGetInt32(FREObject object, int32* val) {
 }
 
 bool FREGetUint32(FREObject object, uint32* val) {
-	// really, Adobe ...?
-#ifdef LINUX
-	return (FREGetObjectAsUInt32(object, val) == FRE_OK);
-#else
 	return (FREGetObjectAsUint32(object, val) == FRE_OK);
-#endif
 }
 
 bool FREGetUint64(FREObject object, uint64* val) {

@@ -13,9 +13,9 @@ ifeq ($(shell uname), Darwin)
 	LDFLAGS += $(AIR_SDK)/runtimes/air/mac/Adobe\ AIR.framework/Versions/1.0/Adobe\ AIR_64
 	AMF_CPP_ARCH =
 else
-	CXXFLAGS += -m32 -DLINUX
-	LDFLAGS += -m32 -L$(STEAM_SDK)/redistributable_bin/linux32
-	AMF_CPP_ARCH = 32bit
+	CXXFLAGS += -m64 -DLINUX
+	LDFLAGS += -m64 -L$(STEAM_SDK)/redistributable_bin/linux64 -L$(AIR_SDK)/lib -l:FlashRuntimeExtensions.so -Wl,-rpath=. -Wl,-rpath=Adobe\ AIR/Versions/1.0
+	AMF_CPP_ARCH = 64bit
 endif
 
 # comma separated list of whitelisted app ids
@@ -39,9 +39,9 @@ src := $(obj:.o=.cpp) $(wrapperobj:.o=.cpp)
 # Destination for libamf
 amf := APIWrapper/libamf.a
 
-# Targets
+# Targets - all no longer needs warpper
 .PHONY: all lib wrapper clean dist-clean
-all: lib wrapper
+all: lib
 lib: FRESteamWorks/FRESteamWorks.so
 wrapper: APIWrapper/APIWrapper
 
@@ -68,7 +68,7 @@ $(amf): APIWrapper/amf-cpp
 SteamSDK:
 	ln -sf $(STEAM_SDK) $@
 
-%.o: | SteamSDK
+%.o: %.cpp | SteamSDK
 	$(CXX) -c $(CXXFLAGS) $< -o $@
 
 # Additional flags

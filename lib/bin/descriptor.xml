@@ -23,6 +23,13 @@
 				<finalizer>ExtFinalizerFRESteamWorks</finalizer>
 			</applicationDeployment>
 		</platform>
+		<platform name="Linux-x86-64">
+			<applicationDeployment>
+				<nativeLibrary>FRESteamWorks.so</nativeLibrary>
+				<initializer>ExtInitializerFRESteamWorks</initializer>
+				<finalizer>ExtFinalizerFRESteamWorks</finalizer>
+			</applicationDeployment>
+		</platform>
 		<platform name="default">
 			<applicationDeployment/>
 		</platform>

@@ -28,6 +28,7 @@ call "%AIR_SDK%\bin\adt" -package -target ane FRESteamWorks.ane descriptor.xml ^
                          -platform Windows-x86 library.swf FRESteamWorks.dll ^
                          -platform Windows-x86-64 library.swf FRESteamWorks-64.dll ^
                          -platform MacOS-x86-64 library.swf FRESteamWorks.framework ^
+                         -platform Linux-x86-64 library.swf FRESteamWorks.so ^
                          -platform default library.swf
 
 del library.swf
