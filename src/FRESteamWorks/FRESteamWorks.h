@@ -13,6 +13,7 @@
 
 #if defined(WIN32)
 	#define EXPORT __declspec(dllexport)
+	#include <Windows.h>
 #else
 	// Symbols tagged with EXPORT are externally visible.
 	// Must use the -fvisibility=hidden gcc option.

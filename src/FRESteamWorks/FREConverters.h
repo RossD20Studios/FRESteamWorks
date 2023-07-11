@@ -11,7 +11,9 @@
 
 #include <string>
 #include <vector>
-
+#if defined(WIN32)
+	#include <Windows.h>
+#endif
 #include <FlashRuntimeExtensions.h>
 // includes definitions of {u,}int{32,64}
 #include <steam/steamtypes.h>
