@@ -1,6 +1,5 @@
 NativeApps
 builds/v*
-config.sh
 src/.dep
 src/.vs
 test/bin-debug/FRESteamWorksTest
@@ -35,5 +34,3 @@ Desktop.ini
 .DS_Store
 /src/*.aps
 /src/.editorconfig
-/src/AdobeAIRSDK
-/src/SteamSDK
