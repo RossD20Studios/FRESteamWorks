@@ -11,6 +11,7 @@
 
 #include <string>
 #include <vector>
+typedef void* NSWindow;
 #if defined(WIN32)
 	#include <Windows.h>
 #endif

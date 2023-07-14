@@ -19,7 +19,7 @@
 	// Must use the -fvisibility=hidden gcc option.
 	#define EXPORT __attribute__((visibility("default")))
 #endif
-
+typedef void* NSWindow;
 #include <FlashRuntimeExtensions.h>
 
 #include "CSteam/CSteam.h"
