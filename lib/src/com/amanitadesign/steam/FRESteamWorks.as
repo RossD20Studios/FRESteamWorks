@@ -675,11 +675,17 @@ package com.amanitadesign.steam {
 			return _ExtensionContext.call("AIRSteam_GetAnalogActionOrigins", inputHandle, actionSetHandle, analogActionHandle) as Array;
 		}
 		public function getGlyphSVGForActionOrigin(eOrigin:String, flags:int):String{
-			return _ExtensionContext.call("AIRSteam_GetGlyphSVGForActionOrigin", eOrigin, flags) as String;
+			return correctFilePath(_ExtensionContext.call("AIRSteam_GetGlyphSVGForActionOrigin", eOrigin, flags) as String);
 		}
 		public function getGlyphPNGForActionOrigin(eOrigin:String, eSize:int, flags:int):String{
 			//Size 0 = Small (32x32), Size 1 = Medium (128x128), Size 2 = Large (256x256)
-			return _ExtensionContext.call("AIRSteam_GetGlyphPNGForActionOrigin", eOrigin, eSize, flags) as String;
+			return correctFilePath(_ExtensionContext.call("AIRSteam_GetGlyphPNGForActionOrigin", eOrigin, eSize, flags) as String);
+		}
+		private function correctFilePath(path:String):String{
+			if(path && path.indexOf("/") != -1){
+				path = path.split("\\").join("/");	//Needed to correct final portion of the file path on Mac and Linux
+			}
+			return path;
 		}
 		public function getStringForActionOrigin(eOrigin:String):String{
 			return _ExtensionContext.call("AIRSteam_GetStringForActionOrigin", eOrigin) as String;
