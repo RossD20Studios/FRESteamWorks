@@ -1758,7 +1758,7 @@ AIR_FUNC(AIRSteam_GetDigitalActionOrigins) {
 	uint64 actionHandle;
 	if (!FREGetUint64(argv[0], &inputHandle)) return FREArray(0);
 	if (!FREGetUint64(argv[1], &actionSetHandle)) return FREArray(0);
-	if (!FREGetUint64(argv[0], &actionHandle)) return FREArray(0);
+	if (!FREGetUint64(argv[2], &actionHandle)) return FREArray(0);
 
 	EInputActionOrigin originsOut[STEAM_INPUT_MAX_ORIGINS];
 	int const numOrigins = g_Steam->GetDigitalActionOrigins(inputHandle, actionSetHandle, actionHandle, originsOut);
