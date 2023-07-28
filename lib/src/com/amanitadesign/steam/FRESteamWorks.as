@@ -677,7 +677,7 @@ package com.amanitadesign.steam {
 		public function getGlyphSVGForActionOrigin(eOrigin:String, flags:int):String{
 			return _ExtensionContext.call("AIRSteam_GetGlyphSVGForActionOrigin", eOrigin, flags) as String;
 		}
-		public function GetGlyphPNGForActionOrigin(eOrigin:String, eSize:int, flags:int):String{
+		public function getGlyphPNGForActionOrigin(eOrigin:String, eSize:int, flags:int):String{
 			return _ExtensionContext.call("AIRSteam_GetGlyphPNGForActionOrigin", eOrigin, eSize, flags) as String;
 		}
 		public function getStringForActionOrigin(eOrigin:String):String{
