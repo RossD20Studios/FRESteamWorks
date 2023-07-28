@@ -1789,33 +1789,32 @@ AIR_FUNC(AIRSteam_GetAnalogActionOrigins) {
 	return array;
 }
 AIR_FUNC(AIRSteam_GetGlyphSVGForActionOrigin) {
-	ARG_CHECK(2, FREString(""));
+	ARG_CHECK(2, FREString("error0"));
 	
-	uint32 eOrigin;
+	uint64 eOrigin;
 	uint32 unFlags;
-	if (!FREGetUint32(argv[0], &eOrigin)) return FREString("");
-	if (!FREGetUint32(argv[1], &unFlags)) return FREString("");
+	if (!FREGetUint64(argv[0], &eOrigin)) return FREString("error1");
+	if (!FREGetUint32(argv[1], &unFlags)) return FREString("error2");
 	
 	return FREString(g_Steam->GetGlyphSVGForActionOrigin(EInputActionOrigin(eOrigin), unFlags));
 }
 AIR_FUNC(AIRSteam_GetGlyphPNGForActionOrigin) {
-	ARG_CHECK(3, FREString(""));
+	ARG_CHECK(3, FREString("error0"));
 	
-	uint32 eOrigin;
+	uint64 eOrigin;
 	uint32 eSize;
 	uint32 unFlags;
-	if (!FREGetUint32(argv[0], &eOrigin)) return FREString("");
-	if (!FREGetUint32(argv[1], &eSize))   return FREString("");
-	if (!FREGetUint32(argv[2], &unFlags)) return FREString("");
+	if (!FREGetUint64(argv[0], &eOrigin)) return FREString("error1");
+	if (!FREGetUint32(argv[1], &eSize))   return FREString("error2");
+	if (!FREGetUint32(argv[2], &unFlags)) return FREString("error3");
 	
 	return FREString(g_Steam->GetGlyphPNGForActionOrigin(EInputActionOrigin(eOrigin), ESteamInputGlyphSize(eSize), unFlags));
 }
 AIR_FUNC(AIRSteam_GetStringForActionOrigin) {
-	ARG_CHECK(1, FREString(""));
+	ARG_CHECK(1, FREString("error0"));
 	
-	uint32 eOrigin;
-	if (!FREGetUint32(argv[0], &eOrigin)) return FREString("");
-	
+	uint64 eOrigin;
+	if (!FREGetUint64(argv[0], &eOrigin)) return FREString("error1");
 	return FREString(g_Steam->GetStringForActionOrigin(EInputActionOrigin(eOrigin)));
 }
 AIR_FUNC(AIRSteam_ShowGamepadTextInput) {
