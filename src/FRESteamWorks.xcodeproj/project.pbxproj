@@ -26,7 +26,7 @@
 		54BD38FD19016834002DD39B /* ResponseTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ResponseTypes.h; path = CSteam/ResponseTypes.h; sourceTree = "<group>"; };
 		AC2FCB17287E3EEB00C43B11 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AC61A76C25B8A8390097E5E4 /* Adobe AIR */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "Adobe AIR"; path = "../../SDKS/AIRSDK/runtimes/air/mac/Adobe AIR.framework/Versions/1.0/Adobe AIR"; sourceTree = "<group>"; };
-		AC61A77125B8A86E0097E5E4 /* libsteam_api.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsteam_api.dylib; path = "../../SDKS/SteamSDK/redistributable_bin/osx/libsteam_api.dylib"; sourceTree = "<group>"; };
+		AC61A77125B8A86E0097E5E4 /* libsteam_api.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsteam_api.dylib; path = ../../SDKS/SteamSDK/redistributable_bin/osx/libsteam_api.dylib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
