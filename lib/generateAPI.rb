@@ -41,20 +41,6 @@ files = [
 		:format => method(:create_lib)
 	},
 	{
-		:file => "src_linux/com/amanitadesign/steam/FRESteamWorks.as",
-		:ignore => %w{init runCallbacks fileRead UGCRead getAuthSessionTicket
-					  getEncryptedAppTicket getMediumFriendAvatar getSmallFriendAvatar
-					  restartAppIfNecessary},
-		:format => method(:create_lib_linux)
-	},
-	{
-		:file => "src_linux/com/amanitadesign/steam/FRESteamWorks.as",
-		:ignore => [],
-		:format => -> line, func { "private static const #{func[:air_name]}:int = #{func[:num]};" },
-		:start => "START GENERATED VALUES",
-		:end => "END GENERATED VALUES"
-	},
-	{
 		:file => "../src/functions.h",
 		:ignore => [],
 		:format => -> line, func { "X(#{func[:air_name]}) /* = #{func[:num]} */" }

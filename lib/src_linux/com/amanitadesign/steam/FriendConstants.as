@@ -1,1 +1,0 @@
-../../../../src/com/amanitadesign/steam/FriendConstants.as
