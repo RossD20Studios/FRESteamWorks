@@ -108,152 +108,59 @@ Since the AIR runtime on Linux doesn't support native extensions, an external
 binary is used to communicate with the Steamworks API. For more information
 on how to build and include this tool, see [the Linux section](#linux).
 
-## Known Issues ##
-
-Due to a bug in old versions of the AIR runtime, the runtime will crash as soon
-as a function is called that returns any of the `com.amanitadesign.steam.*` objects.
-For this reason, FRESteamWorks should only be used with AIR runtimes >= 3.7.
-
-Flash Builder 4.6 seems to have an issue with detecting classes that implement
-interfaces inside an ANE, which results in the `FRESteamWorks` class not being
-visible inside the ANE within Flash Builder when using earlier builds (older than
-v0.4-19) of the ANE. This issue is also fixed in Flash Builder 4.7.
-
-With older versions of the ANE (older than v0.4-19), running an application
-including that ANE is not possible in Flash Builder 4.6 on OS X. To fix this issue,
-simply download to a more recent ANE.
-
-## Flash Builder ##
-
-### Building ###
-
-To include the ANE in your Flash Builder project, simply add it to the list of
-"Native Extensions" under "ActionScript Build Path" in your project's properties.
-Make sure it gets packaged when building your application by checking the "Package" box
-in the "Native Extensions" tab under "ActionScript Build Packaging". The extension
-will automatically be added to your application descriptor, but you still might have
-to add `extendedDesktop` to the list of supported profiles.
-
-### Running ###
-
-Since by default, Flash Builder uses its installation path as working directory
-when running applications, this however isn't enough to test your application in
-Flash Builder. This can be fixed by either adding the library's directory to the
-dynamic linker's search path (see [the AIR/Flex SDK section](#airflex-sdk) on
-how to do this), or by creating a new shortcut to Flash Builder where the working
-directory is set to your project's directory and adding the dynamic library to
-your project (this does not work on OS X).
-
-### Packaging ###
-
-Just include the native Steamworks library at the top level of your project so
-that it gets included when packaging your application.
-
-## AIR/Flex SDK ##
-
-### Building ###
-
-For projects built with the AIR/Flex SDKs, the ANE can be included by simply
-adding the ANE path to the external library path (either by adding it to your
-build config file, or by adding `-external-library-path+=/path/to/FRESteamWorks.ane`
-to your `mxmlc`/`compc` compiler flags). The SWF you're has to be at least version 11.
-
-### Running ###
-
-To run your application with the AIR Debug Launcher (`adl`), you will have to first
-unpack the ANE. To do this, rename `FRESteamWorks.ane` to `FRESteamWorks.zip`,
-then unzip it and rename the generated folder to `FRESteamWorks.Unpacked.ane`.
-Now you can add `-extdir /path/to/folder` to the `adl` command line flags. Here,
-`folder` refers the parent folder of the unzipped extension (i.e. the folder that
-contains `FRESteamWorks.Unpacked.ane`).
-
-Since the native library included in the ANE is dynamically linked against the
-Steamworks library, you'll also have to make sure that the dynamic linker can find
-the Steamworks library. When testing, this is easiest done by adding the folder containing
-the Steamworks library to your `%PATH%` environment variable on Windows
-([example](https://github.com/Ventero/FRESteamWorks/blob/master/test/bin-debug/runWin.bat#L9)),
-`DYLD_FALLBACK_LIBRARY_PATH` on OS X ([example](https://github.com/Ventero/FRESteamWorks/blob/master/test/bin-debug/runMac.sh#L6))
-or the library itself to `LD_PRELOAD` on Linux ([example](https://github.com/Ventero/FRESteamWorks/blob/master/test/bin-debug/runLinux.sh#L24)).
-
-### Packaging ###
-
-For packaged builds, you'll simply have to include the native Steamworks libraries
-in the top level of your build and add the path to a directory containing the
-`FRESteamWorks.ane` as `-extdir` to `adt`. For an example, see the test application's
-[packaging script](https://github.com/Ventero/FRESteamWorks/blob/master/test/bin-debug/packageWin.bat#L13-18).
-
-## Flash Professional ##
-
-### Building ###
-
-First of all, make sure that your project's target is set to "AIR 3.0 for Desktop"
-(or any more recent AIR version). Then, in the AIR preferences (wrench icon next
-to target project's target), check the "Extended Desktop" profile and select
-"Output as: Application with runtime embedded".
-
-To include the ANE, go to the "Advanced ActionScript 3.0 Settings" (wrench icon
-next to the project's script settings), and in the "Library path" tab,
-click the native extension button and select `FRESteamWorks.ane`.
-
-### Running ###
-
-See the [Flash Builder section](#running)
-on running the application.
-
-### Packaging ###
-
-See the [Flash Builder section](#packaging)
-on packaging the application.
-
-## FDT ##
-
-FDT is very similar to [Flash Builder](#flash-builder). The main differences
-are that the ANE is automatically added to the project and packaged when copying
-it into the project's `lib` folder, so that the steps described in
-[Flash Builder's building section](#building) are not necessary. However, when adding
-the native Steamworks libraries, you have to make sure that they're packaged with
-the application by opening the project's properties and adding them under
-"FDT AIR Properties" -> "Desktop" -> "Package Contents".
-
-Please also make sure to follow the steps described in [the running section](#running)
-to debug your application from within FDT and see the [list of known issues](#known-issues).
-
-# Linux #
-
-The AIR runtime on Linux doesn't support native extensions. Instead, you'll have
-to compile your AS3 application against `FRESteamWorksLibLinux.swc` and compile
-a wrapper binary that handles the communication between AIR and the Steamworks API.
-For details on how to do that, please contact me directly (email address see profile).
-
 # Building FRESteamWorks #
 
-There shouldn't be any reason for you to manually build the FRESteamWorks.ane,
-as pre-built ANEs can be downloaded from http://dump.ventero.de/FRESteamWorks/.
-If you need a more recent version than the builds that are available on that site,
-you can create an issue in the [bug tracker](https://github.com/Ventero/FRESteamWorks/issues).
+Building the ANE from the source files is only necessary if you need to modify source code and/or the ANE package is no longer available for [downloaded here](https://d20studios.com/FRESteamWorks/)
 
-If you still want to build the ANE yourself (or build the test application), a few
-simple steps have to be followed.
+### Building the ANE Requires: ###
+1. AIR Version 50.2.3
+2. SteamWorks SDK v1.54
+3. Mac OS Catalina+ (To ensure support for latest Xcode)
+4. Apple Developer Account (To create the Developer ID Application certificate necessary to sign the ANE to work on Mac)
+5. Xcode v14+  (To build the Mac version and ensure support for Apple Silicon M1/M2)
+6. Windows 10+
+7. Microsoft Visual Studio 2022
+8. Linux OS / Virtual Machine - x86/64 Version (AIR will not currently compile/run on ARM versions)
 
-1. Create a config file by copying `config_example.sh` to `config.sh` on OS X,
-or `config_example.bat` to `config.bat` and correctly setting up the values within.
+The original Ventero project would have you modify build scripts (indicating the relative and/or direct file paths to the necessary dependent source code, such as the AIRSDK and the SteamSDK). However, in practice, I found that each of the respective projects (Visual Studio, Xcode) still required several direct file path dependencies. To make this process easier and avoid the trouble of finding and replacing all of these dependent file paths, I’ve coded the project to use fixed filepaths.
 
-2. Open the Visual Studio solution or XCode project (both inside `src/`) and fix
-up the include paths (for the Adobe AIR SDK as well as the Steamworks SDK).
+To build the ANE, you will need to compile the respective native source files for each platform you wish to target (Windows, Mac, Linux) using a machine that includes this native operating system or virtual operating system for that platform. Then, you will need to package the native compiled files into a ZIP file with extension ANE. We will complete this last step on the MacOS.
 
-3. Build the project in either debug or release mode. This compiles the native
-library and automatically builds an ANE for the current platform containing that
-library.
+### Step 1: Setup FRESteamWorks Project on your MacOS ###
+1. Ensure FRESteamWorks project folder is located in your username home folder (ex: Users/userName/FRESteamWorks) so that relative file paths in the Xcode project will find dependent source files
+2. Create an SDKS folder in your username home folder (ex: Users/userName/SDKS)
+3. Inside the SDKS folder, copy your AIRSDK and SteamSDK and ensure the folder names are labeled as this exactly.
+4. Inside the root of SDKS\AIRSDK folder, you should see the actual AIRSDK folders (ex: ant, asdoc, aftools, etc.) and not a nested version of the current AIR version.
+5. Inside the root of your SDKS\SteamSDK, you should see the actual SteamSDK folders (ex: glmgr, public, redistributable_bin, etc.)
+6. Proceed to building Windows DLLs and Linux SO, we’ll need the output files before we build the MacOS files and assemble the ANE
 
-4. Optionally, build the test application by running `build.{bat,sh}` inside
-`test/bin-debug/` and run it with `runMac.sh` or `runWin.bat`. This automatically
-uses the ANE built in step 3.
+### Step 2: Building the Windows DLLs ###
+1. Create an SDKS folder at C:\SDKS
+2. Inside the C:\SDKS folder, copy your AIRSDK and SteamSDK and ensure the folder names are labeled as this exactly.
+3. Inside the root of your C:\SDKS\AIRSDK folder, you should see the actual AIRSDK folders (ex: ant, asdoc, aftools, etc.) and not a nested version of the current AIR version.
+4. Inside the root of your C:\SDKS\SteamSDK, you should see the actual SteamSDK folders (ex: glmgr, public, redistributable_bin, etc.)
+5. Navigate to your FRESteamWorks\src folder and open FRESteamWorks.vcxproj with Microsoft Visual Studio 2022
+6. In the two drop down menus at the top (just below the Build / Debug menu headers) set the first drop down menu to “Release” and the second drop down menu to “x64”. Then, select Build -> Build Solution (Ctrl + Shift + B). Note: The Build will fail here unless java environment variables are configured, but that’s OK. It will still output the FRESteamWorks-64.dll file to FRESteamworks/src/Release/FRESteamWorks-64.dll, and that’s all you need for 64-bit Windows.
+7. Change the second drop down selection from x64 to Win32 and select Build -> Build Solution again to compile the 32-bit Windows version. This will output the file FRESteamworks/src/Release/FRESteamWorks.dll.
+8. Copy FRESteamworks/src/Release/FRESteamWorks-64.dll and FRESteamworks/src/Release/FRESteamWorks.dll to the FRESteamWorks/lib/bin folder on your Mac OS.
 
-To build a cross platform ANE, you'll have to compile the native library on both
-Windows and OS X and then create an ANE that includes both of those. This is easiest
-done by first running `mkdir.sh` in `builds/`, building FRESteamWorks.dll on Windows,
-copying it over to the directory created on OS X and then running `compile.sh`
-and `build.sh` in that order.
+### Step 3: Building the Linux SO ###
+1. Ensure the root of your FRESteamWorks project on Linux is located at Home\FRESteamWorks
+2. Create an SDKS folder at Home\SDKS
+3. Inside the SDKS folder, copy your AIRSDK and SteamSDK and ensure the folder names are labeled as this exactly.
+4. Inside the root of your SDKS\AIRSDK folder, you should see the actual AIRSDK folders (ex: ant, asdoc, aftools, etc.) and not a nested version of the current AIR version.
+5. Inside the root of your SDKS\SteamSDK, you should see the actual SteamSDK folders (ex: glmgr, public, redistributable_bin, etc.)
+6. Navigate to FRESteamWorks\src where the MakeFile is located and right click to open this location in the terminal
+7. Type “make” (no quotes). If this fails, you may need to install g++. To do so, type “Sudo apt install g++” (no quotes)
+8. The make command will create a new file in FRESteamWorks\src\FRESteamWorks\ called “FRESteamWorks.so”. Copy this file to the FRESteamWorks/lib/bin folder on your Mac OS.
+
+### Step 4: Building the Mac OS Framework file and Packaging the ANE ###
+1. Create a Developer ID Application certificate in your Apple Developer Account under Certificates. This type of certificate is used to code sign your app for distribution outside the Mac App Store. Once you’ve created the certificate, download it, then double click it to add it to your KeyChain.
+2. Navigate to FRESteamWorks/src and open the FRESteamWorks.xcodeproj in Xcode
+3. In the left navigational menu of Xcode, ensure the “folder” icon is selected and then select the FRESteamWorks project which will have a generic App icon to its left. This will take you to the Build Settings tab. Here, in the “Signing” section, you will need to select Developer ID Application. Select Code Signing Style -> Manual. And also ensure your development team is selected in the third drop down. No provisioning file is required.
+4. From the upper task bar menu, select Project -> Build
+5. If you are prompted to enter a password to use the certificate from your keychain, do so. Important Note: After doing so, you will need to run the build a second time, even if it succeeded, to ensure that the build is properly code signed. I made this mistake many times thinking the build had worked, only to discover later that the ANE wouldn’t run on Mac because it hand’t actually signed it properly. To avoid requiring password in the future, you can check the “Always allow” option, but still run the build process a second time after doing so. And, always test that your ANE works by running it on your local machine before uploading to Steam.
+6. Running the build process will create the completed ANE at Users/userName/FRESteamWorks/lib/bin/FRESteamWorks.ane as well as an unpacked folder called FRESteamWorks.Unpacked.ane where you can see structure of what the ANE looks like. Inside this, you should see a folder for Linux-x86-64 containing your FRESteamWorks.so, a MacOS-x86-64 containing FRESteamWorks.framework, a Windows x86 folder containing FRESteamWorks.dll and a Windows-x86-64 containing FRESteamWorks-64.dll. Each folder also contains a library.swf. Note: Ensure that the file size of these files is greater than zero, otherwise, you may have forgotten to copy the files created in the prior steps to your bin folder. The MacOS build process will create placeholders if these files are missing with a 0KB size.
 
 For more details, please see the
 [contributing guide](https://github.com/Ventero/FRESteamWorks/tree/master/CONTRIBUTING.md).
