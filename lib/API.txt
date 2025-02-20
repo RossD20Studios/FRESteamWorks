@@ -83,6 +83,29 @@ public function getIPCountry():String
 // @default false
 public function isSteamInBigPictureMode():Boolean
 
+// +wot - April 2024
+// ISteamUtils#IsSteamRunningOnSteamDeck()
+// @default false
+public function isSteamRunningOnSteamDeck():Boolean
+
+// +wot - April 2024
+// ISteamUtils#GetServerRealTime
+// @default 0
+// returns uint32
+public function getServerRealTime():uint
+
+// +wot - April 2024
+// ISteamUtils#GetSecondsSinceAppActive
+// @default 0
+// returns uint32
+public function getSecondsSinceAppActive():uint
+
+// +wot - April 2024
+// ISteamApps#GetEarliestPurchaseUnixTime
+// @default 0
+// returns uint32
+public function getEarliestPurchaseUnixTime(appID:String):uint
+
 /************************/
 /* Stats / Achievements */
 /************************/
@@ -634,6 +657,29 @@ public function setRichPresence(key:String, value:String):Boolean
 // Clears your rich presence
 public function clearRichPresence():Boolean
 
+// +wot - April 2024
+// SetPlayedWith(id)
+// @default ""
+// Registers the steamID of a player you recently "played with".  Can be looked up in Steam overlay, and perhaps elsehwere
+public function setPlayedWith(steamID:String):Boolean
+
+
+// +wot - April 2024
+// GetCoplayFriendCount()
+// @default 0
+// Gets the number of players that the current user has recently played with, across all games.
+public function getCoplayFriendCount():int
+
+
+// +wot - April 2024
+// GetCoplayFriend()
+// @default 0
+// Gets the Steam ID of the recently played with user at the given index.
+public function getCoplayFriend(index:int):String
+
+
+
+
 /******************************/
 /* Authentication & Ownership */
 /******************************/
@@ -649,7 +695,8 @@ public function clearRichPresence():Boolean
 // UserConstants.AUTHTICKET_Invalid on failure.
 // If response = UserConstants.SESSION_OK, call getAuthSessionTicketResult to
 // get the actual valid ticket handle.
-public function getAuthSessionTicket(ticket:ByteArray):uint
+// +wot -- steamID is now required for creating a SteamNetworkingIdentity object
+public function getAuthSessionTicket(ticket:ByteArray, steamID:String):uint
 
 // @default UserConstants.AUTHTICKET_Invalid
 // Returns the ticket handle of the last successful call to getAuthSessionTicket
@@ -814,6 +861,95 @@ public function DLCInstalledResult():uint
 // 	}
 // }
 public function microTxnResult():MicroTxnAuthorizationResponse
+
+
+/********************/
+/* Input */
+/********************/
+
+// inputInit()
+// @default false
+public function inputInit():Boolean
+
+// getControllerForGamepadIndex(index)
+// @default 0
+public function getControllerForGamepadIndex(index:int):String
+
+// showBindingPanel(inputHandle)
+// @default false
+public function showBindingPanel(inputHandle:String):Boolean 
+
+// getActionSetHandle(actionSetName)
+// @default false
+public function getActionSetHandle(actionSetName:String):String 
+
+// getDigitalActionHandle(actionName)
+// @default ""
+public function getDigitalActionHandle(actionName:String):String
+
+// getAnalogActionHandle(actionName)
+// @default ""
+public function getAnalogActionHandle(actionName:String):String 
+
+// getDigitalActionData(inputHandle, actionHandle):InputDigitalActionData
+// @default null
+public function getDigitalActionData(inputHandle:String, actionHandle:String):InputDigitalActionData
+
+// getAnalogActionData(inputHandle, actionHandle)
+// @default null
+public function getAnalogActionData(inputHandle:String, actionHandle:String):InputAnalogActionData
+
+// runFrame()
+// @default false
+public function runFrame():Boolean
+
+// getConnectedControllers()
+// @default []
+public function getConnectedControllers():Array
+
+// activateActionSet()
+// @default false
+public function activateActionSet(inputHandle:String, actionSetHandle:String):Boolean
+
+// getHandleAllControllers()
+// @default false
+public function getHandleAllControllers():String
+
+// getDigitalActionOrigins(inputHandle, actionSetHandle, digitalActionHandle)
+// @default false
+public function getDigitalActionOrigins(inputHandle:String, actionSetHandle:String, digitalActionHandle:String):Array
+
+// getAnalogActionOrigins(inputHandle, actionSetHandle, analogActionHandle)
+// @default []
+public function getAnalogActionOrigins(inputHandle:String, actionSetHandle:String, analogActionHandle:String):Array
+
+// getGlyphSVGForActionOrigin(eOrigin, flags)
+// @default "error0"
+public function getGlyphSVGForActionOrigin(eOrigin:String, flags:int):String
+
+// getGlyphPNGForActionOrigin(eOrigin, eSize, flags)
+// @default "error0"
+public function getGlyphPNGForActionOrigin(eOrigin:String, eSize:int, flags:int):String
+
+// getStringForActionOrigin(eOrigin)
+// @default "error0"
+public function getStringForActionOrigin(eOrigin:String):String
+
+// showGamepadTextInput(eInputMode, eLineInputMode, pchDescription, unCharMax, pchExistingText)
+// @default false
+public function showGamepadTextInput(eInputMode:int, eLineInputMode:int, pchDescription:String, unCharMax:int, pchExistingText:String):Boolean
+
+// showFloatingGamepadTextInput(eKeyboardMode, nTextFieldXPosition, nTextFieldYPosition, nTextFieldWidth, nTextFieldHeight)
+// @default false
+public function showFloatingGamepadTextInput(eKeyboardMode:int, nTextFieldXPosition:int, nTextFieldYPosition:int, nTextFieldWidth:int, nTextFieldHeight:int):Boolean
+
+// steamInputShutdown()
+// @default false
+public function steamInputShutdown():Boolean
+
+// dismissFloatingGamepadTextInput()
+// @default false
+public function dismissFloatingGamepadTextInput():Boolean
 
 /**********************************/
 /* Other non-Steamworks functions */

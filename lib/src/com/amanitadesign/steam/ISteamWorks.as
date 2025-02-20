@@ -39,6 +39,10 @@ package com.amanitadesign.steam {
 		function restartAppIfNecessary(appID:uint):Boolean
 		function getIPCountry():String
 		function isSteamInBigPictureMode():Boolean
+		function isSteamRunningOnSteamDeck():Boolean
+		function getServerRealTime():uint
+		function getSecondsSinceAppActive():uint
+		function getEarliestPurchaseUnixTime(appID:String):uint
 		/************************/
 		/* Stats / Achievements */
 		/************************/
@@ -142,10 +146,13 @@ package com.amanitadesign.steam {
 		function getLargeFriendAvatar(id:String):BitmapData
 		function setRichPresence(key:String, value:String):Boolean
 		function clearRichPresence():Boolean
+		function setPlayedWith(steamID:String):Boolean
+		function getCoplayFriendCount():int
+		function getCoplayFriend(index:int):String
 		/******************************/
 		/* Authentication & Ownership */
 		/******************************/
-		function getAuthSessionTicket(ticket:ByteArray):uint
+		function getAuthSessionTicket(ticket:ByteArray, steamID:String):uint
 		function getAuthSessionTicketResult():uint
 		function beginAuthSession(ticket:ByteArray, steamID:String):int
 		function endAuthSession(steamID:String):Boolean
@@ -178,6 +185,30 @@ package com.amanitadesign.steam {
 		/* Microtransaction */
 		/********************/
 		function microTxnResult():MicroTxnAuthorizationResponse
+		/********************/
+		/* Input */
+		/********************/
+		function inputInit():Boolean
+		function getControllerForGamepadIndex(index:int):String
+		function showBindingPanel(inputHandle:String):Boolean 
+		function getActionSetHandle(actionSetName:String):String 
+		function getDigitalActionHandle(actionName:String):String
+		function getAnalogActionHandle(actionName:String):String 
+		function getDigitalActionData(inputHandle:String, actionHandle:String):InputDigitalActionData
+		function getAnalogActionData(inputHandle:String, actionHandle:String):InputAnalogActionData
+		function runFrame():Boolean
+		function getConnectedControllers():Array
+		function activateActionSet(inputHandle:String, actionSetHandle:String):Boolean
+		function getHandleAllControllers():String
+		function getDigitalActionOrigins(inputHandle:String, actionSetHandle:String, digitalActionHandle:String):Array
+		function getAnalogActionOrigins(inputHandle:String, actionSetHandle:String, analogActionHandle:String):Array
+		function getGlyphSVGForActionOrigin(eOrigin:String, flags:int):String
+		function getGlyphPNGForActionOrigin(eOrigin:String, eSize:int, flags:int):String
+		function getStringForActionOrigin(eOrigin:String):String
+		function showGamepadTextInput(eInputMode:int, eLineInputMode:int, pchDescription:String, unCharMax:int, pchExistingText:String):Boolean
+		function showFloatingGamepadTextInput(eKeyboardMode:int, nTextFieldXPosition:int, nTextFieldYPosition:int, nTextFieldWidth:int, nTextFieldHeight:int):Boolean
+		function steamInputShutdown():Boolean
+		function dismissFloatingGamepadTextInput():Boolean
 		/**********************************/
 		/* Other non-Steamworks functions */
 		/**********************************/
