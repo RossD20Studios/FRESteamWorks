@@ -926,12 +926,10 @@ public function getAnalogActionOrigins(inputHandle:String, actionSetHandle:Strin
 
 // getGlyphSVGForActionOrigin(eOrigin, flags)
 // @default "error0"
-// @nogen
 public function getGlyphSVGForActionOrigin(eOrigin:String, flags:int):String
 
 // getGlyphPNGForActionOrigin(eOrigin, eSize, flags)
 // @default "error0"
-// @nogen
 public function getGlyphPNGForActionOrigin(eOrigin:String, eSize:int, flags:int):String
 
 // getStringForActionOrigin(eOrigin)

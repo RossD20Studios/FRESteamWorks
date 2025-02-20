@@ -175,14 +175,16 @@ X(AIRSteam_ActivateActionSet) /* = 138 */
 X(AIRSteam_GetHandleAllControllers) /* = 139 */
 X(AIRSteam_GetDigitalActionOrigins) /* = 140 */
 X(AIRSteam_GetAnalogActionOrigins) /* = 141 */
-X(AIRSteam_GetStringForActionOrigin) /* = 142 */
-X(AIRSteam_ShowGamepadTextInput) /* = 143 */
-X(AIRSteam_ShowFloatingGamepadTextInput) /* = 144 */
-X(AIRSteam_SteamInputShutdown) /* = 145 */
-X(AIRSteam_DismissFloatingGamepadTextInput) /* = 146 */
+X(AIRSteam_GetGlyphSVGForActionOrigin) /* = 142 */
+X(AIRSteam_GetGlyphPNGForActionOrigin) /* = 143 */
+X(AIRSteam_GetStringForActionOrigin) /* = 144 */
+X(AIRSteam_ShowGamepadTextInput) /* = 145 */
+X(AIRSteam_ShowFloatingGamepadTextInput) /* = 146 */
+X(AIRSteam_SteamInputShutdown) /* = 147 */
+X(AIRSteam_DismissFloatingGamepadTextInput) /* = 148 */
 /**********************************/
 /* Other non-Steamworks functions */
 /**********************************/
-X(AIRSteam_GetEnv) /* = 147 */
-X(AIRSteam_SetEnv) /* = 148 */
+X(AIRSteam_GetEnv) /* = 149 */
+X(AIRSteam_SetEnv) /* = 150 */
 /* END GENERATED CODE */
