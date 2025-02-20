@@ -94,8 +94,8 @@
     <IntDir>$(SolutionDir)\$(Configuration)\Intermediate_$(Platform)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Label="UserMacros">
-    <AirSDK>Z:\home\paulo\AIRSDKWIN\AIRSDK_Windows\</AirSDK>
-    <SteamSDK>Z:\home\paulo\SteamWorks SDK\</SteamSDK>
+    <AirSDK>C:\SDKS\AIRSDK\</AirSDK>
+    <SteamSDK>C:\SDKS\SteamSDK\</SteamSDK>
   </PropertyGroup>
   <ItemGroup>
     <BuildMacro Include="AirSDK">
