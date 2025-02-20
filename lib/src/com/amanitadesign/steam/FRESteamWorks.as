@@ -180,10 +180,6 @@ package com.amanitadesign.steam {
 		/************************/
 		/* Stats / Achievements */
 		/************************/
-		public function requestStats():Boolean {
-			return _ExtensionContext.call("AIRSteam_RequestStats") as Boolean;
-		}
-
 		public function setAchievement(name:String):Boolean {
 			return _ExtensionContext.call("AIRSteam_SetAchievement", name) as Boolean;
 		}

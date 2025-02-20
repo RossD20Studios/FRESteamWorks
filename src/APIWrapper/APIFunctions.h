@@ -26,7 +26,7 @@ std::string AIRSteam_GetPersonaName();
 std::string AIRSteam_GetIPCountry();
 bool AIRSteam_IsSteamInBigPictureMode();
 bool AIRSteam_RestartAppIfNecessary();
-bool AIRSteam_RequestStats();
+// bool AIRSteam_RequestStats();
 bool AIRSteam_SetAchievement();
 bool AIRSteam_ClearAchievement();
 bool AIRSteam_IsAchievement();

@@ -17,7 +17,7 @@
 #include "ResponseTypes.h"
 
 CSteam::CSteam():
-	m_ctx(),
+	//m_ctx(), // there is no longer a CSteamAPIContext
 	m_iAppID(0),
 	m_bInitialized(false),
 	m_CurrentLeaderboard(0),
@@ -44,39 +44,40 @@ bool CSteam::Initialize() {
 	if (m_bInitialized) return true;
 
 	// Try to initialize the version safe API
-	m_bInitialized = (SteamAPI_InitSafe() && m_ctx.Init());
+	m_bInitialized = (SteamAPI_InitSafe());
 
 	if (!m_bInitialized) {
 		SteamAPI_Shutdown();
-		m_ctx.Clear();
 		return false;
 	}
 
-	m_iAppID = m_ctx.SteamUtils()->GetAppID();
-	RequestStats();
+	m_iAppID = SteamUtils()->GetAppID();
+	//RequestStats();
 
 	return true;
 }
 
 void CSteam::SetWarningMessageHook(SteamAPIWarningMessageHook_t hook) {
-	m_ctx.SteamUtils()->SetWarningMessageHook(hook);
+	SteamUtils()->SetWarningMessageHook(hook);
 }
 
+/* No Longer Required
 bool CSteam::RequestStats() {
 	// Is Steam loaded? If not we can't get stats.
 	if (!m_bInitialized) return false;
 
 	// Is the user logged on? If not we can't get stats.
-	if (!m_ctx.SteamUser()->BLoggedOn()) return false;
+	if (!SteamUser()->BLoggedOn()) return false;
 
 	// Request user stats.
-	return m_ctx.SteamUserStats()->RequestCurrentStats();
+	return SteamUserStats()->RequestCurrentStats();
 }
+*/
 
 CSteamID CSteam::GetUserID() {
 	if (!m_bInitialized) return k_steamIDNil;
 
-	return m_ctx.SteamUser()->GetSteamID();
+	return SteamUser()->GetSteamID();
 }
 
 uint32 CSteam::GetAppID() {
@@ -88,46 +89,46 @@ uint32 CSteam::GetAppID() {
 std::string CSteam::GetAvailableGameLanguages() {
 	if (!m_bInitialized) return "";
 
-	return std::string(m_ctx.SteamApps()->GetAvailableGameLanguages());
+	return std::string(SteamApps()->GetAvailableGameLanguages());
 }
 
 std::string CSteam::GetCurrentGameLanguage() {
 	if (!m_bInitialized) return "";
 
-	return std::string(m_ctx.SteamApps()->GetCurrentGameLanguage());
+	return std::string(SteamApps()->GetCurrentGameLanguage());
 }
 
 std::string CSteam::GetPersonaName() {
 	if (!m_bInitialized) return "";
 
-	return std::string(m_ctx.SteamFriends()->GetPersonaName());
+	return std::string(SteamFriends()->GetPersonaName());
 }
 
 std::string CSteam::GetIPCountry() {
 	if (!m_bInitialized) return "";
 
-	return std::string(m_ctx.SteamUtils()->GetIPCountry());
+	return std::string(SteamUtils()->GetIPCountry());
 }
 
 bool CSteam::IsSteamInBigPictureMode(){
-	return m_ctx.SteamUtils()->IsSteamInBigPictureMode();
+	return SteamUtils()->IsSteamInBigPictureMode();
 }
 
 bool CSteam::IsSteamRunningOnSteamDeck() {
-	return m_ctx.SteamUtils()->IsSteamRunningOnSteamDeck();
+	return SteamUtils()->IsSteamRunningOnSteamDeck();
 }
 
 
 uint32 CSteam::GetEarliestPurchaseUnixTime(AppId_t appId) {
-	return m_ctx.SteamApps()->GetEarliestPurchaseUnixTime(appId);
+	return SteamApps()->GetEarliestPurchaseUnixTime(appId);
 }
 
 uint32 CSteam::GetSecondsSinceAppActive() {
-	return m_ctx.SteamUtils()->GetSecondsSinceAppActive();
+	return SteamUtils()->GetSecondsSinceAppActive();
 }
 
 uint32 CSteam::GetServerRealTime() {
-	return m_ctx.SteamUtils()->GetServerRealTime();
+	return SteamUtils()->GetServerRealTime();
 }
 
 
@@ -137,22 +138,22 @@ uint32 CSteam::GetServerRealTime() {
 bool CSteam::SetAchievement(std::string name) {
 	if (!m_bInitialized) return false;
 
-	m_ctx.SteamUserStats()->SetAchievement(name.c_str());
-	return m_ctx.SteamUserStats()->StoreStats();
+	SteamUserStats()->SetAchievement(name.c_str());
+	return SteamUserStats()->StoreStats();
 }
 
 bool CSteam::ClearAchievement(std::string name) {
 	if (!m_bInitialized) return false;
 
-	m_ctx.SteamUserStats()->ClearAchievement(name.c_str());
-	return m_ctx.SteamUserStats()->StoreStats();
+	SteamUserStats()->ClearAchievement(name.c_str());
+	return SteamUserStats()->StoreStats();
 }
 
 bool CSteam::IsAchievement(std::string name) {
 	if (!m_bInitialized) return false;
 
 	bool result = false;
-	m_ctx.SteamUserStats()->GetAchievement(name.c_str(), &result);
+	SteamUserStats()->GetAchievement(name.c_str(), &result);
 	return result;
 }
 
@@ -160,38 +161,38 @@ bool CSteam::IsAchievementEarned(std::string name) {
 	if (!m_bInitialized) return false;
 
 	bool result = false;
-	m_ctx.SteamUserStats()->GetAchievement(name.c_str(), &result);
+	SteamUserStats()->GetAchievement(name.c_str(), &result);
 	return result;
 }
 
 bool CSteam::GetAchievementAchievedPercent(std::string name, float *value) {
 	if (!m_bInitialized) return false;
 
-	return m_ctx.SteamUserStats()->GetAchievementAchievedPercent(name.c_str(), value);
+	return SteamUserStats()->GetAchievementAchievedPercent(name.c_str(), value);
 }
 
 std::string CSteam::GetAchievementDisplayAttribute(std::string name, std::string attribute) {
 	if (!m_bInitialized) return "";
 
-	return m_ctx.SteamUserStats()->GetAchievementDisplayAttribute(name.c_str(), attribute.c_str());
+	return SteamUserStats()->GetAchievementDisplayAttribute(name.c_str(), attribute.c_str());
 }
 
 std::string CSteam::GetAchievementName(uint32 index) {
 	if (!m_bInitialized) return "";
 
-	return m_ctx.SteamUserStats()->GetAchievementName(index);
+	return SteamUserStats()->GetAchievementName(index);
 }
 
 uint32 CSteam::GetNumAchievements() {
 	if (!m_bInitialized) return 0;
 
-	return m_ctx.SteamUserStats()->GetNumAchievements();
+	return SteamUserStats()->GetNumAchievements();
 }
 
 Image CSteam::GetAchievementIcon(std::string name) {
 	if (!m_bInitialized) return Image(0, 0);
 
-	int image_handle = m_ctx.SteamUserStats()->GetAchievementIcon(name.c_str());
+	int image_handle = SteamUserStats()->GetAchievementIcon(name.c_str());
 	return GetImageData(image_handle);
 }
 
@@ -199,51 +200,51 @@ bool CSteam::IndicateAchievementProgress(std::string name,
 	uint32 currentProgress, uint32 maxProgress) {
 	if (!m_bInitialized) return false;
 
-	return m_ctx.SteamUserStats()->IndicateAchievementProgress(
+	return SteamUserStats()->IndicateAchievementProgress(
 		name.c_str(), currentProgress, maxProgress);
 }
 
 bool CSteam::GetStat(std::string name, int32 *value) {
 	if (!m_bInitialized) return false;
 
-	return m_ctx.SteamUserStats()->GetStat(name.c_str(), value);
+	return SteamUserStats()->GetStat(name.c_str(), value);
 }
 
 bool CSteam::GetStat(std::string name, float *value) {
 	if (!m_bInitialized) return false;
 
-	return m_ctx.SteamUserStats()->GetStat(name.c_str(), value);
+	return SteamUserStats()->GetStat(name.c_str(), value);
 }
 
 bool CSteam::SetStat(std::string name, int32 value) {
 	if (!m_bInitialized) return false;
 
-	return m_ctx.SteamUserStats()->SetStat(name.c_str(), value);
+	return SteamUserStats()->SetStat(name.c_str(), value);
 }
 
 bool CSteam::SetStat(std::string name, float value) {
 	if (!m_bInitialized) return false;
 
-	return m_ctx.SteamUserStats()->SetStat(name.c_str(), value);
+	return SteamUserStats()->SetStat(name.c_str(), value);
 }
 
 bool CSteam::StoreStats() {
 	if (!m_bInitialized) return false;
 
-	return m_ctx.SteamUserStats()->StoreStats();
+	return SteamUserStats()->StoreStats();
 }
 
 bool CSteam::ResetAllStats(bool bAchievementsToo) {
 	if (!m_bInitialized) return false;
 
-	m_ctx.SteamUserStats()->ResetAllStats(bAchievementsToo);
-	return m_ctx.SteamUserStats()->StoreStats();
+	SteamUserStats()->ResetAllStats(bAchievementsToo);
+	return SteamUserStats()->StoreStats();
 }
 
 bool CSteam::RequestGlobalStats(int days) {
 	if (!m_bInitialized) return false;
 
-	SteamAPICall_t result = m_ctx.SteamUserStats()->RequestGlobalStats(days);
+	SteamAPICall_t result = SteamUserStats()->RequestGlobalStats(days);
 	m_CallbackRequestGlobalStats.Set(result, this, &CSteam::OnRequestGlobalStats);
 
 	return true;
@@ -252,20 +253,20 @@ bool CSteam::RequestGlobalStats(int days) {
 bool CSteam::GetGlobalStat(std::string name, int64 *value) {
 	if (!m_bInitialized) return false;
 
-	return m_ctx.SteamUserStats()->GetGlobalStat(name.c_str(), value);
+	return SteamUserStats()->GetGlobalStat(name.c_str(), value);
 }
 
 bool CSteam::GetGlobalStat(std::string name, double *value) {
 	if (!m_bInitialized) return false;
 
-	return m_ctx.SteamUserStats()->GetGlobalStat(name.c_str(), value);
+	return SteamUserStats()->GetGlobalStat(name.c_str(), value);
 }
 
 std::vector<int64> CSteam::GetGlobalStatHistoryInt(std::string name, uint32 days) {
 	if (!m_bInitialized) return std::vector<int64>();
 
 	std::vector<int64> ret(days);
-	int32 actual = m_ctx.SteamUserStats()->GetGlobalStatHistory(name.c_str(),
+	int32 actual = SteamUserStats()->GetGlobalStatHistory(name.c_str(),
 		ret.data(), days);
 	ret.resize(actual);
 
@@ -276,7 +277,7 @@ std::vector<double> CSteam::GetGlobalStatHistoryFloat(std::string name, uint32 d
 	if (!m_bInitialized) return std::vector<double>();
 
 	std::vector<double> ret(days);
-	int32 actual = m_ctx.SteamUserStats()->GetGlobalStatHistory(name.c_str(),
+	int32 actual = SteamUserStats()->GetGlobalStatHistory(name.c_str(),
 		ret.data(), days);
 	ret.resize(actual);
 
@@ -287,7 +288,7 @@ std::vector<double> CSteam::GetGlobalStatHistoryFloat(std::string name, uint32 d
 bool CSteam::FindLeaderboard(std::string name) {
 	if (!m_bInitialized) return false;
 
-	SteamAPICall_t result = m_ctx.SteamUserStats()->FindLeaderboard(name.c_str());
+	SteamAPICall_t result = SteamUserStats()->FindLeaderboard(name.c_str());
 	m_CallbackFindLeaderboard.Set(result, this, &CSteam::OnFindLeaderboard);
 
 	return true;
@@ -297,7 +298,7 @@ bool CSteam::FindOrCreateLeaderboard(std::string name, ELeaderboardSortMethod so
 		ELeaderboardDisplayType display) {
 	if (!m_bInitialized) return false;
 
-	SteamAPICall_t result = m_ctx.SteamUserStats()->FindOrCreateLeaderboard(
+	SteamAPICall_t result = SteamUserStats()->FindOrCreateLeaderboard(
 		name.c_str(), sort, display);
 	m_CallbackFindLeaderboard.Set(result, this, &CSteam::OnFindLeaderboard);
 
@@ -313,25 +314,25 @@ SteamLeaderboard_t CSteam::FindLeaderboardResult() {
 std::string CSteam::GetLeaderboardName(SteamLeaderboard_t handle) {
 	if (!m_bInitialized) return "";
 
-	return m_ctx.SteamUserStats()->GetLeaderboardName(handle);
+	return SteamUserStats()->GetLeaderboardName(handle);
 }
 
 int CSteam::GetLeaderboardEntryCount(SteamLeaderboard_t handle) {
 	if (!m_bInitialized) return 0;
 
-	return m_ctx.SteamUserStats()->GetLeaderboardEntryCount(handle);
+	return SteamUserStats()->GetLeaderboardEntryCount(handle);
 }
 
 ELeaderboardSortMethod CSteam::GetLeaderboardSortMethod(SteamLeaderboard_t handle) {
 	if (!m_bInitialized) return ELeaderboardSortMethod(0);
 
-	return m_ctx.SteamUserStats()->GetLeaderboardSortMethod(handle);
+	return SteamUserStats()->GetLeaderboardSortMethod(handle);
 }
 
 ELeaderboardDisplayType CSteam::GetLeaderboardDisplayType(SteamLeaderboard_t handle) {
 	if (!m_bInitialized) return ELeaderboardDisplayType(0);
 
-	return m_ctx.SteamUserStats()->GetLeaderboardDisplayType(handle);
+	return SteamUserStats()->GetLeaderboardDisplayType(handle);
 }
 
 
@@ -340,7 +341,7 @@ bool CSteam::UploadLeaderboardScore(SteamLeaderboard_t handle,
 	const int32* scoreDetails, int detailscount) {
 	if (!m_bInitialized) return false;
 
-	SteamAPICall_t result = m_ctx.SteamUserStats()->UploadLeaderboardScore(handle,
+	SteamAPICall_t result = SteamUserStats()->UploadLeaderboardScore(handle,
 		method, score, scoreDetails, detailscount);
 	m_CallbackUploadLeaderboardScore.Set(result, this, &CSteam::OnUploadLeaderboardScore);
 
@@ -358,7 +359,7 @@ bool CSteam::DownloadLeaderboardEntries(SteamLeaderboard_t handle,
 	int rangeStart, int rangeEnd) {
 	if (!m_bInitialized) return false;
 
-	SteamAPICall_t result = m_ctx.SteamUserStats()->DownloadLeaderboardEntries(
+	SteamAPICall_t result = SteamUserStats()->DownloadLeaderboardEntries(
 		handle, request, rangeStart, rangeEnd);
 	m_CallbackDownloadLeaderboardEntries.Set(result, this, &CSteam::OnDownloadLeaderboardEntries);
 
@@ -375,7 +376,7 @@ std::vector<LeaderboardEntry> CSteam::DownloadLeaderboardEntriesResult(int maxDe
 	res.reserve(cnt);
 	for (int i = 0; i < cnt; ++i) {
 		LeaderboardEntry entry(maxDetails);
-		m_ctx.SteamUserStats()->GetDownloadedLeaderboardEntry(
+		SteamUserStats()->GetDownloadedLeaderboardEntry(
 			m_ScoreDownloaded->m_hSteamLeaderboardEntries, i, &entry.entry,
 			entry.details, maxDetails);
 
@@ -390,36 +391,36 @@ std::vector<LeaderboardEntry> CSteam::DownloadLeaderboardEntriesResult(int maxDe
 int32 CSteam::GetFileCount() {
 	if (!m_bInitialized) return 0;
 
-	return m_ctx.SteamRemoteStorage()->GetFileCount();
+	return SteamRemoteStorage()->GetFileCount();
 }
 
 int32 CSteam::GetFileSize(std::string name) {
 	if (!m_bInitialized) return 0;
 
-	return m_ctx.SteamRemoteStorage()->GetFileSize(name.c_str());
+	return SteamRemoteStorage()->GetFileSize(name.c_str());
 }
 
 bool CSteam::FileExists(std::string name) {
 	if (!m_bInitialized) return false;
 
-	return m_ctx.SteamRemoteStorage()->FileExists(name.c_str());
+	return SteamRemoteStorage()->FileExists(name.c_str());
 }
 
 bool CSteam::FileWrite(std::string name, const void* data, int32 length) {
 	if (!m_bInitialized) return false;
 
-	return m_ctx.SteamRemoteStorage()->FileWrite(name.c_str(), data, length);
+	return SteamRemoteStorage()->FileWrite(name.c_str(), data, length);
 }
 
 // caller is responsible of deleting data when return value is != 0
 int32 CSteam::FileRead(std::string name, char** content) {
 	if (!m_bInitialized) return 0;
 
-	int32 size = m_ctx.SteamRemoteStorage()->GetFileSize(name.c_str());
+	int32 size = SteamRemoteStorage()->GetFileSize(name.c_str());
 	if (size == 0) return 0;
 
 	char* data = new char[size];
-	int32 read = m_ctx.SteamRemoteStorage()->FileRead(name.c_str(), data, size);
+	int32 read = SteamRemoteStorage()->FileRead(name.c_str(), data, size);
 	if(read == 0) {
 		delete[] data;
 		return 0;
@@ -432,13 +433,13 @@ int32 CSteam::FileRead(std::string name, char** content) {
 bool CSteam::FileDelete(std::string name) {
 	if (!m_bInitialized) return false;
 
-	return m_ctx.SteamRemoteStorage()->FileDelete(name.c_str());
+	return SteamRemoteStorage()->FileDelete(name.c_str());
 }
 
 bool CSteam::FileShare(std::string name) {
 	if (!m_bInitialized) return false;
 
-	SteamAPICall_t result = m_ctx.SteamRemoteStorage()->FileShare(name.c_str());
+	SteamAPICall_t result = SteamRemoteStorage()->FileShare(name.c_str());
 	m_CallbackFileShare.Set(result, this, &CSteam::OnFileShare);
 
 	return true;
@@ -451,26 +452,26 @@ UGCHandle_t CSteam::FileShareResult() {
 bool CSteam::IsCloudEnabledForApp() {
 	if (!m_bInitialized) return false;
 
-	return m_ctx.SteamRemoteStorage()->IsCloudEnabledForApp();
+	return SteamRemoteStorage()->IsCloudEnabledForApp();
 }
 
 bool CSteam::SetCloudEnabledForApp(bool enabled) {
 	if (!m_bInitialized) return false;
 
-	m_ctx.SteamRemoteStorage()->SetCloudEnabledForApp(enabled);
-	return enabled == m_ctx.SteamRemoteStorage()->IsCloudEnabledForApp();
+	SteamRemoteStorage()->SetCloudEnabledForApp(enabled);
+	return enabled == SteamRemoteStorage()->IsCloudEnabledForApp();
 }
 
 bool CSteam::GetQuota(uint64 *total, uint64 *available) {
 	if (!m_bInitialized) return false;
 
-	return m_ctx.SteamRemoteStorage()->GetQuota(total, available);
+	return SteamRemoteStorage()->GetQuota(total, available);
 }
 
 bool CSteam::UGCDownload(UGCHandle_t handle, uint32 priority) {
 	if (!m_bInitialized) return false;
 
-	SteamAPICall_t result = m_ctx.SteamRemoteStorage()->UGCDownload(handle, priority);
+	SteamAPICall_t result = SteamRemoteStorage()->UGCDownload(handle, priority);
 	m_CallbackUGCDownload.Set(result, this, &CSteam::OnUGCDownload);
 
 	return true;
@@ -481,7 +482,7 @@ int32 CSteam::UGCRead(UGCHandle_t handle, int32 size, uint32 offset, char **cont
 
 	char *data = new char[size];
 	// TODO: add new parameter to API
-	int32 read = m_ctx.SteamRemoteStorage()->UGCRead(handle, data, size,
+	int32 read = SteamRemoteStorage()->UGCRead(handle, data, size,
 		offset, k_EUGCRead_ContinueReadingUntilFinished);
 	if (read == 0) {
 		delete[] data;
@@ -495,7 +496,7 @@ int32 CSteam::UGCRead(UGCHandle_t handle, int32 size, uint32 offset, char **cont
 bool CSteam::GetUGCDownloadProgress(UGCHandle_t handle, int32 *downloaded, int32 *expected) {
 	if (!m_bInitialized) return false;
 
-	return m_ctx.SteamRemoteStorage()->GetUGCDownloadProgress(handle, downloaded,
+	return SteamRemoteStorage()->GetUGCDownloadProgress(handle, downloaded,
 		expected);
 }
 
@@ -516,7 +517,7 @@ bool CSteam::PublishWorkshopFile(std::string name, std::string preview,
 
 	if (!m_bInitialized) return false;
 
-	SteamAPICall_t result = m_ctx.SteamRemoteStorage()->PublishWorkshopFile(
+	SteamAPICall_t result = SteamRemoteStorage()->PublishWorkshopFile(
 		name.c_str(), preview.c_str(), nConsumerAppId, title.c_str(),
 		description.c_str(), visibility, tags, fileType);
 	m_CallbackPublishWorkshopFile.Set(result, this, &CSteam::OnPublishWorkshopFile);
@@ -533,7 +534,7 @@ PublishedFileId_t CSteam::PublishWorkshopFileResult() {
 bool CSteam::DeletePublishedFile(PublishedFileId_t file) {
 	if (!m_bInitialized) return false;
 
-	SteamAPICall_t result = m_ctx.SteamRemoteStorage()->DeletePublishedFile(file);
+	SteamAPICall_t result = SteamRemoteStorage()->DeletePublishedFile(file);
 	m_CallbackDeletePublishedFile.Set(result, this, &CSteam::OnDeletePublishedFile);
 
 	return true;
@@ -542,7 +543,7 @@ bool CSteam::DeletePublishedFile(PublishedFileId_t file) {
 bool CSteam::GetPublishedFileDetails(PublishedFileId_t file, uint32 maxAge) {
 	if (!m_bInitialized) return false;
 
-	SteamAPICall_t result = m_ctx.SteamRemoteStorage()->GetPublishedFileDetails(
+	SteamAPICall_t result = SteamRemoteStorage()->GetPublishedFileDetails(
 		file, maxAge);
 	m_CallbackGetPublishedFileDetails.Set(result, this, &CSteam::OnGetPublishedFileDetails);
 
@@ -562,7 +563,7 @@ RemoteStorageGetPublishedFileDetailsResult_t* CSteam::GetPublishedFileDetailsRes
 bool CSteam::EnumerateUserPublishedFiles(uint32 startIndex) {
 	if (!m_bInitialized) return false;
 
-	SteamAPICall_t result = m_ctx.SteamRemoteStorage()->EnumerateUserPublishedFiles(startIndex);
+	SteamAPICall_t result = SteamRemoteStorage()->EnumerateUserPublishedFiles(startIndex);
 	m_CallbackEnumerateUserPublishedFiles.Set(result, this, &CSteam::OnEnumerateUserPublishedFiles);
 
 	return true;
@@ -578,7 +579,7 @@ bool CSteam::EnumeratePublishedWorkshopFiles(EWorkshopEnumerationType type, uint
 		uint32 days, SteamParamStringArray_t *tags, SteamParamStringArray_t *userTags) {
 	if (!m_bInitialized) return false;
 
-	SteamAPICall_t result = m_ctx.SteamRemoteStorage()->EnumeratePublishedWorkshopFiles(
+	SteamAPICall_t result = SteamRemoteStorage()->EnumeratePublishedWorkshopFiles(
 		type, start, count, days, tags, userTags);
 	m_CallbackEnumeratePublishedWorkshopFiles.Set(result, this, &CSteam::OnEnumeratePublishedWorkshopFiles);
 
@@ -594,7 +595,7 @@ RemoteStorageEnumerateWorkshopFilesResult_t* CSteam::EnumeratePublishedWorkshopF
 bool CSteam::EnumerateUserSubscribedFiles(uint32 startIndex) {
 	if (!m_bInitialized) return false;
 
-	SteamAPICall_t result = m_ctx.SteamRemoteStorage()->EnumerateUserSubscribedFiles(startIndex);
+	SteamAPICall_t result = SteamRemoteStorage()->EnumerateUserSubscribedFiles(startIndex);
 	m_CallbackEnumerateUserSubscribedFiles.Set(result, this, &CSteam::OnEnumerateUserSubscribedFiles);
 
 	return true;
@@ -611,7 +612,7 @@ bool CSteam::EnumerateUserSharedWorkshopFiles(CSteamID steamId, uint32 startInde
 
 	if(!m_bInitialized) return false;
 
-	SteamAPICall_t result = m_ctx.SteamRemoteStorage()->EnumerateUserSharedWorkshopFiles(
+	SteamAPICall_t result = SteamRemoteStorage()->EnumerateUserSharedWorkshopFiles(
 		steamId, startIndex, requiredTags, excludedTags);
 	m_CallbackEnumerateUserSharedWorkshopFiles.Set(result, this, &CSteam::OnEnumerateUserSharedWorkshopFiles);
 
@@ -627,7 +628,7 @@ RemoteStorageEnumerateUserSharedWorkshopFilesResult_t* CSteam::EnumerateUserShar
 bool CSteam::EnumeratePublishedFilesByUserAction(EWorkshopFileAction action, uint32 startIndex) {
 	if(!m_bInitialized) return false;
 
-	SteamAPICall_t result = m_ctx.SteamRemoteStorage()->EnumeratePublishedFilesByUserAction(
+	SteamAPICall_t result = SteamRemoteStorage()->EnumeratePublishedFilesByUserAction(
 		action, startIndex);
 	m_CallbackEnumeratePublishedFilesByUserAction.Set(result, this, &CSteam::OnEnumeratePublishedFilesByUserAction);
 
@@ -643,7 +644,7 @@ RemoteStorageEnumeratePublishedFilesByUserActionResult_t* CSteam::EnumeratePubli
 bool CSteam::SubscribePublishedFile(PublishedFileId_t file) {
 	if (!m_bInitialized) return false;
 
-	SteamAPICall_t result = m_ctx.SteamRemoteStorage()->SubscribePublishedFile(file);
+	SteamAPICall_t result = SteamRemoteStorage()->SubscribePublishedFile(file);
 	m_CallbackSubscribePublishedFile.Set(result, this, &CSteam::OnSubscribePublishedFile);
 
 	return true;
@@ -652,7 +653,7 @@ bool CSteam::SubscribePublishedFile(PublishedFileId_t file) {
 bool CSteam::UnsubscribePublishedFile(PublishedFileId_t file) {
 	if (!m_bInitialized) return false;
 
-	SteamAPICall_t result = m_ctx.SteamRemoteStorage()->UnsubscribePublishedFile(file);
+	SteamAPICall_t result = SteamRemoteStorage()->UnsubscribePublishedFile(file);
 	m_CallbackUnsubscribePublishedFile.Set(result, this, &CSteam::OnUnsubscribePublishedFile);
 
 	return true;
@@ -661,59 +662,59 @@ bool CSteam::UnsubscribePublishedFile(PublishedFileId_t file) {
 PublishedFileUpdateHandle_t CSteam::CreatePublishedFileUpdateRequest(PublishedFileId_t file) {
 	if (!m_bInitialized) return k_PublishedFileUpdateHandleInvalid;
 
-	return m_ctx.SteamRemoteStorage()->CreatePublishedFileUpdateRequest(file);
+	return SteamRemoteStorage()->CreatePublishedFileUpdateRequest(file);
 }
 
 bool CSteam::UpdatePublishedFileFile(PublishedFileUpdateHandle_t handle, std::string file) {
 	if (!m_bInitialized) return false;
 
-	return m_ctx.SteamRemoteStorage()->UpdatePublishedFileFile(handle, file.c_str());
+	return SteamRemoteStorage()->UpdatePublishedFileFile(handle, file.c_str());
 }
 
 bool CSteam::UpdatePublishedFilePreviewFile(PublishedFileUpdateHandle_t handle, std::string preview) {
 	if (!m_bInitialized) return false;
 
-	return m_ctx.SteamRemoteStorage()->UpdatePublishedFilePreviewFile(handle,
+	return SteamRemoteStorage()->UpdatePublishedFilePreviewFile(handle,
 		preview.c_str());
 }
 
 bool CSteam::UpdatePublishedFileTitle(PublishedFileUpdateHandle_t handle, std::string title) {
 	if (!m_bInitialized) return false;
 
-	return m_ctx.SteamRemoteStorage()->UpdatePublishedFileTitle(handle,
+	return SteamRemoteStorage()->UpdatePublishedFileTitle(handle,
 		title.c_str());
 }
 
 bool CSteam::UpdatePublishedFileDescription(PublishedFileUpdateHandle_t handle, std::string description) {
 	if (!m_bInitialized) return false;
 
-	return m_ctx.SteamRemoteStorage()->UpdatePublishedFileDescription(handle,
+	return SteamRemoteStorage()->UpdatePublishedFileDescription(handle,
 		description.c_str());
 }
 
 bool CSteam::UpdatePublishedFileSetChangeDescription(PublishedFileUpdateHandle_t handle, std::string changeDesc) {
 	if (!m_bInitialized) return false;
 
-	return m_ctx.SteamRemoteStorage()->UpdatePublishedFileSetChangeDescription(
+	return SteamRemoteStorage()->UpdatePublishedFileSetChangeDescription(
 		handle, changeDesc.c_str());
 }
 
 bool CSteam::UpdatePublishedFileVisibility(PublishedFileUpdateHandle_t handle, ERemoteStoragePublishedFileVisibility visibility) {
 	if (!m_bInitialized) return false;
 
-	return m_ctx.SteamRemoteStorage()->UpdatePublishedFileVisibility(handle, visibility);
+	return SteamRemoteStorage()->UpdatePublishedFileVisibility(handle, visibility);
 }
 
 bool CSteam::UpdatePublishedFileTags(PublishedFileUpdateHandle_t handle, SteamParamStringArray_t* tags) {
 	if (!m_bInitialized) return false;
 
-	return m_ctx.SteamRemoteStorage()->UpdatePublishedFileTags(handle, tags);
+	return SteamRemoteStorage()->UpdatePublishedFileTags(handle, tags);
 }
 
 bool CSteam::CommitPublishedFileUpdate(PublishedFileUpdateHandle_t handle) {
 	if (!m_bInitialized) return false;
 
-	SteamAPICall_t result = m_ctx.SteamRemoteStorage()->CommitPublishedFileUpdate(handle);
+	SteamAPICall_t result = SteamRemoteStorage()->CommitPublishedFileUpdate(handle);
 	m_CallbackCommitPublishedFileUpdate.Set(result, this, &CSteam::OnCommitPublishedFileUpdate);
 
 	return true;
@@ -722,7 +723,7 @@ bool CSteam::CommitPublishedFileUpdate(PublishedFileUpdateHandle_t handle) {
 bool CSteam::GetPublishedItemVoteDetails(PublishedFileId_t file) {
 	if (!m_bInitialized) return false;
 
-	SteamAPICall_t result = m_ctx.SteamRemoteStorage()->GetPublishedItemVoteDetails(file);
+	SteamAPICall_t result = SteamRemoteStorage()->GetPublishedItemVoteDetails(file);
 	m_CallbackGetPublishedItemVoteDetails.Set(result, this, &CSteam::OnGetPublishedItemVoteDetails);
 
 	return true;
@@ -737,7 +738,7 @@ RemoteStorageGetPublishedItemVoteDetailsResult_t* CSteam::GetPublishedItemVoteDe
 bool CSteam::GetUserPublishedItemVoteDetails(PublishedFileId_t file) {
 	if (!m_bInitialized) return false;
 
-	SteamAPICall_t result = m_ctx.SteamRemoteStorage()->GetUserPublishedItemVoteDetails(file);
+	SteamAPICall_t result = SteamRemoteStorage()->GetUserPublishedItemVoteDetails(file);
 	m_CallbackGetUserPublishedItemVoteDetails.Set(result, this, &CSteam::OnGetUserPublishedItemVoteDetails);
 
 	return true;
@@ -752,7 +753,7 @@ RemoteStorageUserVoteDetails_t* CSteam::GetUserPublishedItemVoteDetailsResult() 
 bool CSteam::UpdateUserPublishedItemVote(PublishedFileId_t file, bool upvote) {
 	if (!m_bInitialized) return false;
 
-	SteamAPICall_t result = m_ctx.SteamRemoteStorage()->UpdateUserPublishedItemVote(
+	SteamAPICall_t result = SteamRemoteStorage()->UpdateUserPublishedItemVote(
 		file, upvote);
 	m_CallbackUpdateUserPublishedItemVote.Set(result, this, &CSteam::OnUpdateUserPublishedItemVote);
 
@@ -762,7 +763,7 @@ bool CSteam::UpdateUserPublishedItemVote(PublishedFileId_t file, bool upvote) {
 bool CSteam::SetUserPublishedFileAction(PublishedFileId_t file, EWorkshopFileAction action) {
 	if (!m_bInitialized) return false;
 
-	SteamAPICall_t result = m_ctx.SteamRemoteStorage()->SetUserPublishedFileAction(
+	SteamAPICall_t result = SteamRemoteStorage()->SetUserPublishedFileAction(
 		file, action);
 	m_CallbackSetUserPublishedFileAction.Set(result, this, &CSteam::OnSetUserPublishedFileAction);
 
@@ -773,39 +774,39 @@ bool CSteam::SetUserPublishedFileAction(PublishedFileId_t file, EWorkshopFileAct
 int CSteam::GetFriendCount(int flags) {
 	if (!m_bInitialized) return 0;
 
-	return m_ctx.SteamFriends()->GetFriendCount(flags);
+	return SteamFriends()->GetFriendCount(flags);
 }
 
 CSteamID CSteam::GetFriendByIndex(int index, int flags) {
 	if (!m_bInitialized) return k_steamIDNil;
 
-	return m_ctx.SteamFriends()->GetFriendByIndex(index, flags);
+	return SteamFriends()->GetFriendByIndex(index, flags);
 }
 
 std::string CSteam::GetFriendPersonaName(CSteamID steamId) {
 	if (!m_bInitialized) return "";
 
-	return std::string(m_ctx.SteamFriends()->GetFriendPersonaName(steamId));
+	return std::string(SteamFriends()->GetFriendPersonaName(steamId));
 }
 
 Image CSteam::GetSmallFriendAvatar(CSteamID steamId) {
 	if (!m_bInitialized) return Image(0, 0);
 
-	int image_handle = m_ctx.SteamFriends()->GetSmallFriendAvatar(steamId);
+	int image_handle = SteamFriends()->GetSmallFriendAvatar(steamId);
 	return GetImageData(image_handle);
 }
 
 Image CSteam::GetMediumFriendAvatar(CSteamID steamId) {
 	if (!m_bInitialized) return Image(0, 0);
 
-	int image_handle = m_ctx.SteamFriends()->GetMediumFriendAvatar(steamId);
+	int image_handle = SteamFriends()->GetMediumFriendAvatar(steamId);
 	return GetImageData(image_handle);
 }
 
 Image CSteam::GetLargeFriendAvatar(CSteamID steamId) {
 	if (!m_bInitialized) return Image(0, 0);
 
-	int image_handle = m_ctx.SteamFriends()->GetLargeFriendAvatar(steamId);
+	int image_handle = SteamFriends()->GetLargeFriendAvatar(steamId);
 	return GetImageData(image_handle);
 }
 
@@ -814,24 +815,24 @@ Image CSteam::GetLargeFriendAvatar(CSteamID steamId) {
 int CSteam::GetCoplayFriendCount() {
 	if (!m_bInitialized) return 0;
 
-	return m_ctx.SteamFriends()->GetCoplayFriendCount();
+	return SteamFriends()->GetCoplayFriendCount();
 }
 
 CSteamID CSteam::GetCoplayFriend(int index) {
 	if (!m_bInitialized) return k_steamIDNil;
 
-	return m_ctx.SteamFriends()->GetCoplayFriend(index);
+	return SteamFriends()->GetCoplayFriend(index);
 }
 
 
 Image CSteam::GetImageData(int image_handle) {
 	uint32 width, height;
-	bool success = m_ctx.SteamUtils()->GetImageSize(image_handle, &width, &height);
+	bool success = SteamUtils()->GetImageSize(image_handle, &width, &height);
 	if (!success) return Image(0, 0);
 
 	Image image(width, height);
 	std::vector<uint8> & buf = image.data;
-	success = m_ctx.SteamUtils()->GetImageRGBA(image_handle, buf.data(), static_cast<int>(buf.size()));
+	success = SteamUtils()->GetImageRGBA(image_handle, buf.data(), static_cast<int>(buf.size()));
 	if (!success) return Image(0, 0);
 
 	return image;
@@ -839,18 +840,18 @@ Image CSteam::GetImageData(int image_handle) {
 
 bool CSteam::SetRichPresence(std::string key, std::string value) {
 	if (!m_bInitialized) return false;
-	return m_ctx.SteamFriends()->SetRichPresence(key.c_str(), value.c_str());
+	return SteamFriends()->SetRichPresence(key.c_str(), value.c_str());
 }
 
 bool CSteam::ClearRichPresence() {
-	m_ctx.SteamFriends()->ClearRichPresence();
+	SteamFriends()->ClearRichPresence();
 	return false;
 }
 
 bool CSteam::SetPlayedWith(CSteamID steamId) {
 	if (!m_bInitialized) return false;
 
-	m_ctx.SteamFriends()->SetPlayedWith(steamId);
+	SteamFriends()->SetPlayedWith(steamId);
 	return true;
 }
 
@@ -866,7 +867,7 @@ HAuthTicket CSteam::GetAuthSessionTicket(char** data, uint32* length, CSteamID s
 	SteamNetworkingIdentity snid;
 	snid.SetSteamID(steamID);
 
-	HAuthTicket ret = m_ctx.SteamUser()->GetAuthSessionTicket(buf, bufsize, length, &snid);
+	HAuthTicket ret = SteamUser()->GetAuthSessionTicket(buf, bufsize, length, &snid);
 
 	*data = buf;
 	return ret;
@@ -881,32 +882,32 @@ HAuthTicket CSteam::GetAuthSessionTicketResult() {
 EBeginAuthSessionResult CSteam::BeginAuthSession(const void* data, int length, CSteamID steamId) {
 	if (!m_bInitialized) return k_EBeginAuthSessionResultInvalidTicket;
 
-	return m_ctx.SteamUser()->BeginAuthSession(data, length, steamId);
+	return SteamUser()->BeginAuthSession(data, length, steamId);
 }
 
 bool CSteam::EndAuthSession(CSteamID steamId) {
 	if (!m_bInitialized) return false;
 
-	m_ctx.SteamUser()->EndAuthSession(steamId);
+	SteamUser()->EndAuthSession(steamId);
 	return true;
 }
 
 bool CSteam::CancelAuthTicket(HAuthTicket handle) {
 	if (!m_bInitialized) return false;
 
-	m_ctx.SteamUser()->CancelAuthTicket(handle);
+	SteamUser()->CancelAuthTicket(handle);
 	return true;
 }
 
 EUserHasLicenseForAppResult CSteam::UserHasLicenseForApp(CSteamID steamId, AppId_t appId) {
 	if (!m_bInitialized) return k_EUserHasLicenseResultNoAuth;
 
-	return m_ctx.SteamUser()->UserHasLicenseForApp(steamId, appId);
+	return SteamUser()->UserHasLicenseForApp(steamId, appId);
 }
 
 bool CSteam::RequestEncryptedAppTicket(void *pDataToInclude, int cbDataToInclude) {
 	if (!m_bInitialized) return false;
-	SteamAPICall_t result = m_ctx.SteamUser()->RequestEncryptedAppTicket(pDataToInclude, cbDataToInclude);
+	SteamAPICall_t result = SteamUser()->RequestEncryptedAppTicket(pDataToInclude, cbDataToInclude);
 	m_CallbackEncryptedAppTicketResponse.Set(result, this, &CSteam::OnEncryptedAppTicketResponse);
 	return true;
 }
@@ -918,7 +919,7 @@ bool CSteam::GetEncryptedAppTicket(char** data, uint32* length) {
 	// example app uses ...
 	const int bufsize = 1024;
 	char* buf = new char[bufsize];
-	bool ret = m_ctx.SteamUser()->GetEncryptedAppTicket(buf, bufsize, length);
+	bool ret = SteamUser()->GetEncryptedAppTicket(buf, bufsize, length);
 	*data = buf;
 	return ret;
 }
@@ -927,94 +928,94 @@ bool CSteam::GetEncryptedAppTicket(char** data, uint32* length) {
 bool CSteam::ActivateGameOverlay(std::string dialog) {
 	if (!m_bInitialized) return false;
 
-	m_ctx.SteamFriends()->ActivateGameOverlay(dialog.c_str());
+	SteamFriends()->ActivateGameOverlay(dialog.c_str());
 	return true;
 }
 
 bool CSteam::ActivateGameOverlayToUser(std::string dialog, CSteamID steamId) {
 	if (!m_bInitialized) return false;
 
-	m_ctx.SteamFriends()->ActivateGameOverlayToUser(dialog.c_str(), steamId);
+	SteamFriends()->ActivateGameOverlayToUser(dialog.c_str(), steamId);
 	return true;
 }
 
 bool CSteam::ActivateGameOverlayToWebPage(std::string url) {
 	if (!m_bInitialized) return false;
 
-	m_ctx.SteamFriends()->ActivateGameOverlayToWebPage(url.c_str());
+	SteamFriends()->ActivateGameOverlayToWebPage(url.c_str());
 	return true;
 }
 
 bool CSteam::ActivateGameOverlayToStore(AppId_t appId, EOverlayToStoreFlag flag) {
 	if (!m_bInitialized) return false;
 
-	m_ctx.SteamFriends()->ActivateGameOverlayToStore(appId, flag);
+	SteamFriends()->ActivateGameOverlayToStore(appId, flag);
 	return true;
 }
 
 bool CSteam::ActivateGameOverlayInviteDialog(CSteamID lobbyId) {
 	if (!m_bInitialized) return false;
 
-	m_ctx.SteamFriends()->ActivateGameOverlayInviteDialog(lobbyId);
+	SteamFriends()->ActivateGameOverlayInviteDialog(lobbyId);
 	return true;
 }
 
 bool CSteam::IsOverlayEnabled() {
 	if (!m_bInitialized) return false;
 
-	return m_ctx.SteamUtils()->IsOverlayEnabled();
+	return SteamUtils()->IsOverlayEnabled();
 }
 
 bool CSteam::SetOverlayNotificationPosition(ENotificationPosition pos) {
 	if (!m_bInitialized) return false;
 
-	m_ctx.SteamUtils()->SetOverlayNotificationPosition(pos);
+	SteamUtils()->SetOverlayNotificationPosition(pos);
 	return true;
 }
 
 bool CSteam::SetOverlayNotificationInset(int hInset, int vInset) {
 	if (!m_bInitialized) return false;
 
-	m_ctx.SteamUtils()->SetOverlayNotificationInset(hInset, vInset);
+	SteamUtils()->SetOverlayNotificationInset(hInset, vInset);
 	return true;
 }
 
 bool CSteam::OverlayNeedsPresent() {
 	if (!m_bInitialized) return false;
 
-	return m_ctx.SteamUtils()->BOverlayNeedsPresent();
+	return SteamUtils()->BOverlayNeedsPresent();
 }
 
 // DLC / subscription
 bool CSteam::IsSubscribedApp(AppId_t appId) {
 	if (!m_bInitialized) return false;
 
-	return m_ctx.SteamApps()->BIsSubscribedApp(appId);
+	return SteamApps()->BIsSubscribedApp(appId);
 }
 
 bool CSteam::IsDLCInstalled(AppId_t appId) {
 	if (!m_bInitialized) return false;
 
-	return m_ctx.SteamApps()->BIsDlcInstalled(appId);
+	return SteamApps()->BIsDlcInstalled(appId);
 }
 
 int32 CSteam::GetDLCCount() {
 	if (!m_bInitialized) return 0;
 
-	return m_ctx.SteamApps()->GetDLCCount();
+	return SteamApps()->GetDLCCount();
 }
 
 bool CSteam::InstallDLC(AppId_t appId) {
 	if (!m_bInitialized) return false;
 
-	m_ctx.SteamApps()->InstallDLC(appId);
+	SteamApps()->InstallDLC(appId);
 	return true;
 }
 
 bool CSteam::UninstallDLC(AppId_t appId) {
 	if (!m_bInitialized) return false;
 
-	m_ctx.SteamApps()->UninstallDLC(appId);
+	SteamApps()->UninstallDLC(appId);
 	return true;
 }
 
@@ -1038,75 +1039,75 @@ bool CSteam::MicroTxnResult(MicroTxnAuthorizationResponse_t* out) {
 // input
 bool CSteam::InitInput() {
     if (!m_bInitialized) return false;
-    m_ctx.SteamInput()->Init(false);    //Contrary to online SteamAPI docs, this actually has a parameter (See Init definition notes in isteaminput.h)
+    SteamInput()->Init(false);    //Contrary to online SteamAPI docs, this actually has a parameter (See Init definition notes in isteaminput.h)
     return true;
 }
 uint64_t CSteam::GetControllerForGamepadIndex(int index) {
     if (!m_bInitialized) return 0;
-    return m_ctx.SteamInput()->GetControllerForGamepadIndex(index);
+    return SteamInput()->GetControllerForGamepadIndex(index);
 }
 bool CSteam::ShowBindingPanel(uint64 inputHandle) {
     if (!m_bInitialized) return false;
-    return m_ctx.SteamInput()->ShowBindingPanel(inputHandle);
+    return SteamInput()->ShowBindingPanel(inputHandle);
 }
 uint64_t CSteam::GetActionSetHandle(std::string actionSetName) {
     if (!m_bInitialized) return 0;
-    return m_ctx.SteamInput()->GetActionSetHandle(actionSetName.c_str());
+    return SteamInput()->GetActionSetHandle(actionSetName.c_str());
 }
 uint64_t CSteam::GetDigitalActionHandle(std::string actionName) {
     if (!m_bInitialized) return 0;
-    return m_ctx.SteamInput()->GetDigitalActionHandle(actionName.c_str());
+    return SteamInput()->GetDigitalActionHandle(actionName.c_str());
 }
 uint64_t CSteam::GetAnalogActionHandle(std::string actionName) {
     if (!m_bInitialized) return 0;
-    return m_ctx.SteamInput()->GetAnalogActionHandle(actionName.c_str());
+    return SteamInput()->GetAnalogActionHandle(actionName.c_str());
 }
 InputDigitalActionData_t CSteam::GetDigitalActionData( uint64 inputHandle, uint64 digitalActionHandle){
-    return m_ctx.SteamInput()->GetDigitalActionData(inputHandle, digitalActionHandle);
+    return SteamInput()->GetDigitalActionData(inputHandle, digitalActionHandle);
 }
 InputAnalogActionData_t CSteam::GetAnalogActionData(uint64 inputHandle, uint64 analogActionHandle){
-    return m_ctx.SteamInput()->GetAnalogActionData(inputHandle, analogActionHandle);
+    return SteamInput()->GetAnalogActionData(inputHandle, analogActionHandle);
 }
 bool CSteam::RunFrame(){
     if (!m_bInitialized) return false;
-    m_ctx.SteamInput()->RunFrame();
+    SteamInput()->RunFrame();
     return true;
 }
 int CSteam::GetConnectedControllers(InputHandle_t *handlesOut) {
-	return m_ctx.SteamInput()->GetConnectedControllers(handlesOut);
+	return SteamInput()->GetConnectedControllers(handlesOut);
 }
 void CSteam::ActivateActionSet(uint64 inputHandle, uint64 actionSetHandle) {
-    m_ctx.SteamInput()->ActivateActionSet(inputHandle, actionSetHandle);
+    SteamInput()->ActivateActionSet(inputHandle, actionSetHandle);
 }
 uint64_t CSteam::GetHandleAllControllers() {
     return STEAM_INPUT_HANDLE_ALL_CONTROLLERS;
 }
 int CSteam::GetDigitalActionOrigins(InputHandle_t inputHandle, InputActionSetHandle_t actionSetHandle, InputDigitalActionHandle_t digitalActionHandle, EInputActionOrigin *originsOut) {
-    return m_ctx.SteamInput()->GetDigitalActionOrigins(inputHandle, actionSetHandle, digitalActionHandle, originsOut);
+    return SteamInput()->GetDigitalActionOrigins(inputHandle, actionSetHandle, digitalActionHandle, originsOut);
 }
 int CSteam::GetAnalogActionOrigins(InputHandle_t inputHandle, InputActionSetHandle_t actionSetHandle, InputAnalogActionHandle_t analogActionHandle, EInputActionOrigin *originsOut) {
-    return m_ctx.SteamInput()->GetAnalogActionOrigins(inputHandle, actionSetHandle, analogActionHandle, originsOut);
+    return SteamInput()->GetAnalogActionOrigins(inputHandle, actionSetHandle, analogActionHandle, originsOut);
 }
 const char * CSteam::GetGlyphSVGForActionOrigin(EInputActionOrigin eOrigin, uint32 unFlags) {
-    return m_ctx.SteamInput()->GetGlyphSVGForActionOrigin(eOrigin, unFlags);
+    return SteamInput()->GetGlyphSVGForActionOrigin(eOrigin, unFlags);
 }
 const char * CSteam::GetGlyphPNGForActionOrigin(EInputActionOrigin eOrigin, ESteamInputGlyphSize eSize, uint32 unFlags) {
-    return m_ctx.SteamInput()->GetGlyphPNGForActionOrigin(eOrigin, eSize, unFlags);
+    return SteamInput()->GetGlyphPNGForActionOrigin(eOrigin, eSize, unFlags);
 }
 const char * CSteam::GetStringForActionOrigin(EInputActionOrigin eOrigin) {
-    return m_ctx.SteamInput()->GetStringForActionOrigin(eOrigin);
+    return SteamInput()->GetStringForActionOrigin(eOrigin);
 }
 bool CSteam::ShowGamepadTextInput( EGamepadTextInputMode eInputMode, EGamepadTextInputLineMode eLineInputMode, const char *pchDescription, uint32 unCharMax, const char *pchExistingText){
-    return m_ctx.SteamUtils()->ShowGamepadTextInput(eInputMode, eLineInputMode, pchDescription, unCharMax, pchExistingText);
+    return SteamUtils()->ShowGamepadTextInput(eInputMode, eLineInputMode, pchDescription, unCharMax, pchExistingText);
 }
 bool CSteam::ShowFloatingGamepadTextInput(EFloatingGamepadTextInputMode eKeyboardMode, int nTextFieldXPosition, int nTextFieldYPosition, int nTextFieldWidth, int nTextFieldHeight){
-    return m_ctx.SteamUtils()->ShowFloatingGamepadTextInput(eKeyboardMode, nTextFieldXPosition, nTextFieldYPosition, nTextFieldWidth, nTextFieldHeight);
+    return SteamUtils()->ShowFloatingGamepadTextInput(eKeyboardMode, nTextFieldXPosition, nTextFieldYPosition, nTextFieldWidth, nTextFieldHeight);
 }
-bool CSteam::SteamInputShutDown(){
-    return m_ctx.SteamInput()->Shutdown();
+bool CSteam::SteamInputShutdown(){
+    return SteamInput()->Shutdown();
 }
 bool CSteam::DismissFloatingGamepadTextInput(){
-    return m_ctx.SteamUtils()->DismissFloatingGamepadTextInput();
+    return SteamUtils()->DismissFloatingGamepadTextInput();
 }
 
 

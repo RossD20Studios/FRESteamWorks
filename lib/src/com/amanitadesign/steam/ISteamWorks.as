@@ -46,7 +46,6 @@ package com.amanitadesign.steam {
 		/************************/
 		/* Stats / Achievements */
 		/************************/
-		function requestStats():Boolean
 		function setAchievement(name:String):Boolean
 		function clearAchievement(name:String):Boolean
 		function isAchievement(name:String):Boolean

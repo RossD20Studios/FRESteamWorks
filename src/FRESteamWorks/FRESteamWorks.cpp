@@ -159,7 +159,7 @@ AIR_FUNC(AIRSteam_RestartAppIfNecessary) {
 /*
  * stats / achievements
  */
-
+/* No Longer Required and Removed from SteamWorks
 AIR_FUNC(AIRSteam_RequestStats) {
 	bool ret = false;
 	if (g_Steam) ret = g_Steam->RequestStats();
@@ -167,7 +167,7 @@ AIR_FUNC(AIRSteam_RequestStats) {
 	SteamAPI_RunCallbacks();
 	return FREBool(ret);
 }
-
+*/
 AIR_FUNC(AIRSteam_SetAchievement) {
 	ARG_CHECK(1, FREBool(false));
 
@@ -1907,9 +1907,9 @@ AIR_FUNC(AIRSteam_ShowFloatingGamepadTextInput) {
 	
 	return FREBool(g_Steam->ShowFloatingGamepadTextInput(EFloatingGamepadTextInputMode(eKeyboardMode), nTextFieldXPosition, nTextFieldYPosition, nTextFieldWidth, nTextFieldHeight));
 }
-AIR_FUNC(AIRSteam_SteamInputShutDown) {
+AIR_FUNC(AIRSteam_SteamInputShutdown) {
 	ARG_CHECK(0, FREBool(false));
-	return FREBool(g_Steam->SteamInputShutDown());
+	return FREBool(g_Steam->SteamInputShutdown());
 }
 AIR_FUNC(AIRSteam_DismissFloatingGamepadTextInput) {
 	ARG_CHECK(0, FREBool(false));

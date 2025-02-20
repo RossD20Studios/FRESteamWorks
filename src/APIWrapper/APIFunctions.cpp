@@ -153,7 +153,7 @@ bool AIRSteam_IsSteamRunningOnSteamDeck() {
 /*
  * stats / achievements
  */
-
+/* No Longer Required and Removed from SteamWorks
 bool AIRSteam_RequestStats() {
 	bool ret = false;
 
@@ -162,6 +162,7 @@ bool AIRSteam_RequestStats() {
 
 	return ret;
 }
+*/
 
 bool AIRSteam_SetAchievement() {
 	std::string name = g_Steam->get_string();

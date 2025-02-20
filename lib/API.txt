@@ -114,7 +114,8 @@ public function getEarliestPurchaseUnixTime(appID:String):uint
 // RequestCurrentStats()
 // @default false
 // @event RESPONSE_OnUserStatsReceived, response = m_eResult
-public function requestStats():Boolean
+// No Longer Required and Removed from SteamWorks
+//public function requestStats():Boolean
 
 // SetAchievement(name)
 // @default false
