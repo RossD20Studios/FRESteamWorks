@@ -19,17 +19,7 @@
 	// Must use the -fvisibility=hidden gcc option.
 	#define EXPORT __attribute__((visibility("default")))
 #endif
-
-
-#ifdef _WIN32
-#include <windows.h> // required for Air 50+ due to HWND references
-
-#elif __APPLE__
-#include <Cocoa/Cocoa.h> // required for Air 50+ due to HWND references
-
-#endif
-
-
+typedef void* NSWindow;
 #include <FlashRuntimeExtensions.h>
 
 #include "CSteam/CSteam.h"
