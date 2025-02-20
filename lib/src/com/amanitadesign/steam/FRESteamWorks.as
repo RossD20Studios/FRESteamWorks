@@ -108,12 +108,6 @@ package com.amanitadesign.steam {
 		}
 
 		// These need manual changes, so don't autogen them
-		private function correctFilePath(path:String):String{
-			if(path && path.indexOf("/") != -1){
-				path = path.split("\\").join("/");	//Needed to correct final portion of the file path on Mac and Linux
-			}
-			return path;
-		}
 		public function getGlyphSVGForActionOrigin(eOrigin:String, flags:int):String{
 			return correctFilePath(_ExtensionContext.call("AIRSteam_GetGlyphSVGForActionOrigin", eOrigin, flags) as String);
 		}
