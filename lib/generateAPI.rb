@@ -32,12 +32,12 @@ end
 files = [
 	{
 		:file => "src/com/amanitadesign/steam/ISteamWorks.as",
-		:ignore => ["init"],
+		:ignore => ["init", "getGlyphSVGForActionOrigin", "getGlyphPNGForActionOrigin"],
 		:format => -> line, func { line.sub "public ", "" }
 	},
 	{
 		:file => "src/com/amanitadesign/steam/FRESteamWorks.as",
-		:ignore => ["init"],
+		:ignore => ["init", "getGlyphSVGForActionOrigin", "getGlyphPNGForActionOrigin"],
 		:format => method(:create_lib)
 	},
 	{
@@ -48,7 +48,7 @@ files = [
 ]
 
 def parse_prototype line
-	match = line.match /function ([^(]+)\(([^)]*)\):(\w+)$/
+	match = line.match(/function\s+([^\s(]+)\s*\(([^)]*)\)\s*:\s*(\w+)/)
 	raise "Invalid line: #{line}" unless match
 
 	func, args, ret = match.captures

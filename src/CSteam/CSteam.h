@@ -40,10 +40,17 @@ public:
 	std::string GetCurrentGameLanguage();
 	std::string GetPersonaName();
 	std::string GetIPCountry();
+
+	uint32 GetEarliestPurchaseUnixTime(AppId_t appId);
+	uint32 GetSecondsSinceAppActive();
+	uint32 GetServerRealTime();
+
 	bool IsSteamInBigPictureMode();
+	bool IsSteamRunningOnSteamDeck();
+
 
 	// stats/achievements
-	bool RequestStats();
+	// bool RequestStats(); No Longer Required and Removed from SteamWorks
 	bool SetAchievement(std::string name);
 	bool ClearAchievement(std::string name);
 	bool IsAchievement(std::string name);
@@ -160,13 +167,18 @@ public:
 	Image GetMediumFriendAvatar(CSteamID steamId);
 	Image GetLargeFriendAvatar(CSteamID steamId);
 
+	int GetCoplayFriendCount();
+	CSteamID GetCoplayFriend(int index);
+
 	// rich presence
 	bool SetRichPresence(std::string key, std::string value);
 	bool ClearRichPresence();
 	//
+
+	bool SetPlayedWith(CSteamID steamId);
 	
 	// authentication & ownership
-	HAuthTicket GetAuthSessionTicket(char** data, uint32* length);
+	HAuthTicket GetAuthSessionTicket(char** data, uint32* length, CSteamID steamID);
 	HAuthTicket GetAuthSessionTicketResult();
 	EBeginAuthSessionResult BeginAuthSession(const void* data, int length, CSteamID steamId);
 	bool EndAuthSession(CSteamID steamId);
@@ -217,7 +229,7 @@ public:
     const char *GetStringForActionOrigin(EInputActionOrigin eOrigin);
     bool ShowGamepadTextInput(EGamepadTextInputMode eInputMode, EGamepadTextInputLineMode eLineInputMode, const char *pchDescription, uint32 unCharMax, const char *pchExistingText);
     bool ShowFloatingGamepadTextInput(EFloatingGamepadTextInputMode eKeyboardMode, int nTextFieldXPosition, int nTextFieldYPosition, int nTextFieldWidth, int nTextFieldHeight);
-    bool SteamInputShutDown();
+    bool SteamInputShutdown();
     bool DismissFloatingGamepadTextInput();
     
 
@@ -225,7 +237,7 @@ protected:
 	virtual void DispatchEvent(char* code, char* level) = 0;
 
 private:
-	CSteamAPIContext m_ctx;
+	// 	CSteamAPIContext m_ctx; // there is no longer a CSteamAPIContext
 	// Our current appId
 	uint32 m_iAppID;
 	bool m_bInitialized;

@@ -176,7 +176,7 @@ package {
 				log("Persona name: " + Steamworks.getPersonaName());
 				log("Current game language: " + Steamworks.getCurrentGameLanguage());
 				log("Available game languages: " + Steamworks.getAvailableGameLanguages());
-				log("requestStats() == " + Steamworks.requestStats());
+				// log("requestStats() == " + Steamworks.requestStats());
 				log("requestGlobalStats(3) == " + Steamworks.requestGlobalStats(3));
 				log("isCloudEnabledForApp() == "+Steamworks.isCloudEnabledForApp());
 				log("getFileCount() == "+Steamworks.getFileCount());
