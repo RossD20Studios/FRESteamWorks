@@ -10,12 +10,15 @@ A brief history of this project's development:
 1. [Ventero](https://github.com/Ventero) initially started this project as a fork of [FRESteamWorks by Oldes/Amanita Design](https://github.com/Oldes/FRESteamWorks/) 
 2. [waveofthought](https://github.com/waveofthought-code) forked Ventero's branch [FRESteamWorks by Ventero](https://github.com/Ventero/FRESteamWorks) to create his branch that added 64Bit + expanded API
 3. [RossD20Studios](https://github.com/RossD20Studios) forked waveofthought's branch [FRESteamWorks waveofthought](https://github.com/waveofthought-code/FRESteamWorks) to create this branch that adds support for Steam Input API, Native Linux, and newer AIR v50.2.3 thanks to support from Andrew Frost, Jon Dix and Brad Jackson.
+4. [Fancy2209](https://github.com/Fancy2209) forked RossD20Studios's branch with his own [FRESteamWorks Fancy2209](https://github.com/Fancy2209/FRESteamWorks) to merge waveOfThought's recent changes and update the ANE for SteamWorks v1.61 and has merged his changes back here to support the ANE's development.
 
 For an example of this ANE in action with a Steam Deck Verified and Native Linux support, you can [download the free demo of my turn-based tactical card game, Abalon, on Steam](https://store.steampowered.com/app/1681840/Abalon/?utm_source=FRESteamWorks).
 
 # Download #
 
-A working ANE with Steam Input support for Windows/macOS/Linux can be [downloaded here](https://d20studios.com/FRESteamWorks/).
+A fully code signed and working ANE with Steam Input support for Windows/macOS/Linux can be [downloaded here](https://d20studios.com/FRESteamWorks/). 
+
+This version was built and uploaded on February 21, 2025. If you're upgrading from an older version, take note that the getAuthSessionTicket now requires an additional parameter of the user's Steam id which you can get with _userId = Steamworks.getUserID(), then call Steamworks.getAuthSessionTicket(_authTicket, _userId).
 
 # API Documentation #
 
@@ -32,8 +35,8 @@ Steam Input API Documentation can be [read here](https://partner.steamgames.com/
 # Usage #
 
 ### Using the ANE Requires: ### 
-1. AIR Version 50.2.3
-2. SteamWorks SDK v1.54 (At this time, newer versions of the SDK are not supported due to added parameters in the authentication methods starting in v1.56)
+1. AIR Version 50.2.3 or greater (Last built with AIR 51.1.3.7)
+2. SteamWorks SDK v1.61
 3. Windows 32-bit/x64, MacOS x64/ARM (M1/M2) or Linux x64
 
 Include the ANE in your project like
@@ -53,8 +56,8 @@ For testing the application, I recommend building the AIR application, opening t
 Building the ANE from the source files is only necessary if you need to modify source code and/or the ANE package is no longer available for [downloaded here](https://d20studios.com/FRESteamWorks/).
 
 ### Building the ANE Requires: ###
-1. AIR Version 50.2.3
-2. SteamWorks SDK v1.54 (At this time, newer versions of the SDK are not supported due to added parameters in the authentication methods starting in v1.56)
+1. AIR Version 50.2.3 or greater (Last built with AIR 51.1.3.7)
+2. SteamWorks SDK v1.61 (Newer versions might be compatibly, but this is the last working version the ANE was built with)
 3. Mac OS Catalina+ (To ensure support for latest Xcode)
 4. Apple Developer Account (To create the Developer ID Application certificate necessary to sign the ANE to work on Mac)
 5. Xcode v14+  (To build the Mac version and ensure support for Apple Silicon M1/M2)
@@ -83,6 +86,7 @@ To build the ANE, you will need to compile the respective native source files fo
 6. In the two drop down menus at the top (just below the Build / Debug menu headers) set the first drop down menu to “Release” and the second drop down menu to “x64”. Then, select Build -> Build Solution (Ctrl + Shift + B). **Note:** The Build will fail here unless java environment variables are configured, but that’s OK. It will still output the FRESteamWorks-64.dll file to FRESteamworks/src/Release/FRESteamWorks-64.dll, and that’s all you need for 64-bit Windows.
 7. Change the second drop down selection from x64 to Win32 and select Build -> Build Solution again to compile the 32-bit Windows version. This will output the file FRESteamworks/src/Release/FRESteamWorks.dll.
 8. Copy FRESteamworks/src/Release/FRESteamWorks-64.dll and FRESteamworks/src/Release/FRESteamWorks.dll to the FRESteamWorks/lib/bin folder on your Mac OS.
+9. **Note:** If you're getting an error about moving/copying the built DLL's, then be sure to manually move them or delete them from the Release folder before you build again. Otherwise, the next time you go to build, it will not re-create a new version of the DLL.
 
 ### Step 3: Building the Linux SO ###
 1. Ensure the root of your FRESteamWorks project on Linux is located at Home\FRESteamWorks
@@ -102,7 +106,9 @@ To build the ANE, you will need to compile the respective native source files fo
 5. If you are prompted to enter a password to use the certificate from your keychain, do so. **Important Note:** After doing so, you will need to run the build a second time, even if it succeeded, to ensure that the build is properly code signed. I made this mistake many times thinking the build had worked, only to discover later that the ANE wouldn’t run on Mac because it hand’t actually signed it properly. To avoid requiring password in the future, you can check the “Always allow” option, but still run the build process a second time after doing so. And, always test that your ANE works by running it on your local machine before uploading to Steam.
 6. Running the build process will create the completed ANE at Users/userName/FRESteamWorks/lib/bin/FRESteamWorks.ane as well as an unpacked folder called FRESteamWorks.Unpacked.ane where you can see structure of what the ANE looks like. Inside this, you should see a folder for Linux-x86-64 containing your FRESteamWorks.so, a MacOS-x86-64 containing FRESteamWorks.framework, a Windows x86 folder containing FRESteamWorks.dll and a Windows-x86-64 containing FRESteamWorks-64.dll. Each folder also contains a library.swf. **Note:** Ensure that the file size of these files is greater than zero, otherwise, you may have forgotten to copy the files created in the prior steps to your bin folder. The MacOS build process will create placeholders if these files are missing with a 0KB size.
 
-For more details, please see the
+# Contributing to the ANE's Development #
+For more details and contributing to the ANE please visit the [air.sdk Discord](https://discord.gg/HVSP4bqJst) and ping @rossd20studios with a pull request.
+Also check out the original contribution guide from Ventero: 
 [contributing guide](https://github.com/Ventero/FRESteamWorks/tree/master/CONTRIBUTING.md).
 
 ---
