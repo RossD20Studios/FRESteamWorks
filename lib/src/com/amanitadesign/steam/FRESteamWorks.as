@@ -38,7 +38,6 @@ package com.amanitadesign.steam {
 			_ExtensionContext = ExtensionContext.createExtensionContext("com.amanitadesign.steam.FRESteamWorks", null);
 			_ExtensionContext.addEventListener(StatusEvent.STATUS, handleStatusEvent);
 			super(target);
-			trace("[FRESteamWorks]: Functions in context: \n", _ExtensionContext.functions);
 		}
 
 		private function handleStatusEvent(event:StatusEvent):void{
@@ -113,14 +112,6 @@ package com.amanitadesign.steam {
 				path = path.split("\\").join("/");	//Needed to correct final portion of the file path on Mac and Linux
 			}
 			return path;
-		}
-
-		public function getGlyphSVGForActionOrigin(eOrigin:String, flags:int):String {
-			return correctFilePath(_ExtensionContext.call("AIRSteam_GetGlyphSVGForActionOrigin", eOrigin, flags) as String);
-		}
-
-		public function getGlyphPNGForActionOrigin(eOrigin:String, eSize:int, flags:int):String {
-			return correctFilePath(_ExtensionContext.call("AIRSteam_GetGlyphPNGForActionOrigin", eOrigin, eSize, flags) as String);
 		}
 
 		/*
@@ -726,6 +717,14 @@ package com.amanitadesign.steam {
 
 		public function getAnalogActionOrigins(inputHandle:String, actionSetHandle:String, analogActionHandle:String):Array {
 			return _ExtensionContext.call("AIRSteam_GetAnalogActionOrigins", inputHandle, actionSetHandle, analogActionHandle) as Array;
+		}
+		
+		public function getGlyphSVGForActionOrigin(eOrigin:String, flags:int):String {
+			return correctFilePath(_ExtensionContext.call("AIRSteam_GetGlyphSVGForActionOrigin", eOrigin, flags) as String);
+		}
+
+		public function getGlyphPNGForActionOrigin(eOrigin:String, eSize:int, flags:int):String {
+			return correctFilePath(_ExtensionContext.call("AIRSteam_GetGlyphPNGForActionOrigin", eOrigin, eSize, flags) as String);
 		}
 
 		public function getStringForActionOrigin(eOrigin:String):String {

@@ -21,8 +21,6 @@ package com.amanitadesign.steam {
 		function addOverlayWorkaround(container:DisplayObjectContainer,
 			alwaysVisible:Boolean = false, color:uint = 0x000000):void;
 
-		function getGlyphSVGForActionOrigin(eOrigin:String, flags:int):String
-		function getGlyphPNGForActionOrigin(eOrigin:String, eSize:int, flags:int):String
 
 		// the below list was automatically generated with generateAPI.rb
 
@@ -204,9 +202,8 @@ package com.amanitadesign.steam {
 		function getHandleAllControllers():String
 		function getDigitalActionOrigins(inputHandle:String, actionSetHandle:String, digitalActionHandle:String):Array
 		function getAnalogActionOrigins(inputHandle:String, actionSetHandle:String, analogActionHandle:String):Array
-		// manual implementations
-		// function getGlyphSVGForActionOrigin(eOrigin:String, flags:int):String
-		// function getGlyphPNGForActionOrigin(eOrigin:String, eSize:int, flags:int):String
+		function getGlyphSVGForActionOrigin(eOrigin:String, flags:int):String
+		function getGlyphPNGForActionOrigin(eOrigin:String, eSize:int, flags:int):String
 		function getStringForActionOrigin(eOrigin:String):String
 		function showGamepadTextInput(eInputMode:int, eLineInputMode:int, pchDescription:String, unCharMax:int, pchExistingText:String):Boolean
 		function showFloatingGamepadTextInput(eKeyboardMode:int, nTextFieldXPosition:int, nTextFieldYPosition:int, nTextFieldWidth:int, nTextFieldHeight:int):Boolean
