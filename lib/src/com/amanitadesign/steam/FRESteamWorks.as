@@ -38,6 +38,7 @@ package com.amanitadesign.steam {
 			_ExtensionContext = ExtensionContext.createExtensionContext("com.amanitadesign.steam.FRESteamWorks", null);
 			_ExtensionContext.addEventListener(StatusEvent.STATUS, handleStatusEvent);
 			super(target);
+			trace("[FRESteamWorks]: Functions in context: \n", _ExtensionContext.functions);
 		}
 
 		private function handleStatusEvent(event:StatusEvent):void{
