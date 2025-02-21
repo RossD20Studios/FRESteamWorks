@@ -20,7 +20,7 @@ A fully code signed and built ANE for Windows/macOS/Linux can be [downloaded her
 
 This version was built and uploaded on February 21, 2025. 
 
-If you're upgrading from an older version, note that the getAuthSessionTicket now requires an additional parameter of the user's Steam id: Steamworks.getAuthSessionTicket(_authTicket, Steamworks.getUserID()).
+If you're upgrading from an older version, note that the getAuthSessionTicket now requires an additional parameter of the user's Steam id.
 
 # API Documentation #
 
