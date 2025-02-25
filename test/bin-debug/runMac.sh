@@ -3,7 +3,7 @@
 [ ! -e ../../config.sh ] && die "FRESteamWorks/config.sh is not set up!"
 . ../../config.sh
 
-export DYLD_FALLBACK_LIBRARY_PATH="$STEAM_SDK/redistributable_bin/osx32"
+export DYLD_FALLBACK_LIBRARY_PATH="$STEAM_SDK/redistributable_bin/osx"
 
 # Ensure the overlay is added when running outside Steam
 overlay_libs=(
