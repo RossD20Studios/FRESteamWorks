@@ -1921,15 +1921,15 @@ AIR_FUNC(AIRSteam_SetLEDColor)
 	ARG_CHECK(5, FREBool(false));
 
 	uint64 inputHandle;
-	uint32 nColorR;
-	uint32 nColorG;
-	uint32 nColorB;
+	int32 nColorR;
+	int32 nColorG;
+	int32 nColorB;
 	uint32 nFlags;
 
 	FREGetUint64(argv[0], &inputHandle);
-	FREGetUint32(argv[1], &nColorR);
-	FREGetUint32(argv[2], &nColorG);
-	FREGetUint32(argv[3], &nColorB);
+	FREGetInt32(argv[1], &nColorR);
+	FREGetInt32(argv[2], &nColorG);
+	FREGetInt32(argv[3], &nColorB);
 	FREGetUint32(argv[3], &nFlags);
 
 	g_Steam->SetLEDColor(inputHandle, nColorR, nColorG, nColorB, nFlags);
