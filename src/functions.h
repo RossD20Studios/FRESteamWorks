@@ -180,11 +180,15 @@ X(AIRSteam_GetGlyphPNGForActionOrigin) /* = 143 */
 X(AIRSteam_GetStringForActionOrigin) /* = 144 */
 X(AIRSteam_ShowGamepadTextInput) /* = 145 */
 X(AIRSteam_ShowFloatingGamepadTextInput) /* = 146 */
-X(AIRSteam_SteamInputShutdown) /* = 147 */
-X(AIRSteam_DismissFloatingGamepadTextInput) /* = 148 */
+X(AIRSteam_SetLEDColor) /* = 147 */
+X(AIRSteam_TriggerVibration) /* = 148 */
+X(AIRSteam_GetInputTypeForHandle) /* = 149 */
+X(AIRSteam_TranslateActionOrigin) /* = 150 */
+X(AIRSteam_SteamInputShutdown) /* = 151 */
+X(AIRSteam_DismissFloatingGamepadTextInput) /* = 152 */
 /**********************************/
 /* Other non-Steamworks functions */
 /**********************************/
-X(AIRSteam_GetEnv) /* = 149 */
-X(AIRSteam_SetEnv) /* = 150 */
+X(AIRSteam_GetEnv) /* = 153 */
+X(AIRSteam_SetEnv) /* = 154 */
 /* END GENERATED CODE */

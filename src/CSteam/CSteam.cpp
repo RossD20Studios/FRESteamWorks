@@ -1109,6 +1109,21 @@ bool CSteam::SteamInputShutdown(){
 bool CSteam::DismissFloatingGamepadTextInput(){
     return SteamUtils()->DismissFloatingGamepadTextInput();
 }
+void CSteam::SetLEDColor(InputHandle_t inputHandle, uint8 nColorR, uint8 nColorG, uint8 nColorB, unsigned int nFlags) {
+	SteamInput()->SetLEDColor(inputHandle, nColorR, nColorG, nColorB, nFlags);
+}
+
+void CSteam::TriggerVibration(InputHandle_t inputHandle, unsigned short usLeftSpeed, unsigned short usRightSpeed) {
+	SteamInput()->TriggerVibration(inputHandle, usLeftSpeed, usRightSpeed);
+}
+
+ESteamInputType CSteam::GetInputTypeForHandle(InputHandle_t inputHandle) {
+	return SteamInput()->GetInputTypeForHandle(inputHandle);
+}
+
+EInputActionOrigin CSteam::TranslateActionOrigin(ESteamInputType eDestinationInputType, EInputActionOrigin eSourceOrigin) {
+	return SteamInput()->TranslateActionOrigin(eDestinationInputType, eSourceOrigin);
+}
 
 
 void CSteam::DispatchEvent(const int req_type, const int response) {

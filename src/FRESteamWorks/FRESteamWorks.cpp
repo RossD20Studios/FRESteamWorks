@@ -1916,6 +1916,68 @@ AIR_FUNC(AIRSteam_DismissFloatingGamepadTextInput) {
 	return FREBool(g_Steam->DismissFloatingGamepadTextInput());
 }
 
+AIR_FUNC(AIRSteam_SetLEDColor) 
+{
+	ARG_CHECK(5, FREBool(false));
+
+	uint64 inputHandle;
+	uint32 nColorR;
+	uint32 nColorG;
+	uint32 nColorB;
+	uint32 nFlags;
+
+	FREGetUint64(argv[0], &inputHandle);
+	FREGetUint32(argv[1], &nColorR);
+	FREGetUint32(argv[2], &nColorG);
+	FREGetUint32(argv[3], &nColorB);
+	FREGetUint32(argv[3], &nFlags);
+
+	g_Steam->SetLEDColor(inputHandle, nColorR, nColorG, nColorB, nFlags);
+	return FREBool(true);
+
+}
+
+AIR_FUNC(AIRSteam_TriggerVibration) 
+{
+	ARG_CHECK(3, FREBool(false));
+	uint64 inputHandle;
+	uint32 leftSpeed;
+	uint32 rightSpeed;
+
+	FREGetUint64(argv[0], &inputHandle);
+	FREGetUint32(argv[1], &leftSpeed);
+	FREGetUint32(argv[2], &rightSpeed);
+	g_Steam->TriggerVibration(inputHandle, leftSpeed, rightSpeed);
+	return FREBool(true);
+
+}
+
+AIR_FUNC(AIRSteam_GetInputTypeForHandle) 
+{
+	ARG_CHECK(1, FREInt(0));
+
+	uint64 inputHandle;
+	FREGetUint64(argv[0], &inputHandle);
+
+	return FREInt(g_Steam->GetInputTypeForHandle(inputHandle));
+
+}
+
+AIR_FUNC(AIRSteam_TranslateActionOrigin) 
+{
+	ARG_CHECK(2, FREUint64(0));
+
+	int32 eDestinationInputType;
+	uint64 eSourceOrigin;
+
+	FREGetInt32(argv[0], &eDestinationInputType);
+	FREGetUint64(argv[1], &eSourceOrigin);
+
+	return FREUint64(g_Steam->TranslateActionOrigin((ESteamInputType)eDestinationInputType, (EInputActionOrigin)eSourceOrigin));
+
+}
+
+
 	//============================
 
 

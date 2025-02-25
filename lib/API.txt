@@ -944,6 +944,23 @@ public function showGamepadTextInput(eInputMode:int, eLineInputMode:int, pchDesc
 // @default false
 public function showFloatingGamepadTextInput(eKeyboardMode:int, nTextFieldXPosition:int, nTextFieldYPosition:int, nTextFieldWidth:int, nTextFieldHeight:int):Boolean
 
+
+// setLEDColor(inputHandle, colorR, colorG, colorB, flags)
+// @default false
+public function setLEDColor(inputHandle:String, colorR:int, colorG:int, colorB:int, flags:uint):Boolean
+
+// triggerVibration(inputHandle, leftSpeed, rightSpeed)
+// @default false
+public function triggerVibration(inputHandle:String, leftSpeed:uint, rightSpeed:uint):Boolean
+
+// getInputTypeForHandle(inputHandle)
+// @default 0
+public function getInputTypeForHandle(inputHandle:String):int
+
+// translateActionOrigin(destinationInputType, sourceOrigin)
+// @default "0"
+public function translateActionOrigin(destinationInputType:int, sourceOrigin:String):String
+
 // steamInputShutdown()
 // @default false
 public function steamInputShutdown():Boolean

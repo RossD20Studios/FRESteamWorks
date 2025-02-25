@@ -25,6 +25,7 @@ project.xcworkspace
 *.swf
 *.dylib
 *.framework
+**/XCBuildData/
 
 [Dd]ebug/
 [Rr]elease/

@@ -32,12 +32,12 @@ end
 files = [
 	{
 		:file => "src/com/amanitadesign/steam/ISteamWorks.as",
-		:ignore => ["init"],
+		:ignore => ["init", "getGlyphSVGForActionOrigin", "getGlyphPNGForActionOrigin"],
 		:format => -> line, func { line.sub "public ", "" }
 	},
 	{
 		:file => "src/com/amanitadesign/steam/FRESteamWorks.as",
-		:ignore => ["init"],
+		:ignore => ["init", "getGlyphSVGForActionOrigin", "getGlyphPNGForActionOrigin"],
 		:format => method(:create_lib)
 	},
 	{
