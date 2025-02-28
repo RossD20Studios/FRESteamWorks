@@ -892,9 +892,13 @@ public function getDigitalActionHandle(actionName:String):String
 // @default ""
 public function getAnalogActionHandle(actionName:String):String 
 
-// getDigitalActionData(inputHandle, actionHandle):InputDigitalActionData
-// @default null
-public function getDigitalActionData(inputHandle:String, actionHandle:String):InputDigitalActionData
+// getDigitalActionButtonState(inputHandle, actionHandle):Boolean
+// @default false
+public function getDigitalActionButtonState(inputHandle:String, actionHandle:String):Boolean
+
+// getDigitalActionButtonActive(inputHandle, actionHandle):Boolean
+// @default false
+public function getDigitalActionButtonActive(inputHandle:String, actionHandle:String):Boolean
 
 // getAnalogActionData(inputHandle, actionHandle)
 // @default null

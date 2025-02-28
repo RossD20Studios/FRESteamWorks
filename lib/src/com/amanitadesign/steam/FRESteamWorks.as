@@ -696,8 +696,12 @@ package com.amanitadesign.steam {
 			return _ExtensionContext.call("AIRSteam_GetAnalogActionHandle", actionName) as String;
 		}
 
-		public function getDigitalActionData(inputHandle:String, actionHandle:String):InputDigitalActionData {
-			return _ExtensionContext.call("AIRSteam_GetDigitalActionData", inputHandle, actionHandle) as InputDigitalActionData;
+		public function getDigitalActionButtonState(inputHandle:String, actionHandle:String):Boolean {
+			return _ExtensionContext.call("AIRSteam_GetDigitalActionButtonState", inputHandle, actionHandle) as Boolean;
+		}
+
+		public function getDigitalActionButtonActive(inputHandle:String, actionHandle:String):Boolean {
+			return _ExtensionContext.call("AIRSteam_GetDigitalActionButtonActive", inputHandle, actionHandle) as Boolean;
 		}
 
 		public function getAnalogActionData(inputHandle:String, actionHandle:String):InputAnalogActionData {

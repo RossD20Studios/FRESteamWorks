@@ -196,7 +196,8 @@ package com.amanitadesign.steam {
 		function getActionSetHandle(actionSetName:String):String 
 		function getDigitalActionHandle(actionName:String):String
 		function getAnalogActionHandle(actionName:String):String 
-		function getDigitalActionData(inputHandle:String, actionHandle:String):InputDigitalActionData
+		function getDigitalActionButtonState(inputHandle:String, actionHandle:String):Boolean
+		function getDigitalActionButtonActive(inputHandle:String, actionHandle:String):Boolean
 		function getAnalogActionData(inputHandle:String, actionHandle:String):InputAnalogActionData
 		function runFrame():Boolean
 		function getConnectedControllers():Array
