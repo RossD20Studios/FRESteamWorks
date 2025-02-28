@@ -438,7 +438,7 @@ package {
 			if(!Steamworks.isReady) return;
 
 			authTicket = new ByteArray();
-			authHandle = Steamworks.getAuthSessionTicket(authTicket)
+			authHandle = Steamworks.getAuthSessionTicket(authTicket, Steamworks.getUserID());
 			log("getAuthSessionTicket(ticket) == " + authHandle);
 			logTicket(authTicket, "authTicket");
 		}
