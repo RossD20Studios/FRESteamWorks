@@ -16,9 +16,9 @@ For an example of this ANE in action with a Steam Deck Verified and Native Linux
 
 # Download #
 
-A fully code signed and built ANE for Windows/macOS/Linux can be [downloaded here](https://d20studios.com/FRESteamWorks/). 
+A fully code signed and built ANE for Windows/macOS/Linux can be [downloaded here](https://github.com/RossD20Studios/FRESteamWorks/releases/download/ANE_03_17_2025/FRESteamWorks.ane). 
 
-This version was built and uploaded on February 21, 2025. 
+The lastest version was tested and uploaded on March 17, 2025. 
 
 If you're upgrading from an older version, note that the getAuthSessionTicket now requires an additional parameter of the user's Steam id.
 
