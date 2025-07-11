@@ -1,4 +1,4 @@
-include ../config.sh
+#include ../config.sh
 
 CXXFLAGS = -std=c++0x -fvisibility=hidden -I.
 CXXFLAGS += -Wall -Wextra -pedantic -Wno-unused-parameter -Wmissing-declarations

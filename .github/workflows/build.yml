@@ -1,0 +1,143 @@
+# This is a basic workflow to help you get started with Actions
+
+name: CI
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the master branch
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  build:
+    strategy:
+      matrix:
+        os: [windows, ubuntu, macos]
+    
+    runs-on: ${{ matrix.os }}-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download SteamWorks SDK
+        uses: actions/checkout@v4
+        with:
+          repository: flibitijibibo/steamworks-sdk
+          ref: dc2b9953670fc66b76bae80dfc6fd53874656e2b
+          path: SteamSDK
+
+      - name: Setup AIR SDK
+        uses: joshtynjala/setup-adobe-air-action@v2
+        with:
+          air-version: 51.1
+          accept-license: true
+
+      - name: Add msbuild to PATH # MSBuild is needed to build Visual Studio Projects on the CLI
+        if: runner.os == 'Windows'
+        uses: microsoft/setup-msbuild@v2
+        
+      - name: Build (Windows)
+        if: runner.os == 'Windows'
+        run: |
+          mkdir SteamSDK/public
+          cp -Recurse -Force SteamSDK/steam SteamSDK/public
+          mkdir C:\SDKs\
+          cp -Recurse -Force SteamSDK C:\SDKs\
+          cp $env:AIR_HOME "C:\SDKs\AIRSDK" -Recurse -Force
+          $env:AIR_SDK = $env:AIR_HOME
+          $env:FLEX_SDK = $env:AIR_HOME
+          $env:STEAM_SDK = Join-Path $env:GITHUB_WORKSPACE 'SteamSDK'
+          
+          msbuild src/FRESteamWorks.sln /p:Platform=x64 /p:Configuration=Release
+          msbuild src/FRESteamWorks.sln /p:Platform=Win32 /p:Configuration=Release
+          cd lib/bin
+          cp ../../src/Release/FRESteamWorks.dll .
+          cp ../../src/Release/FRESteamWorks-64.dll .
+          mkdir FRESteamWorks.framework
+          echo "" >> FRESteamWorks.framework/FRESteamWorks
+          echo "" >> FRESteamWorks.so
+          acompc +configname=air -source-path ../src -debug=false -optimize -include-sources ..\src\ -swf-version=11 -output FRESteamWorksLib.swc
+          7z x FRESteamWorksLib.swc
+          adt -package -target ane FRESteamWorks.ane descriptor.xml -swc FRESteamWorksLib.swc -platform Windows-x86 library.swf FRESteamWorks.dll -platform Windows-x86-64 library.swf FRESteamWorks-64.dll -platform MacOS-x86-64 library.swf FRESteamWorks.framework -platform Linux-x86-64 library.swf FRESteamWorks.so -platform default library.swf
+
+      - name: Build (Linux)
+        if: runner.os == 'Linux'
+        run: |
+          mkdir SteamSDK/public
+          cp -r SteamSDK/steam SteamSDK/public
+          export AIR_SDK=$AIR_HOME
+          export FLEX_SDK=$AIR_HOME
+          export STEAM_SDK=$GITHUB_WORKSPACE/SteamSDK
+          
+          cd src
+          make -j${nproc}
+          cd ../lib/bin
+          cp ../../src/FRESteamWorks/FRESteamWorks.so .
+          acompc +configname=air -source-path ../src \
+                               -debug=false -optimize \
+                               -include-sources ../src/ \
+                               -swf-version=11 -output FRESteamWorksLib.swc
+                    
+          7z x FRESteamWorksLib.swc
+          touch FRESteamWorks-64.dll
+          touch FRESteamWorks.dll
+          mkdir FRESteamWorks.framework
+          touch FRESteamWorks.framework/FRESteamWorks
+          adt -package -target ane FRESteamWorks.ane descriptor.xml \
+                             -swc FRESteamWorksLib.swc \
+                             -platform Windows-x86 library.swf FRESteamWorks.dll \
+                             -platform Windows-x86-64 library.swf FRESteamWorks-64.dll \
+                             -platform MacOS-x86-64 library.swf FRESteamWorks.framework \
+                             -platform Linux-x86-64 library.swf FRESteamWorks.so \
+                             -platform default library.swf
+
+      - name: Install the Apple certificate and provisioning profile
+        if: runner.os == 'macOS'
+        env:
+          BUILD_CERTIFICATE_BASE64: ${{ secrets.BUILD_CERTIFICATE_BASE64 }}
+          P12_PASSWORD: ${{ secrets.P12_PASSWORD }}
+          KEYCHAIN_PASSWORD: ${{ secrets.KEYCHAIN_PASSWORD }}
+        run: |
+          # create variables
+          CERTIFICATE_PATH=$RUNNER_TEMP/build_certificate.p12
+          KEYCHAIN_PATH=$RUNNER_TEMP/app-signing.keychain-db
+        
+          # import certificate
+          echo -n "$BUILD_CERTIFICATE_BASE64" | base64 --decode -o $CERTIFICATE_PATH
+        
+          # create temporary keychain
+          security create-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
+          security set-keychain-settings -lut 21600 $KEYCHAIN_PATH
+          security unlock-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
+        
+          # import certificate to keychain
+          security import $CERTIFICATE_PATH -P "$P12_PASSWORD" -A -t cert -f pkcs12 -k $KEYCHAIN_PATH
+          security set-key-partition-list -S apple-tool:,apple: -k "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
+          security list-keychain -d user -s $KEYCHAIN_PATH
+
+      - name: Build (macOS)
+        if: runner.os == 'macOS'
+        run: |
+          mkdir SteamSDK/public
+          cp -r SteamSDK/steam SteamSDK/public
+          export AIR_SDK=$AIR_HOME
+          export FLEX_SDK=$AIR_HOME
+          export STEAM_SDK=$GITHUB_WORKSPACE/SteamSDK
+          
+          touch lib/bin/FRESteamworks-64.dll
+          touch lib/bin/FRESteamworks.dll
+          touch lib/bin/FRESteamworks.so
+          cd src
+          xcodebuild -project FRESteamWorks.xcodeproj
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: FRESteamWorks-${{runner.os}}
+          path: lib/bin/FRESteamWorks.ane
+          
+          
