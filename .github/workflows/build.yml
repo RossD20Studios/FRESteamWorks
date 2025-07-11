@@ -125,6 +125,7 @@ jobs:
         run: |
           mkdir SteamSDK/public
           cp -r SteamSDK/steam SteamSDK/public
+          
           export AIR_SDK=$AIR_HOME
           export FLEX_SDK=$AIR_HOME
           export STEAM_SDK=$GITHUB_WORKSPACE/SteamSDK
@@ -132,7 +133,13 @@ jobs:
           touch lib/bin/FRESteamworks-64.dll
           touch lib/bin/FRESteamworks.dll
           touch lib/bin/FRESteamworks.so
+          
           cd src
+          
+          mkdir ../../SDKS
+          cp -r $AIR_HOME ../../SDKS/AIRSDK
+          cp -r $STEAM_SDK ../../SDKS/SteamSDK
+          
           xcodebuild -project FRESteamWorks.xcodeproj
 
       - uses: actions/upload-artifact@v4
