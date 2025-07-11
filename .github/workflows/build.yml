@@ -96,7 +96,7 @@ jobs:
                              -platform default library.swf
 
       - name: Install the Apple certificate and provisioning profile
-        if: runner.os == 'macOS'
+        if: runner.os == 'macOS' && github.event_name != 'pull_request'
         env:
           BUILD_CERTIFICATE_BASE64: ${{ secrets.BUILD_CERTIFICATE_BASE64 }}
           P12_PASSWORD: ${{ secrets.P12_PASSWORD }}
@@ -120,7 +120,7 @@ jobs:
           security list-keychain -d user -s $KEYCHAIN_PATH
 
       - name: Build (macOS)
-        if: runner.os == 'macOS'
+        if: runner.os == 'macOS' && github.event_name != 'pull_request'
         run: |
           mkdir SteamSDK/public
           cp -r SteamSDK/steam SteamSDK/public
