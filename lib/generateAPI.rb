@@ -48,7 +48,7 @@ files = [
 ]
 
 def parse_prototype line
-	match = line.match(/function\s+([^\s(]+)\s*\(([^)]*)\)\s*:\s*(\w+)/)
+	match = line.match(/function\s+([^\s(]+)\s*\(([^)]*)\)\s*:\s*([^\s{]+)/)
 	raise "Invalid line: #{line}" unless match
 
 	func, args, ret = match.captures

@@ -122,74 +122,99 @@ X(AIRSteam_ClearRichPresence) /* = 100 */
 X(AIRSteam_SetPlayedWith) /* = 101 */
 X(AIRSteam_GetCoplayFriendCount) /* = 102 */
 X(AIRSteam_GetCoplayFriend) /* = 103 */
+X(AIRSteam_GetGameLobbyJoinRequestResponse) /* = 104 */
 /******************************/
 /* Authentication & Ownership */
 /******************************/
-X(AIRSteam_GetAuthSessionTicket) /* = 104 */
-X(AIRSteam_GetAuthSessionTicketResult) /* = 105 */
-X(AIRSteam_BeginAuthSession) /* = 106 */
-X(AIRSteam_EndAuthSession) /* = 107 */
-X(AIRSteam_CancelAuthTicket) /* = 108 */
-X(AIRSteam_UserHasLicenseForApp) /* = 109 */
-X(AIRSteam_RequestEncryptedAppTicket) /* = 110 */
-X(AIRSteam_GetEncryptedAppTicket) /* = 111 */
+X(AIRSteam_GetAuthSessionTicket) /* = 105 */
+X(AIRSteam_GetAuthSessionTicketResult) /* = 106 */
+X(AIRSteam_BeginAuthSession) /* = 107 */
+X(AIRSteam_EndAuthSession) /* = 108 */
+X(AIRSteam_CancelAuthTicket) /* = 109 */
+X(AIRSteam_UserHasLicenseForApp) /* = 110 */
+X(AIRSteam_RequestEncryptedAppTicket) /* = 111 */
+X(AIRSteam_GetEncryptedAppTicket) /* = 112 */
 /***********/
 /* Overlay */
 /***********/
-X(AIRSteam_ActivateGameOverlay) /* = 112 */
-X(AIRSteam_ActivateGameOverlayToUser) /* = 113 */
-X(AIRSteam_ActivateGameOverlayToWebPage) /* = 114 */
-X(AIRSteam_ActivateGameOverlayToStore) /* = 115 */
-X(AIRSteam_ActivateGameOverlayInviteDialog) /* = 116 */
-X(AIRSteam_IsOverlayEnabled) /* = 117 */
-X(AIRSteam_SetOverlayNotificationPosition) /* = 118 */
-X(AIRSteam_SetOverlayNotificationInset) /* = 119 */
-X(AIRSteam_OverlayNeedsPresent) /* = 120 */
+X(AIRSteam_ActivateGameOverlay) /* = 113 */
+X(AIRSteam_ActivateGameOverlayToUser) /* = 114 */
+X(AIRSteam_ActivateGameOverlayToWebPage) /* = 115 */
+X(AIRSteam_ActivateGameOverlayToStore) /* = 116 */
+X(AIRSteam_ActivateGameOverlayInviteDialog) /* = 117 */
+X(AIRSteam_IsOverlayEnabled) /* = 118 */
+X(AIRSteam_SetOverlayNotificationPosition) /* = 119 */
+X(AIRSteam_SetOverlayNotificationInset) /* = 120 */
+X(AIRSteam_OverlayNeedsPresent) /* = 121 */
 /***********************/
 /* DLC / subscriptions */
 /***********************/
-X(AIRSteam_IsSubscribedApp) /* = 121 */
-X(AIRSteam_IsDLCInstalled) /* = 122 */
-X(AIRSteam_GetDLCCount) /* = 123 */
-X(AIRSteam_InstallDLC) /* = 124 */
-X(AIRSteam_UninstallDLC) /* = 125 */
-X(AIRSteam_DLCInstalledResult) /* = 126 */
+X(AIRSteam_IsSubscribedApp) /* = 122 */
+X(AIRSteam_IsDLCInstalled) /* = 123 */
+X(AIRSteam_GetDLCCount) /* = 124 */
+X(AIRSteam_InstallDLC) /* = 125 */
+X(AIRSteam_UninstallDLC) /* = 126 */
+X(AIRSteam_DLCInstalledResult) /* = 127 */
 /********************/
 /* Microtransaction */
 /********************/
-X(AIRSteam_MicroTxnResult) /* = 127 */
+X(AIRSteam_MicroTxnResult) /* = 128 */
 /********************/
 /* Input */
 /********************/
-X(AIRSteam_InputInit) /* = 128 */
-X(AIRSteam_GetControllerForGamepadIndex) /* = 129 */
-X(AIRSteam_ShowBindingPanel) /* = 130 */
-X(AIRSteam_GetActionSetHandle) /* = 131 */
-X(AIRSteam_GetDigitalActionHandle) /* = 132 */
-X(AIRSteam_GetAnalogActionHandle) /* = 133 */
-X(AIRSteam_GetDigitalActionButtonState) /* = 134 */
-X(AIRSteam_GetDigitalActionButtonActive) /* = 135 */
-X(AIRSteam_GetAnalogActionData) /* = 136 */
-X(AIRSteam_RunFrame) /* = 137 */
-X(AIRSteam_GetConnectedControllers) /* = 138 */
-X(AIRSteam_ActivateActionSet) /* = 139 */
-X(AIRSteam_GetHandleAllControllers) /* = 140 */
-X(AIRSteam_GetDigitalActionOrigins) /* = 141 */
-X(AIRSteam_GetAnalogActionOrigins) /* = 142 */
-X(AIRSteam_GetGlyphSVGForActionOrigin) /* = 143 */
-X(AIRSteam_GetGlyphPNGForActionOrigin) /* = 144 */
-X(AIRSteam_GetStringForActionOrigin) /* = 145 */
-X(AIRSteam_ShowGamepadTextInput) /* = 146 */
-X(AIRSteam_ShowFloatingGamepadTextInput) /* = 147 */
-X(AIRSteam_SetLEDColor) /* = 148 */
-X(AIRSteam_TriggerVibration) /* = 149 */
-X(AIRSteam_GetInputTypeForHandle) /* = 150 */
-X(AIRSteam_TranslateActionOrigin) /* = 151 */
-X(AIRSteam_SteamInputShutdown) /* = 152 */
-X(AIRSteam_DismissFloatingGamepadTextInput) /* = 153 */
+X(AIRSteam_InputInit) /* = 129 */
+X(AIRSteam_GetControllerForGamepadIndex) /* = 130 */
+X(AIRSteam_ShowBindingPanel) /* = 131 */
+X(AIRSteam_GetActionSetHandle) /* = 132 */
+X(AIRSteam_GetDigitalActionHandle) /* = 133 */
+X(AIRSteam_GetAnalogActionHandle) /* = 134 */
+X(AIRSteam_GetDigitalActionButtonState) /* = 135 */
+X(AIRSteam_GetDigitalActionButtonActive) /* = 136 */
+X(AIRSteam_GetAnalogActionData) /* = 137 */
+X(AIRSteam_RunFrame) /* = 138 */
+X(AIRSteam_GetConnectedControllers) /* = 139 */
+X(AIRSteam_ActivateActionSet) /* = 140 */
+X(AIRSteam_GetHandleAllControllers) /* = 141 */
+X(AIRSteam_GetDigitalActionOrigins) /* = 142 */
+X(AIRSteam_GetAnalogActionOrigins) /* = 143 */
+X(AIRSteam_GetGlyphSVGForActionOrigin) /* = 144 */
+X(AIRSteam_GetGlyphPNGForActionOrigin) /* = 145 */
+X(AIRSteam_GetStringForActionOrigin) /* = 146 */
+X(AIRSteam_ShowGamepadTextInput) /* = 147 */
+X(AIRSteam_ShowFloatingGamepadTextInput) /* = 148 */
+X(AIRSteam_SetLEDColor) /* = 149 */
+X(AIRSteam_TriggerVibration) /* = 150 */
+X(AIRSteam_GetInputTypeForHandle) /* = 151 */
+X(AIRSteam_TranslateActionOrigin) /* = 152 */
+X(AIRSteam_SteamInputShutdown) /* = 153 */
+X(AIRSteam_DismissFloatingGamepadTextInput) /* = 154 */
+/***************/
+/* Matchmaking */
+/***************/
+X(AIRSteam_GetCurrentLobbyID) /* = 155 */
+X(AIRSteam_CreateLobby) /* = 156 */
+X(AIRSteam_JoinLobby) /* = 157 */
+X(AIRSteam_LeaveLobby) /* = 158 */
+X(AIRSteam_GetNumLobbyMembers) /* = 159 */
+X(AIRSteam_GetLobbyMemberByIndex) /* = 160 */
+X(AIRSteam_GetLobbyChatUpdateResult) /* = 161 */
+X(AIRSteam_GetLobbyOwner) /* = 162 */
+/**********************/
+/* Networking (Utils) */
+/**********************/
+X(AIRSteam_InitRelayNetworkAccess) /* = 163 */
+/*************************/
+/* Networking (Messages) */
+/*************************/
+X(AIRSteam_GetSteamNetworkingMessagesSessionRequestRemoteID) /* = 164 */
+X(AIRSteam_AcceptSessionWithUser) /* = 165 */
+X(AIRSteam_CloseSessionWithUser) /* = 166 */
+X(AIRSteam_SendMessageToUser) /* = 167 */
+X(AIRSteam_ReceiveMessagesOnChannel) /* = 168 */
+X(AIRSteam_CloseChannelWithUser) /* = 169 */
 /**********************************/
 /* Other non-Steamworks functions */
 /**********************************/
-X(AIRSteam_GetEnv) /* = 154 */
-X(AIRSteam_SetEnv) /* = 155 */
+X(AIRSteam_GetEnv) /* = 170 */
+X(AIRSteam_SetEnv) /* = 171 */
 /* END GENERATED CODE */

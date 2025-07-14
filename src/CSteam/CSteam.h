@@ -166,6 +166,7 @@ public:
 	Image GetSmallFriendAvatar(CSteamID steamId);
 	Image GetMediumFriendAvatar(CSteamID steamId);
 	Image GetLargeFriendAvatar(CSteamID steamId);
+	bool GameLobbyJoinRequestResponse(GameLobbyJoinRequested_t* out);
 
 	int GetCoplayFriendCount();
 	CSteamID GetCoplayFriend(int index);
@@ -236,6 +237,26 @@ public:
 	ESteamInputType GetInputTypeForHandle(InputHandle_t inputHandle);
 	EInputActionOrigin TranslateActionOrigin(ESteamInputType eDestinationInputType, EInputActionOrigin eSourceOrigin);
     
+	// Matchmaking
+	CSteamID GetCurrentLobbyID();
+	bool CreateLobby(ELobbyType eLobbyType, int cMaxMembers);
+	bool JoinLobby(CSteamID steamIDLobby);
+	void LeaveLobby(CSteamID steamIDLobby);
+	int GetNumLobbyMembers(CSteamID steamIDLobby);
+	CSteamID GetLobbyMemberByIndex(CSteamID steamIDLobby, int iMember);
+	bool LobbyChatUpdateResult(LobbyChatUpdate_t* out);
+	CSteamID GetLobbyOwner(CSteamID steamIDLobby);
+
+	// Networking (Utils)
+	void InitRelayNetworkAccess();
+
+	// Networking (Messages)
+	bool GetSteamNetworkingMessagesSessionRequestRemoteID(SteamNetworkingIdentity *out);
+	bool AcceptSessionWithUser(const SteamNetworkingIdentity &identityRemote);
+	bool CloseSessionWithUser(const SteamNetworkingIdentity &identityRemote);
+	EResult SendMessageToUser(const SteamNetworkingIdentity &identityRemote, const void *pubData, uint32 cubData, int nSendFlags, int nRemoteChannel);
+	int ReceiveMessagesOnChannel(int nLocalChannel, SteamNetworkingMessage_t **ppOutMessages, int nMaxMessages);
+	bool CloseChannelWithUser(const SteamNetworkingIdentity &identityRemote, int nLocalChannel);
 
 protected:
 	virtual void DispatchEvent(char* code, char* level) = 0;
@@ -244,6 +265,7 @@ private:
 	// 	CSteamAPIContext m_ctx; // there is no longer a CSteamAPIContext
 	// Our current appId
 	uint32 m_iAppID;
+	CSteamID m_iCurrentLobbyId;
 	bool m_bInitialized;
 
 	// the most recently received *Result
@@ -256,6 +278,9 @@ private:
 	std::map<UGCHandle_t, RemoteStorageDownloadUGCResult_t> m_DownloadResults;
 	std::map<PublishedFileId_t, RemoteStorageGetPublishedFileDetailsResult_t> m_PublishedFileDetails;
 	std::queue<MicroTxnAuthorizationResponse_t> m_MicroTxnResponses;
+	std::queue<LobbyChatUpdate_t> m_LobbyChatUpdates;
+	std::queue<SteamNetworkingIdentity> m_iSteamNetworkingMessagesCurrentRemoteIdentitys;
+	std::queue<GameLobbyJoinRequested_t> m_GameLobbyJoinRequests;
 
 	Image GetImageData(int image_handle);
 
@@ -292,6 +317,7 @@ private:
 	
 	// friends
 	STEAM_CALLBACK(CSteam, OnAvatarImageLoaded, AvatarImageLoaded_t, m_CallbackAvatarImageLoaded);
+	STEAM_CALLBACK(CSteam, OnGameLobbyJoinRequested, GameLobbyJoinRequested_t, m_CallbackGameLobbyJoinRequested);
 	
 	// leaderboards
 	STEAM_CALLRESULT(CSteam, OnFindLeaderboard,
@@ -377,6 +403,22 @@ private:
 	// Microtransaction
 	STEAM_CALLBACK(CSteam, OnMicroTxnAuthorizationResponse, MicroTxnAuthorizationResponse_t,
 	               m_CallbackMicroTxnAuthorizationResponse);
+
+	// Matchmaking
+	STEAM_CALLBACK(CSteam, OnLobbyEntered, LobbyEnter_t,
+				   m_CallbackLobbyEntered);
+	STEAM_CALLBACK(CSteam, OnLobbyChatUpdate, LobbyChatUpdate_t,
+				   m_CallbackLobbyChatUpdate);
+	STEAM_CALLRESULT(CSteam, OnLobbyCreated, LobbyCreated_t,
+					m_CallbackLobbyCreated);
+	STEAM_CALLRESULT(CSteam, OnLobbyEntered, LobbyEnter_t,
+					m_CallbackLobbyEnteredResult);
+
+	// Networking (Messages)
+	STEAM_CALLBACK(CSteam, OnSteamNetworkingMessagesSessionRequest, SteamNetworkingMessagesSessionRequest_t,
+				   m_CallbackSteamNetworkingMessagesSessionRequest);
+	STEAM_CALLBACK(CSteam, OnSteamNetworkingMessagesSessionFailed, SteamNetworkingMessagesSessionFailed_t,
+				   m_CallbackSteamNetworkingMessagesSessionFailed);
 
 #undef STEAM_CALLRESULT
 

@@ -151,6 +151,7 @@ package com.amanitadesign.steam {
 		function setPlayedWith(steamID:String):Boolean
 		function getCoplayFriendCount():int
 		function getCoplayFriend(index:int):String
+		function getGameLobbyJoinRequestResponse():GameLobbyJoinRequestResponse
 		/******************************/
 		/* Authentication & Ownership */
 		/******************************/
@@ -220,6 +221,30 @@ package com.amanitadesign.steam {
 		function translateActionOrigin(destinationInputType:int, sourceOrigin:String):String
 		function steamInputShutdown():Boolean
 		function dismissFloatingGamepadTextInput():Boolean
+		/***************/
+		/* Matchmaking */
+		/***************/
+		function getCurrentLobbyID():String
+		function createLobby(lobbyType:int, maxMembers:int):Boolean
+		function joinLobby(steamIDLobby:String):Boolean
+		function leaveLobby(steamIDLobby:String):Boolean
+		function getNumLobbyMembers(steamIDLobby:String):int
+		function getLobbyMemberByIndex(steamIDLobby:String, member:int):String
+		function getLobbyChatUpdateResult():LobbyChatUpdate
+		function getLobbyOwner(steamIDLobby:String):String
+		/**********************/
+		/* Networking (Utils) */
+		/**********************/
+		function initRelayNetworkAccess():Boolean
+		/*************************/
+		/* Networking (Messages) */
+		/*************************/
+		function getSteamNetworkingMessagesSessionRequestRemoteID():String
+		function acceptSessionWithUser(identityRemote:String):Boolean
+		function closeSessionWithUser(identityRemote:String):Boolean
+		function sendMessageToUser(identityRemote:String, data:ByteArray, sendFlags:int, remoteChannel:int):int
+		function receiveMessagesOnChannel(localChannel:int, maxMessages:int):Vector.<NetworkingMessage>
+		function closeChannelWithUser(identityRemote:String, localChannel:int):Boolean
 		/**********************************/
 		/* Other non-Steamworks functions */
 		/**********************************/
