@@ -973,9 +973,9 @@ public function steamInputShutdown():Boolean
 // @default false
 public function dismissFloatingGamepadTextInput():Boolean
 
-/********************/
+/***************/
 /* Matchmaking */
-/********************/
+/***************/
 
 // getCurrentLobbyID()
 // @default "0"
@@ -1005,10 +1005,16 @@ public function getLobbyMemberByIndex(steamIDLobby:String, member:int):String
 // @default null
 public function getLobbyChatUpdateResult():LobbyChatUpdate
 
+/**********************/
+/* Networking (Utils) */
+/**********************/
+// initRelayNetworkAccess()
+// @default false
+public function initRelayNetworkAccess():Boolean
 
-/********************/
+/*************************/
 /* Networking (Messages) */
-/********************/
+/*************************/
 
 // getSteamNetworkingMessagesSessionRequestRemoteID()
 // @default "0"

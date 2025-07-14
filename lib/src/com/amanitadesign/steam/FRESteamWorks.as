@@ -774,9 +774,9 @@ package com.amanitadesign.steam {
 			return _ExtensionContext.call("AIRSteam_DismissFloatingGamepadTextInput") as Boolean;
 		}
 
-		/********************/
+		/***************/
 		/* Matchmaking */
-		/********************/
+		/***************/
 		public function getCurrentLobbyID():String {
 			return _ExtensionContext.call("AIRSteam_GetCurrentLobbyID") as String;
 		}
@@ -805,9 +805,16 @@ package com.amanitadesign.steam {
 			return _ExtensionContext.call("AIRSteam_GetLobbyChatUpdateResult") as LobbyChatUpdate;
 		}
 
-		/********************/
+		/**********************/
+		/* Networking (Utils) */
+		/**********************/
+		public function initRelayNetworkAccess():Boolean {
+			return _ExtensionContext.call("AIRSteam_InitRelayNetworkAccess") as Boolean;
+		}
+
+		/*************************/
 		/* Networking (Messages) */
-		/********************/
+		/*************************/
 		public function getSteamNetworkingMessagesSessionRequestRemoteID():String {
 			return _ExtensionContext.call("AIRSteam_GetSteamNetworkingMessagesSessionRequestRemoteID") as String;
 		}

@@ -12,9 +12,6 @@
 
 #include <cstddef>
 #include <cstdlib>
-#include <steam/isteammatchmaking.h>
-#include <steam/steamclientpublic.h>
-#include <steam/steamnetworkingtypes.h>
 
 #include "FREConverters.h"
 
@@ -2067,6 +2064,15 @@ AIR_FUNC(AIRSteam_GetLobbyChatUpdateResult)
 	return result;
 }
 
+/*
+ * Networking (Utils)
+ */
+AIR_FUNC(AIRSteam_InitRelayNetworkAccess)
+{
+	ARG_CHECK(0, FREBool(false));
+	g_Steam->InitRelayNetworkAccess();
+	return FREBool(true);
+}
 
 /*
  * Networking (Messages)

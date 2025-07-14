@@ -13,7 +13,6 @@
 #include <algorithm>
 #include <stdio.h>
 #include <sstream>
-#include <steam/steamnetworkingtypes.h>
 
 #include "ResponseTypes.h"
 
@@ -1177,6 +1176,13 @@ bool CSteam::LobbyChatUpdateResult(LobbyChatUpdate_t* out) {
 
 	return false;
 }
+
+// Networking (Utils)
+void CSteam::InitRelayNetworkAccess()
+{
+	SteamNetworkingUtils()->InitRelayNetworkAccess();
+}
+
 
 // Networking (Messages)
 bool CSteam::GetSteamNetworkingMessagesSessionRequestRemoteID(SteamNetworkingIdentity *out)

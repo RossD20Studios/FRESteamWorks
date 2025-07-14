@@ -11,7 +11,6 @@
 #ifndef CSTEAM_H
 #define CSTEAM_H
 
-#include <steam/isteammatchmaking.h>
 #if (defined(_MSC_VER) && (_MSC_VER < 1900))
 	#define snprintf _snprintf
 #endif
@@ -245,6 +244,9 @@ public:
 	int GetNumLobbyMembers(CSteamID steamIDLobby);
 	CSteamID GetLobbyMemberByIndex(CSteamID steamIDLobby, int iMember);
 	bool LobbyChatUpdateResult(LobbyChatUpdate_t* out);
+
+	// Networking (Utils)
+	void InitRelayNetworkAccess();
 
 	// Networking (Messages)
 	bool GetSteamNetworkingMessagesSessionRequestRemoteID(SteamNetworkingIdentity *out);
