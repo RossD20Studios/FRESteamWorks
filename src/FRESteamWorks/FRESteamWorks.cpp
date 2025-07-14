@@ -1380,7 +1380,7 @@ AIR_FUNC(AIRSteam_GetGameLobbyJoinRequestResponse)
 	g_Steam->GameLobbyJoinRequestResponse(&gameLobbyJoinRequest);
 
 	FREObject result;
-	FRENewObject((const uint8_t*)"com.amanitadesign.steam.GameLobbyJoinRequestedResults", 0, NULL, &result, NULL);
+	FRENewObject((const uint8_t*)"com.amanitadesign.steam.GameLobbyJoinRequestResponse", 0, NULL, &result, NULL);
 	SET_PROP(result, "steamIDLobby", FREUint64(gameLobbyJoinRequest.m_steamIDLobby.ConvertToUint64()));
 	SET_PROP(result, "steamIDFriend", FREUint64(gameLobbyJoinRequest.m_steamIDFriend.ConvertToUint64()));
 	return result;
