@@ -1415,7 +1415,12 @@ void CSteam::OnLobbyCreated(LobbyCreated_t *pCallback, bool failure) {
 	DispatchEvent(RESPONSE_OnLobbyCreated, pCallback->m_eResult);
 }
 
-void CSteam::OnLobbyEntered(LobbyEnter_t *pCallback, bool failure = false) {
+void CSteam::OnLobbyEntered(LobbyEnter_t *pCallback) {
+	OnLobbyEntered(pCallback, false);
+}
+
+
+void CSteam::OnLobbyEntered(LobbyEnter_t *pCallback, bool failure) {
 	if(pCallback->m_EChatRoomEnterResponse == k_EChatRoomEnterResponseSuccess)
 	{
 		DispatchEvent(RESPONSE_OnLobbyEntered, k_EResultOK);
