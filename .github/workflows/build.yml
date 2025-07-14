@@ -138,7 +138,7 @@ jobs:
           touch lib/bin/FRESteamworks.so
           
           cd src
-          ln - s ~/SDKS ../../SDKS
+          ln -s ~/SDKS ../../SDKS
           xcodebuild -project FRESteamWorks.xcodeproj
 
       - uses: actions/upload-artifact@v4
