@@ -2144,15 +2144,15 @@ AIR_FUNC(AIRSteam_SendMessageToUser)
 	int32 nRemoteChannel;
 
 	FREGetUint64(argv[0], &steamID);
-	FREAcquireByteArray(argv[1], &msg);
 	FREGetInt32(argv[2], &nSendFlags);
 	FREGetInt32(argv[3], &nRemoteChannel);
 	
 	SteamNetworkingIdentity netID;
 	netID.SetSteamID64(steamID);
 
+	FREAcquireByteArray(argv[1], &msg);
 	int result = g_Steam->SendMessageToUser(netID, msg.bytes, msg.length, nSendFlags, nRemoteChannel);
-	FREReleaseByteArray(&msg);
+	FREReleaseByteArray(argv[1]);
 	
 	return FREInt(result);
 }
