@@ -13,6 +13,7 @@
 #include <algorithm>
 #include <stdio.h>
 #include <sstream>
+#include <steam/isteamfriends.h>
 
 #include "ResponseTypes.h"
 
@@ -31,6 +32,7 @@ CSteam::CSteam():
     m_CallbackAchievementStored(this, &CSteam::OnAchievementStored),
     m_CallbackAchievementIconFetched(this, &CSteam::OnUserAchievementIconFetched),
     m_CallbackAvatarImageLoaded(this, &CSteam::OnAvatarImageLoaded),
+	m_CallbackGameLobbyJoinRequested(this, &CSteam::OnGameLobbyJoinRequested),
 	m_CallbackGetAuthSessionTicketResponse(this, &CSteam::OnGetAuthSessionTicketResponse),
 	m_OnValidateAuthTicketResponse(this, &CSteam::OnValidateAuthTicketResponse),
 	m_CallbackGameOverlayActivated(this, &CSteam::OnGameOverlayActivated),
@@ -860,6 +862,8 @@ bool CSteam::SetPlayedWith(CSteamID steamId) {
 	return true;
 }
 
+
+
 // authentication & ownership
 HAuthTicket CSteam::GetAuthSessionTicket(char** data, uint32* length, CSteamID steamID) {
 	if (!m_bInitialized) return k_HAuthTicketInvalid;
@@ -965,6 +969,18 @@ bool CSteam::ActivateGameOverlayInviteDialog(CSteamID lobbyId) {
 	return true;
 }
 
+bool CSteam::GameLobbyJoinRequestResponse(GameLobbyJoinRequested_t* out) {
+	if (!m_GameLobbyJoinRequests.empty()) {
+		*out = m_GameLobbyJoinRequests.front();
+		m_GameLobbyJoinRequests.pop();
+
+		return true;
+	}
+
+	return false;
+}
+
+// overlay
 bool CSteam::IsOverlayEnabled() {
 	if (!m_bInitialized) return false;
 
@@ -1251,6 +1267,10 @@ void CSteam::OnAvatarImageLoaded(AvatarImageLoaded_t *pCallback) {
 	DispatchEvent(RESPONSE_OnAvatarImageLoaded, k_EResultOK);
 }
 
+void CSteam::OnGameLobbyJoinRequested(GameLobbyJoinRequested_t *pCallback) {
+	m_GameLobbyJoinRequests.push(*pCallback);
+	DispatchEvent(RESPONSE_GameLobbyJoinRequested, k_EResultOK);
+}
 
 
 void CSteam::OnUserStatsStored(UserStatsStored_t *pCallback) {

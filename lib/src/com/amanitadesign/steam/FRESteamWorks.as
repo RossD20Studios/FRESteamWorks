@@ -561,6 +561,10 @@ package com.amanitadesign.steam {
 			return _ExtensionContext.call("AIRSteam_GetCoplayFriend", index) as String;
 		}
 
+		public function getGameLobbyJoinRequestResponse():GameLobbyJoinRequestResponse {
+			return _ExtensionContext.call("AIRSteam_GetGameLobbyJoinRequestResponse") as GameLobbyJoinRequestResponse;
+		}
+
 		/******************************/
 		/* Authentication & Ownership */
 		/******************************/

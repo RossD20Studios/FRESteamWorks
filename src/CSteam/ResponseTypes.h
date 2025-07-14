@@ -44,6 +44,7 @@ enum ResponseTypes {
 	RESPONSE_OnEncryptedAppTicketResponse,
 	RESPONSE_OnUserAchievementIconFetched,
 	RESPONSE_OnAvatarImageLoaded,
+	RESPONSE_GameLobbyJoinRequested,
 	RESPONSE_OnLobbyCreated,
 	RESPONSE_OnLobbyEntered,
 	RESPONSE_OnLobbyChatUpdate,

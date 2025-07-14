@@ -1372,6 +1372,20 @@ AIR_FUNC(AIRSteam_SetPlayedWith) {
 	return FREBool(g_Steam->SetPlayedWith(CSteamID(steamId)));
 }
 
+AIR_FUNC(AIRSteam_GetGameLobbyJoinRequestResponse) 
+{
+	ARG_CHECK(0, nullptr);
+	GameLobbyJoinRequested_t gameLobbyJoinRequest; 
+	g_Steam->GameLobbyJoinRequestResponse(&gameLobbyJoinRequest);
+
+	FREObject result;
+	FRENewObject((const uint8_t*)"com.amanitadesign.steam.GameLobbyJoinRequestedResults", 0, NULL, &result, NULL);
+	SET_PROP(result, "steamIDLobby", FREUint64(gameLobbyJoinRequest.m_steamIDLobby.ConvertToUint64()));
+	SET_PROP(result, "steamIDFriend", FREUint64(gameLobbyJoinRequest.m_steamIDFriend.ConvertToUint64()));
+	return result;
+}
+
+
 /*
  * authentication & ownership
  */

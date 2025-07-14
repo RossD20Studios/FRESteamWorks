@@ -166,6 +166,7 @@ public:
 	Image GetSmallFriendAvatar(CSteamID steamId);
 	Image GetMediumFriendAvatar(CSteamID steamId);
 	Image GetLargeFriendAvatar(CSteamID steamId);
+	bool GameLobbyJoinRequestResponse(GameLobbyJoinRequested_t* out);
 
 	int GetCoplayFriendCount();
 	CSteamID GetCoplayFriend(int index);
@@ -278,6 +279,7 @@ private:
 	std::queue<MicroTxnAuthorizationResponse_t> m_MicroTxnResponses;
 	std::queue<LobbyChatUpdate_t> m_LobbyChatUpdates;
 	std::queue<SteamNetworkingIdentity> m_iSteamNetworkingMessagesCurrentRemoteIdentitys;
+	std::queue<GameLobbyJoinRequested_t> m_GameLobbyJoinRequests;
 
 	Image GetImageData(int image_handle);
 
@@ -314,6 +316,7 @@ private:
 	
 	// friends
 	STEAM_CALLBACK(CSteam, OnAvatarImageLoaded, AvatarImageLoaded_t, m_CallbackAvatarImageLoaded);
+	STEAM_CALLBACK(CSteam, OnGameLobbyJoinRequested, GameLobbyJoinRequested_t, m_CallbackGameLobbyJoinRequested);
 	
 	// leaderboards
 	STEAM_CALLRESULT(CSteam, OnFindLeaderboard,

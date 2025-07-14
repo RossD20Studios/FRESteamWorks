@@ -678,7 +678,9 @@ public function getCoplayFriendCount():int
 // Gets the Steam ID of the recently played with user at the given index.
 public function getCoplayFriend(index:int):String
 
-
+// getGameLobbyJoinRequestResult
+// @default null
+public function getGameLobbyJoinRequestResponse():GameLobbyJoinRequestResponse
 
 
 /******************************/

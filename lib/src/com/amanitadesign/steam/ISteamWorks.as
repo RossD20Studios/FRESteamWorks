@@ -151,6 +151,7 @@ package com.amanitadesign.steam {
 		function setPlayedWith(steamID:String):Boolean
 		function getCoplayFriendCount():int
 		function getCoplayFriend(index:int):String
+		function getGameLobbyJoinRequestResponse():GameLobbyJoinRequestResponse
 		/******************************/
 		/* Authentication & Ownership */
 		/******************************/
