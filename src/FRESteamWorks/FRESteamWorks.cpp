@@ -12,6 +12,7 @@
 
 #include <cstddef>
 #include <cstdlib>
+#include <cstring>
 
 #include "FREConverters.h"
 
@@ -2179,7 +2180,7 @@ AIR_FUNC(AIRSteam_ReceiveMessagesOnChannel)
 			SteamNetworkingMessage_t *msg = ppOutMessages[i];
 
 			FREByteArray msgByteArray;
-			msgByteArray.bytes = (uint8_t *)msg->m_pData;
+			memcpy(msgByteArray.bytes, msg->m_pData, msg->m_cbSize);
 			msgByteArray.length = msg->m_cbSize;
 
 			FREObject msgByteArrayObj;
