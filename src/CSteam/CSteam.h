@@ -245,6 +245,7 @@ public:
 	int GetNumLobbyMembers(CSteamID steamIDLobby);
 	CSteamID GetLobbyMemberByIndex(CSteamID steamIDLobby, int iMember);
 	bool LobbyChatUpdateResult(LobbyChatUpdate_t* out);
+	CSteamID GetLobbyOwner(CSteamID steamIDLobby);
 
 	// Networking (Utils)
 	void InitRelayNetworkAccess();

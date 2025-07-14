@@ -1007,6 +1007,10 @@ public function getLobbyMemberByIndex(steamIDLobby:String, member:int):String
 // @default null
 public function getLobbyChatUpdateResult():LobbyChatUpdate
 
+// getLobbyOwner()
+// @default "0"
+public function getLobbyOwner(steamIDLobby:String):String
+
 /**********************/
 /* Networking (Utils) */
 /**********************/

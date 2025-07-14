@@ -2078,6 +2078,16 @@ AIR_FUNC(AIRSteam_GetLobbyChatUpdateResult)
 	return result;
 }
 
+AIR_FUNC(AIRSteam_GetLobbyOwner)
+{
+	ARG_CHECK(1, FREUint64(0));
+
+	uint64 steamIDLobby;
+	FREGetUint64(argv[0], &steamIDLobby);
+	return FREUint64(g_Steam->GetLobbyOwner(steamIDLobby).ConvertToUint64());
+}
+
+
 /*
  * Networking (Utils)
  */

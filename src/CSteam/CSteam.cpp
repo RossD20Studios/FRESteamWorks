@@ -14,6 +14,7 @@
 #include <stdio.h>
 #include <sstream>
 #include <steam/isteamfriends.h>
+#include <steam/isteammatchmaking.h>
 
 #include "ResponseTypes.h"
 
@@ -1180,6 +1181,11 @@ CSteamID CSteam::GetLobbyMemberByIndex(CSteamID steamIDLobby, int iMember)
 int CSteam::GetNumLobbyMembers(CSteamID steamIDLobby)
 {
 	return SteamMatchmaking()->GetNumLobbyMembers(steamIDLobby);
+}
+
+CSteamID CSteam::GetLobbyOwner(CSteamID steamIDLobby)
+{
+	return SteamMatchmaking()->GetLobbyOwner(steamIDLobby);
 }
 
 bool CSteam::LobbyChatUpdateResult(LobbyChatUpdate_t* out) {

@@ -198,22 +198,23 @@ X(AIRSteam_LeaveLobby) /* = 158 */
 X(AIRSteam_GetNumLobbyMembers) /* = 159 */
 X(AIRSteam_GetLobbyMemberByIndex) /* = 160 */
 X(AIRSteam_GetLobbyChatUpdateResult) /* = 161 */
+X(AIRSteam_GetLobbyOwner) /* = 162 */
 /**********************/
 /* Networking (Utils) */
 /**********************/
-X(AIRSteam_InitRelayNetworkAccess) /* = 162 */
+X(AIRSteam_InitRelayNetworkAccess) /* = 163 */
 /*************************/
 /* Networking (Messages) */
 /*************************/
-X(AIRSteam_GetSteamNetworkingMessagesSessionRequestRemoteID) /* = 163 */
-X(AIRSteam_AcceptSessionWithUser) /* = 164 */
-X(AIRSteam_CloseSessionWithUser) /* = 165 */
-X(AIRSteam_SendMessageToUser) /* = 166 */
-X(AIRSteam_ReceiveMessagesOnChannel) /* = 167 */
-X(AIRSteam_CloseChannelWithUser) /* = 168 */
+X(AIRSteam_GetSteamNetworkingMessagesSessionRequestRemoteID) /* = 164 */
+X(AIRSteam_AcceptSessionWithUser) /* = 165 */
+X(AIRSteam_CloseSessionWithUser) /* = 166 */
+X(AIRSteam_SendMessageToUser) /* = 167 */
+X(AIRSteam_ReceiveMessagesOnChannel) /* = 168 */
+X(AIRSteam_CloseChannelWithUser) /* = 169 */
 /**********************************/
 /* Other non-Steamworks functions */
 /**********************************/
-X(AIRSteam_GetEnv) /* = 169 */
-X(AIRSteam_SetEnv) /* = 170 */
+X(AIRSteam_GetEnv) /* = 170 */
+X(AIRSteam_SetEnv) /* = 171 */
 /* END GENERATED CODE */

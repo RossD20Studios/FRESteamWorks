@@ -231,6 +231,7 @@ package com.amanitadesign.steam {
 		function getNumLobbyMembers(steamIDLobby:String):int
 		function getLobbyMemberByIndex(steamIDLobby:String, member:int):String
 		function getLobbyChatUpdateResult():LobbyChatUpdate
+		function getLobbyOwner(steamIDLobby:String):String
 		/**********************/
 		/* Networking (Utils) */
 		/**********************/

@@ -809,6 +809,10 @@ package com.amanitadesign.steam {
 			return _ExtensionContext.call("AIRSteam_GetLobbyChatUpdateResult") as LobbyChatUpdate;
 		}
 
+		public function getLobbyOwner(steamIDLobby:String):String {
+			return _ExtensionContext.call("AIRSteam_GetLobbyOwner", steamIDLobby) as String;
+		}
+
 		/**********************/
 		/* Networking (Utils) */
 		/**********************/
