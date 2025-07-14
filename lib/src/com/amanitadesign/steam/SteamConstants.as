@@ -45,6 +45,11 @@ package com.amanitadesign.steam {
 		public static const RESPONSE_OnEncryptedAppTicketResponse:int = 29;
 		public static const RESPONSE_OnUserAchievementIconFetched:int = 30;
 		public static const RESPONSE_OnAvatarImageLoaded:int = 31;
+		public static const RESPONSE_OnLobbyCreated:int = 32;
+		public static const RESPONSE_OnLobbyEntered:int = 33;
+		public static const RESPONSE_OnLobbyChatUpdate:int = 34;
+		public static const RESPONSE_OnSteamNetworkingMessagesSessionRequest:int = 35;
+		public static const RESPONSE_OnSteamNetworkingMessagesSessionFailed:int = 36;
 		// END GENERATED CODE
 	}
 }

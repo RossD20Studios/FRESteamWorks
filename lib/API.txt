@@ -973,6 +973,67 @@ public function steamInputShutdown():Boolean
 // @default false
 public function dismissFloatingGamepadTextInput():Boolean
 
+/********************/
+/* Matchmaking */
+/********************/
+
+// getCurrentLobbyID()
+// @default "0"
+public function getCurrentLobbyID():String
+
+// createLobby(lobbyType, maxMembers)
+// @default false
+public function createLobby(lobbyType:int, maxMembers:int):Boolean
+
+// joinLobby(steamIDLobby)
+// @default false
+public function joinLobby(steamIDLobby:String):Boolean
+
+// leaveLobby(steamIDLobby)
+// @default false
+public function leaveLobby(steamIDLobby:String):Boolean
+
+// getNumLobbyMembers(steamIDLobby)
+// @default 0
+public function getNumLobbyMembers(steamIDLobby:String):int
+
+// getLobbyMemberByIndex(steamIDLobby, member)
+// @default "0"
+public function getLobbyMemberByIndex(steamIDLobby:String, member:int):String
+
+// getLobbyChatUpdateResult()
+// @default null
+public function getLobbyChatUpdateResult():LobbyChatUpdate
+
+
+/********************/
+/* Networking (Messages) */
+/********************/
+
+// getSteamNetworkingMessagesSessionRequestRemoteID()
+// @default "0"
+public function getSteamNetworkingMessagesSessionRequestRemoteID():String
+
+// acceptSessionWithUser(identityRemote)
+// @default false
+public function acceptSessionWithUser(identityRemote:String):Boolean
+
+// closeSessionWithUser(identityRemote)
+// @default false
+public function closeSessionWithUser(identityRemote:String):Boolean
+
+// sendMessageToUser(identityRemote, data, sendFlags, remoteChannel)
+// @default 0
+public function sendMessageToUser(identityRemote:String, data:ByteArray, sendFlags:int, remoteChannel:int):int
+
+// receiveMessagesOnChannel(localChannel, maxMessages)
+// @default null
+public function receiveMessagesOnChannel(localChannel:int, maxMessages:int):Vector.<NetworkingMessage>
+
+// closeChannelWithUser(identityRemote, localChannel)
+// @default false
+public function closeChannelWithUser(identityRemote:String, localChannel:int):Boolean
+
 /**********************************/
 /* Other non-Steamworks functions */
 /**********************************/

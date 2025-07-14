@@ -10,7 +10,11 @@
 
 #include "FRESteamWorks.h"
 
+#include <cstddef>
 #include <cstdlib>
+#include <steam/isteammatchmaking.h>
+#include <steam/steamclientpublic.h>
+#include <steam/steamnetworkingtypes.h>
 
 #include "FREConverters.h"
 
@@ -1935,7 +1939,7 @@ AIR_FUNC(AIRSteam_SetLEDColor)
 	FREGetInt32(argv[3], &nColorB);
 	FREGetUint32(argv[3], &nFlags);
 
-	g_Steam->SetLEDColor(inputHandle, nColorR, nColorG, nColorB, nFlags);
+	g_Steam->SetLEDColor(inputHandle, (uint8)nColorR, (uint8)nColorG, (uint8)nColorB, nFlags);
 	return FREBool(true);
 
 }
@@ -1950,7 +1954,7 @@ AIR_FUNC(AIRSteam_TriggerVibration)
 	FREGetUint64(argv[0], &inputHandle);
 	FREGetUint32(argv[1], &leftSpeed);
 	FREGetUint32(argv[2], &rightSpeed);
-	g_Steam->TriggerVibration(inputHandle, leftSpeed, rightSpeed);
+	g_Steam->TriggerVibration(inputHandle, (uint8)leftSpeed, (uint8)rightSpeed);
 	return FREBool(true);
 
 }
@@ -1978,6 +1982,212 @@ AIR_FUNC(AIRSteam_TranslateActionOrigin)
 
 	return FREUint64(g_Steam->TranslateActionOrigin((ESteamInputType)eDestinationInputType, (EInputActionOrigin)eSourceOrigin));
 
+}
+
+/*
+ * Matchmaking
+ */
+AIR_FUNC(AIRSteam_GetCurrentLobbyID)
+{
+	ARG_CHECK(0, FREUint64(0));
+	return FREUint64(g_Steam->GetCurrentLobbyID().ConvertToUint64());
+}
+
+AIR_FUNC(AIRSteam_CreateLobby)
+{
+	ARG_CHECK(2, FREBool(false));
+
+	int32 eLobbyType;
+	int32 cMaxMembers;
+	
+	FREGetInt32(argv[0], &eLobbyType);
+	FREGetInt32(argv[1], &cMaxMembers);
+
+	return FREBool(g_Steam->CreateLobby(ELobbyType(eLobbyType), cMaxMembers));
+}
+
+AIR_FUNC(AIRSteam_JoinLobby)
+{
+	ARG_CHECK(1, FREBool(false));
+
+	uint64 steamIDLobby;
+	FREGetUint64(argv[0], &steamIDLobby);
+	
+	return FREBool(g_Steam->JoinLobby(steamIDLobby));
+}
+
+AIR_FUNC(AIRSteam_LeaveLobby)
+{
+	ARG_CHECK(1, FREBool(false));
+
+	uint64 steamIDLobby;
+	FREGetUint64(argv[0], &steamIDLobby);
+
+	g_Steam->LeaveLobby(steamIDLobby);
+	return FREBool(true);
+}
+
+AIR_FUNC(AIRSteam_GetNumLobbyMembers)
+{
+	ARG_CHECK(1, FREInt(0));
+
+	uint64 steamIDLobby;
+	FREGetUint64(argv[0], &steamIDLobby);
+
+	return FREInt(g_Steam->GetNumLobbyMembers(steamIDLobby));
+}
+
+AIR_FUNC(AIRSteam_GetLobbyMemberByIndex)
+{
+	ARG_CHECK(2, FREUint64(0));
+
+	uint64 steamIDLobby;
+	int32 iMember;
+
+	FREGetUint64(argv[0], &steamIDLobby);
+	FREGetInt32(argv[1], &iMember);
+
+	return FREUint64(g_Steam->GetLobbyMemberByIndex(steamIDLobby, iMember).ConvertToUint64());
+}
+
+AIR_FUNC(AIRSteam_GetLobbyChatUpdateResult)
+{
+	ARG_CHECK(0, nullptr);
+	
+	FREObject result;
+	FRENewObject((const uint8_t*)"com.amanitadesign.steam.LobbyChatUpdate", 0, NULL, &result, NULL);
+	
+	LobbyChatUpdate_t chatUpdate;
+	g_Steam->LobbyChatUpdateResult(&chatUpdate);
+
+	SET_PROP(result, "steamIDLobby", FREUint64(chatUpdate.m_ulSteamIDLobby));
+	SET_PROP(result, "steamIDUserChanged", FREUint64(chatUpdate.m_ulSteamIDUserChanged));
+	SET_PROP(result, "steamIDMakingChange", FREUint64(chatUpdate.m_ulSteamIDMakingChange));
+	SET_PROP(result, "chatMemberStateChange", FREUint(chatUpdate.m_rgfChatMemberStateChange));
+	return result;
+}
+
+
+/*
+ * Networking (Messages)
+ */
+AIR_FUNC(AIRSteam_GetSteamNetworkingMessagesSessionRequestRemoteID)
+{
+	ARG_CHECK(0, FREUint64(0));
+	SteamNetworkingIdentity netID;
+	g_Steam->GetSteamNetworkingMessagesSessionRequestRemoteID(&netID);
+	return FREUint64(netID.GetSteamID64());
+}
+
+AIR_FUNC(AIRSteam_AcceptSessionWithUser)
+{
+	ARG_CHECK(1, FREBool(false));
+	
+	uint64 steamID;
+	FREGetUint64(argv[0], &steamID);
+	SteamNetworkingIdentity netID;
+	netID.SetSteamID64(steamID);
+
+	return FREBool(g_Steam->AcceptSessionWithUser(netID));
+}
+
+AIR_FUNC(AIRSteam_CloseSessionWithUser)
+{
+	ARG_CHECK(1, FREBool(false));
+	
+	uint64 steamID;
+	FREGetUint64(argv[0], &steamID);
+	SteamNetworkingIdentity netID;
+	netID.SetSteamID64(steamID);
+	
+	return FREBool(g_Steam->CloseSessionWithUser(netID));
+}
+
+AIR_FUNC(AIRSteam_SendMessageToUser)
+{
+	ARG_CHECK(4, FREInt(0));
+	
+	uint64 steamID;
+	FREByteArray msg;
+	int32 nSendFlags;
+	int32 nRemoteChannel;
+
+	FREGetUint64(argv[0], &steamID);
+	FREAcquireByteArray(argv[1], &msg);
+	FREGetInt32(argv[2], &nSendFlags);
+	FREGetInt32(argv[3], &nRemoteChannel);
+	
+	SteamNetworkingIdentity netID;
+	netID.SetSteamID64(steamID);
+
+	int result = g_Steam->SendMessageToUser(netID, msg.bytes, msg.length, nSendFlags, nRemoteChannel);
+	FREReleaseByteArray(&msg);
+	
+	return FREInt(result);
+}
+
+AIR_FUNC(AIRSteam_ReceiveMessagesOnChannel)
+{
+	ARG_CHECK(2, nullptr);
+
+	int32 nLocalChannel;
+	int32 nMaxMessages;
+
+	FREGetInt32(argv[0], &nLocalChannel);
+	FREGetInt32(argv[1], &nMaxMessages);
+
+	SteamNetworkingMessage_t **ppOutMessages = new SteamNetworkingMessage_t*[nMaxMessages];
+	int msgNum = g_Steam->ReceiveMessagesOnChannel(nLocalChannel, ppOutMessages, nMaxMessages);
+
+	if(msgNum > 0)
+	{
+		FREObject msgVec;
+		FRENewObject((const uint8_t *)"Vector.<com.amanitadesign.steam.NetworkingMessage>", 0, NULL, &msgVec, NULL);
+		FRESetArrayLength(msgVec, msgNum);
+		for(int i = 0; i < msgNum; i++)
+		{
+			SteamNetworkingMessage_t *msg = ppOutMessages[i];
+
+			FREByteArray msgByteArray;
+			msgByteArray.bytes = (uint8_t *)msg->m_pData;
+			msgByteArray.length = msg->m_cbSize;
+
+			FREObject msgByteArrayObj;
+			FRENewByteArray(&msgByteArray, &msgByteArrayObj);
+
+			FREObject currMsgFreObj; 
+			FRENewObject((const uint8_t *)"com.amanitadesign.steam.NetworkingMessage", 0, NULL, &currMsgFreObj, NULL);
+			SET_PROP(currMsgFreObj, "payload", msgByteArrayObj);
+			SET_PROP(currMsgFreObj, "peerSteamID", FREUint64(msg->m_identityPeer.GetSteamID64()));
+			SET_PROP(currMsgFreObj, "timeReceived", FREInt64(msg->m_usecTimeReceived));
+			SET_PROP(currMsgFreObj, "channel", FREInt(msg->m_nChannel));
+
+			FRESetArrayElementAt(&msgVec, i, &currMsgFreObj);
+			
+			msg->Release();
+		}
+		delete[] ppOutMessages;
+		return msgVec;
+	} else {
+		delete[] ppOutMessages;
+		return nullptr;
+	}
+}
+
+AIR_FUNC(AIRSteam_CloseChannelWithUser)
+{
+	ARG_CHECK(2, FREBool(false));
+	
+	uint64 steamID;
+	int nLocalChannel;
+
+	FREGetUint64(argv[0], &steamID);
+	FREGetInt32(argv[1], &nLocalChannel);
+
+	SteamNetworkingIdentity netID;
+	netID.SetSteamID64(steamID);
+	
+	return FREBool(g_Steam->CloseChannelWithUser(netID, nLocalChannel));
 }
 
 

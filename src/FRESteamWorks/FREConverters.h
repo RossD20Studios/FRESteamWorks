@@ -23,6 +23,7 @@ typedef void* NSWindow;
 FREObject FREBool(bool);
 FREObject FREDouble(double);
 FREObject FREInt(int32);
+FREObject FREInt64(int64);
 FREObject FREUint(uint32);
 FREObject FREUint64(uint64);
 FREObject FREString(std::string);
@@ -32,6 +33,7 @@ FREObject FREBitmapDataFromImageRGBA(uint32 width, uint32 height, std::vector<ui
 bool FREGetBool(FREObject object, bool* val);
 bool FREGetDouble(FREObject, double* val);
 bool FREGetInt32(FREObject, int32* val);
+bool FREGetInt64(FREObject, int64* val);
 bool FREGetUint32(FREObject, uint32* val);
 bool FREGetUint64(FREObject, uint64* val);
 bool FREGetString(FREObject, std::string& val);

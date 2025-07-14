@@ -13,12 +13,14 @@
 #include <algorithm>
 #include <stdio.h>
 #include <sstream>
+#include <steam/steamnetworkingtypes.h>
 
 #include "ResponseTypes.h"
 
 CSteam::CSteam():
 	//m_ctx(), // there is no longer a CSteamAPIContext
 	m_iAppID(0),
+	m_iCurrentLobbyId(),
 	m_bInitialized(false),
 	m_CurrentLeaderboard(0),
 	m_FileHandle(k_UGCHandleInvalid),
@@ -34,7 +36,11 @@ CSteam::CSteam():
 	m_OnValidateAuthTicketResponse(this, &CSteam::OnValidateAuthTicketResponse),
 	m_CallbackGameOverlayActivated(this, &CSteam::OnGameOverlayActivated),
 	m_CallbackDLCInstalled(this, &CSteam::OnDLCInstalled),
-	m_CallbackMicroTxnAuthorizationResponse(this, &CSteam::OnMicroTxnAuthorizationResponse)
+	m_CallbackMicroTxnAuthorizationResponse(this, &CSteam::OnMicroTxnAuthorizationResponse),
+	m_CallbackLobbyEntered(this, &CSteam::OnLobbyEntered),
+	m_CallbackLobbyChatUpdate(this, &CSteam::OnLobbyChatUpdate),
+	m_CallbackSteamNetworkingMessagesSessionRequest(this, &CSteam::OnSteamNetworkingMessagesSessionRequest),
+	m_CallbackSteamNetworkingMessagesSessionFailed(this, &CSteam::OnSteamNetworkingMessagesSessionFailed)
 {
 }
 
@@ -1125,6 +1131,91 @@ EInputActionOrigin CSteam::TranslateActionOrigin(ESteamInputType eDestinationInp
 	return SteamInput()->TranslateActionOrigin(eDestinationInputType, eSourceOrigin);
 }
 
+// Matchmaking
+CSteamID CSteam::GetCurrentLobbyID()
+{
+	return m_iCurrentLobbyId;
+}
+
+bool CSteam::CreateLobby(ELobbyType eLobbyType, int cMaxMembers)
+{
+	SteamAPICall_t result = SteamMatchmaking()->CreateLobby(eLobbyType, cMaxMembers);
+	m_CallbackLobbyCreated.Set(result, this, &CSteam::OnLobbyCreated);
+	return true;
+
+}
+
+bool CSteam::JoinLobby(CSteamID steamIDLobby)
+{
+	SteamAPICall_t result = SteamMatchmaking()->JoinLobby(steamIDLobby);
+	m_CallbackLobbyEnteredResult.Set(result, this, &CSteam::OnLobbyEntered);
+	return true;
+}
+
+void CSteam::LeaveLobby(CSteamID steamIDLobby)
+{
+	SteamMatchmaking()->LeaveLobby(steamIDLobby);
+}
+
+CSteamID CSteam::GetLobbyMemberByIndex(CSteamID steamIDLobby, int iMember)
+{
+	return SteamMatchmaking()->GetLobbyMemberByIndex(steamIDLobby, iMember);
+}
+
+int CSteam::GetNumLobbyMembers(CSteamID steamIDLobby)
+{
+	return SteamMatchmaking()->GetNumLobbyMembers(steamIDLobby);
+}
+
+bool CSteam::LobbyChatUpdateResult(LobbyChatUpdate_t* out) {
+	if (!m_LobbyChatUpdates.empty()) {
+		*out = m_LobbyChatUpdates.front();
+		m_LobbyChatUpdates.pop();
+
+		return true;
+	}
+
+	return false;
+}
+
+// Networking (Messages)
+bool CSteam::GetSteamNetworkingMessagesSessionRequestRemoteID(SteamNetworkingIdentity *out)
+{
+	if (!m_iSteamNetworkingMessagesCurrentRemoteIdentitys.empty()) {
+		*out = m_iSteamNetworkingMessagesCurrentRemoteIdentitys.front();
+		m_iSteamNetworkingMessagesCurrentRemoteIdentitys.pop();
+
+		return true;
+	}
+
+	return false;
+}
+
+bool CSteam::AcceptSessionWithUser(const SteamNetworkingIdentity &identityRemote)
+{
+	return SteamNetworkingMessages()->AcceptSessionWithUser(identityRemote);
+}
+
+bool CSteam::CloseSessionWithUser(const SteamNetworkingIdentity &identityRemote)
+{
+	return SteamNetworkingMessages()->CloseSessionWithUser(identityRemote);
+}
+
+EResult CSteam::SendMessageToUser(const SteamNetworkingIdentity &identityRemote, const void *pubData, uint32 cubData, int nSendFlags, int nRemoteChannel)
+{
+	return SteamNetworkingMessages()->SendMessageToUser(identityRemote, pubData, cubData, nSendFlags, nRemoteChannel);
+}
+
+int CSteam::ReceiveMessagesOnChannel(int nLocalChannel, SteamNetworkingMessage_t **ppOutMessages, int nMaxMessages)
+{
+	return SteamNetworkingMessages()->ReceiveMessagesOnChannel(nLocalChannel, ppOutMessages, nMaxMessages);
+}
+
+bool CSteam::CloseChannelWithUser(const SteamNetworkingIdentity &identityRemote, int nLocalChannel )
+{
+	return SteamNetworkingMessages()->CloseChannelWithUser(identityRemote, nLocalChannel);
+}
+
 
 void CSteam::DispatchEvent(const int req_type, const int response) {
 	char type[5];
@@ -1311,6 +1402,37 @@ void CSteam::OnMicroTxnAuthorizationResponse(MicroTxnAuthorizationResponse_t *pC
 	if (m_iAppID != pCallback->m_unAppID) return;
 	m_MicroTxnResponses.push(*pCallback);
 	DispatchEvent(RESPONSE_OnMicroTxnAuthorizationResponse, pCallback->m_bAuthorized ? k_EResultOK : k_EResultFail);
+}
+
+
+void CSteam::OnLobbyCreated(LobbyCreated_t *pCallback, bool failure) {
+	DispatchEvent(RESPONSE_OnLobbyCreated, pCallback->m_eResult);
+}
+
+void CSteam::OnLobbyEntered(LobbyEnter_t *pCallback, bool failure = false) {
+	if(pCallback->m_EChatRoomEnterResponse == k_EChatRoomEnterResponseSuccess)
+	{
+		DispatchEvent(RESPONSE_OnLobbyEntered, k_EResultOK);
+		m_iCurrentLobbyId = pCallback->m_ulSteamIDLobby;
+	} else {
+		DispatchEvent(RESPONSE_OnLobbyEntered, k_EResultFail);
+	}
+}
+
+void CSteam::OnLobbyChatUpdate(LobbyChatUpdate_t *pCallback) {
+	m_LobbyChatUpdates.push(*pCallback);
+	DispatchEvent(RESPONSE_OnLobbyChatUpdate, k_EResultOK);
+}
+
+void CSteam::OnSteamNetworkingMessagesSessionRequest(SteamNetworkingMessagesSessionRequest_t *pCallback)
+{
+	m_iSteamNetworkingMessagesCurrentRemoteIdentitys.push(pCallback->m_identityRemote);
+	DispatchEvent(RESPONSE_OnSteamNetworkingMessagesSessionRequest, k_EResultOK);
+}
+
+void CSteam::OnSteamNetworkingMessagesSessionFailed(SteamNetworkingMessagesSessionFailed_t *pCallback)
+{
+	DispatchEvent(RESPONSE_OnSteamNetworkingMessagesSessionFailed, k_EResultOK);
 }
 
 /*

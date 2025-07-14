@@ -22,7 +22,7 @@ package com.amanitadesign.steam {
 	import flash.utils.setInterval;
 	import flash.utils.setTimeout;
 
-	public class FRESteamWorks extends EventDispatcher /* implements ISteamWorks */ {
+	public class FRESteamWorks extends EventDispatcher implements ISteamWorks {
 		private var _ExtensionContext:ExtensionContext;
 		private var _tm:int;
 
@@ -772,6 +772,64 @@ package com.amanitadesign.steam {
 
 		public function dismissFloatingGamepadTextInput():Boolean {
 			return _ExtensionContext.call("AIRSteam_DismissFloatingGamepadTextInput") as Boolean;
+		}
+
+		/********************/
+		/* Matchmaking */
+		/********************/
+		public function getCurrentLobbyID():String {
+			return _ExtensionContext.call("AIRSteam_GetCurrentLobbyID") as String;
+		}
+
+		public function createLobby(lobbyType:int, maxMembers:int):Boolean {
+			return _ExtensionContext.call("AIRSteam_CreateLobby", lobbyType, maxMembers) as Boolean;
+		}
+
+		public function joinLobby(steamIDLobby:String):Boolean {
+			return _ExtensionContext.call("AIRSteam_JoinLobby", steamIDLobby) as Boolean;
+		}
+
+		public function leaveLobby(steamIDLobby:String):Boolean {
+			return _ExtensionContext.call("AIRSteam_LeaveLobby", steamIDLobby) as Boolean;
+		}
+
+		public function getNumLobbyMembers(steamIDLobby:String):int {
+			return _ExtensionContext.call("AIRSteam_GetNumLobbyMembers", steamIDLobby) as int;
+		}
+
+		public function getLobbyMemberByIndex(steamIDLobby:String, member:int):String {
+			return _ExtensionContext.call("AIRSteam_GetLobbyMemberByIndex", steamIDLobby, member) as String;
+		}
+
+		public function getLobbyChatUpdateResult():LobbyChatUpdate {
+			return _ExtensionContext.call("AIRSteam_GetLobbyChatUpdateResult") as LobbyChatUpdate;
+		}
+
+		/********************/
+		/* Networking (Messages) */
+		/********************/
+		public function getSteamNetworkingMessagesSessionRequestRemoteID():String {
+			return _ExtensionContext.call("AIRSteam_GetSteamNetworkingMessagesSessionRequestRemoteID") as String;
+		}
+
+		public function acceptSessionWithUser(identityRemote:String):Boolean {
+			return _ExtensionContext.call("AIRSteam_AcceptSessionWithUser", identityRemote) as Boolean;
+		}
+
+		public function closeSessionWithUser(identityRemote:String):Boolean {
+			return _ExtensionContext.call("AIRSteam_CloseSessionWithUser", identityRemote) as Boolean;
+		}
+
+		public function sendMessageToUser(identityRemote:String, data:ByteArray, sendFlags:int, remoteChannel:int):int {
+			return _ExtensionContext.call("AIRSteam_SendMessageToUser", identityRemote, data, sendFlags, remoteChannel) as int;
+		}
+
+		public function receiveMessagesOnChannel(localChannel:int, maxMessages:int):Vector.<NetworkingMessage> {
+			return _ExtensionContext.call("AIRSteam_ReceiveMessagesOnChannel", localChannel, maxMessages) as Vector.<NetworkingMessage>;
+		}
+
+		public function closeChannelWithUser(identityRemote:String, localChannel:int):Boolean {
+			return _ExtensionContext.call("AIRSteam_CloseChannelWithUser", identityRemote, localChannel) as Boolean;
 		}
 
 		/**********************************/

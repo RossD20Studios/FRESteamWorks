@@ -1,0 +1,8 @@
+{
+  "config": "air",
+  "compilerOptions": {
+    "source-path": ["src"],
+    "output": "bin/MyProject.swf"
+  },
+  "mainClass": "com.amanitadesign.steam.FRESteamWorks"
+}

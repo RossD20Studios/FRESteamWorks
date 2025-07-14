@@ -51,6 +51,12 @@ FREObject FREString(const char* value) {
 	return FREString(std::string(value));
 }
 
+FREObject FREInt64(int64 value) {
+	std::stringstream stream;
+	stream << value;
+	return FREString(stream.str());
+}
+
 FREObject FREUint64(uint64 value) {
 	std::stringstream stream;
 	stream << value;
@@ -74,7 +80,7 @@ FREObject FREBitmapDataFromImageRGBA(uint32 width, uint32 height, std::vector<ui
 	FREObject freArguments[4] = { freWidth, freHeight, freTransparent, freFillColor };
 
 	FREObject bitmap_data_object;
-	FRENewObject((uint8_t *)"flash.display.BitmapData", 4, freArguments, &bitmap_data_object, NULL);
+	FRENewObject((const uint8_t *)"flash.display.BitmapData", 4, freArguments, &bitmap_data_object, NULL);
 
 	FREBitmapData2 bitmap_data;
 	FREAcquireBitmapData2(bitmap_data_object, &bitmap_data);
@@ -144,6 +150,17 @@ bool FREGetDouble(FREObject object, double* val) {
 
 bool FREGetInt32(FREObject object, int32* val) {
 	return (FREGetObjectAsInt32(object, val) == FRE_OK);
+}
+
+bool FREGetInt64(FREObject object, int64* val) {
+	std::string str;
+	if (!FREGetString(object, str)) return false;
+
+	// Clang doesn't support std::stoull yet...
+	std::istringstream ss(str);
+	if (!(ss >> *val)) return false;
+
+	return true;
 }
 
 bool FREGetUint32(FREObject object, uint32* val) {
