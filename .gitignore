@@ -35,3 +35,7 @@ Desktop.ini
 .DS_Store
 /src/*.aps
 /src/.editorconfig
+src/compile_commands.json
+src/.cache
+src/SteamSDK
+.vscode/settings.json
