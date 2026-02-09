@@ -1011,13 +1011,6 @@ public function getLobbyChatUpdateResult():LobbyChatUpdate
 // @default "0"
 public function getLobbyOwner(steamIDLobby:String):String
 
-/**********************/
-/* Networking (Utils) */
-/**********************/
-// initRelayNetworkAccess()
-// @default false
-public function initRelayNetworkAccess():Boolean
-
 /*************************/
 /* Networking (Messages) */
 /*************************/

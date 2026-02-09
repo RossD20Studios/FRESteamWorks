@@ -813,13 +813,6 @@ package com.amanitadesign.steam {
 			return _ExtensionContext.call("AIRSteam_GetLobbyOwner", steamIDLobby) as String;
 		}
 
-		/**********************/
-		/* Networking (Utils) */
-		/**********************/
-		public function initRelayNetworkAccess():Boolean {
-			return _ExtensionContext.call("AIRSteam_InitRelayNetworkAccess") as Boolean;
-		}
-
 		/*************************/
 		/* Networking (Messages) */
 		/*************************/

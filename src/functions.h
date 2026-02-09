@@ -199,10 +199,6 @@ X(AIRSteam_GetNumLobbyMembers) /* = 159 */
 X(AIRSteam_GetLobbyMemberByIndex) /* = 160 */
 X(AIRSteam_GetLobbyChatUpdateResult) /* = 161 */
 X(AIRSteam_GetLobbyOwner) /* = 162 */
-/**********************/
-/* Networking (Utils) */
-/**********************/
-X(AIRSteam_InitRelayNetworkAccess) /* = 163 */
 /*************************/
 /* Networking (Messages) */
 /*************************/

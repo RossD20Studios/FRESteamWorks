@@ -60,6 +60,7 @@ bool CSteam::Initialize() {
 	}
 
 	m_iAppID = SteamUtils()->GetAppID();
+	SteamNetworkingUtils()->InitRelayNetworkAccess();
 	//RequestStats();
 
 	return true;
@@ -1198,13 +1199,6 @@ bool CSteam::LobbyChatUpdateResult(LobbyChatUpdate_t* out) {
 
 	return false;
 }
-
-// Networking (Utils)
-void CSteam::InitRelayNetworkAccess()
-{
-	SteamNetworkingUtils()->InitRelayNetworkAccess();
-}
-
 
 // Networking (Messages)
 bool CSteam::GetSteamNetworkingMessagesSessionRequestRemoteID(SteamNetworkingIdentity *out)

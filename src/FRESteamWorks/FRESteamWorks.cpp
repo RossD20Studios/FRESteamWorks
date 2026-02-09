@@ -2088,17 +2088,6 @@ AIR_FUNC(AIRSteam_GetLobbyOwner)
 	return FREUint64(g_Steam->GetLobbyOwner(steamIDLobby).ConvertToUint64());
 }
 
-
-/*
- * Networking (Utils)
- */
-AIR_FUNC(AIRSteam_InitRelayNetworkAccess)
-{
-	ARG_CHECK(0, FREBool(false));
-	g_Steam->InitRelayNetworkAccess();
-	return FREBool(true);
-}
-
 /*
  * Networking (Messages)
  */

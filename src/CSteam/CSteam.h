@@ -247,9 +247,6 @@ public:
 	bool LobbyChatUpdateResult(LobbyChatUpdate_t* out);
 	CSteamID GetLobbyOwner(CSteamID steamIDLobby);
 
-	// Networking (Utils)
-	void InitRelayNetworkAccess();
-
 	// Networking (Messages)
 	bool GetSteamNetworkingMessagesSessionRequestRemoteID(SteamNetworkingIdentity *out);
 	bool AcceptSessionWithUser(const SteamNetworkingIdentity &identityRemote);
