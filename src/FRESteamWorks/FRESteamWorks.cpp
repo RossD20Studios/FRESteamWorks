@@ -2095,8 +2095,8 @@ AIR_FUNC(AIRSteam_GetSteamNetworkingMessagesSessionRequestRemoteID)
 {
 	ARG_CHECK(0, FREUint64(0));
 	SteamNetworkingIdentity netID;
-	g_Steam->GetSteamNetworkingMessagesSessionRequestRemoteID(&netID);
-	return FREUint64(netID.GetSteamID64());
+	bool result = g_Steam->GetSteamNetworkingMessagesSessionRequestRemoteID(&netID);
+	return FREUint64(result ? netID.GetSteamID64() : 0);
 }
 
 AIR_FUNC(AIRSteam_AcceptSessionWithUser)
@@ -2106,6 +2106,7 @@ AIR_FUNC(AIRSteam_AcceptSessionWithUser)
 	uint64 steamID;
 	FREGetUint64(argv[0], &steamID);
 	SteamNetworkingIdentity netID;
+	netID.Clear();
 	netID.SetSteamID64(steamID);
 
 	return FREBool(g_Steam->AcceptSessionWithUser(netID));
@@ -2118,6 +2119,7 @@ AIR_FUNC(AIRSteam_CloseSessionWithUser)
 	uint64 steamID;
 	FREGetUint64(argv[0], &steamID);
 	SteamNetworkingIdentity netID;
+	netID.Clear();
 	netID.SetSteamID64(steamID);
 	
 	return FREBool(g_Steam->CloseSessionWithUser(netID));
@@ -2137,6 +2139,7 @@ AIR_FUNC(AIRSteam_SendMessageToUser)
 	FREGetInt32(argv[3], &nRemoteChannel);
 	
 	SteamNetworkingIdentity netID;
+	netID.Clear();
 	netID.SetSteamID64(steamID);
 
 	FREAcquireByteArray(argv[1], &msg);
@@ -2205,6 +2208,7 @@ AIR_FUNC(AIRSteam_CloseChannelWithUser)
 	FREGetInt32(argv[1], &nLocalChannel);
 
 	SteamNetworkingIdentity netID;
+	netID.Clear();
 	netID.SetSteamID64(steamID);
 	
 	return FREBool(g_Steam->CloseChannelWithUser(netID, nLocalChannel));
