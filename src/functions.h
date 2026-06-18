@@ -192,4 +192,5 @@ X(AIRSteam_DismissFloatingGamepadTextInput) /* = 153 */
 /**********************************/
 X(AIRSteam_GetEnv) /* = 154 */
 X(AIRSteam_SetEnv) /* = 155 */
+X(AIRSteam_GetLaunchQueryParam) /* = 156 */
 /* END GENERATED CODE */

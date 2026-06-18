@@ -785,6 +785,10 @@ package com.amanitadesign.steam {
 			return _ExtensionContext.call("AIRSteam_SetEnv", name, value) as Boolean;
 		}
 
+		public function getLaunchQueryParam(key:String):String {
+			return _ExtensionContext.call("AIRSteam_GetLaunchQueryParam", key) as String;
+		}
+
 		// END GENERATED CODE
 	}
 }

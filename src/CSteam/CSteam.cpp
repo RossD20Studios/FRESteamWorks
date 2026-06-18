@@ -98,6 +98,14 @@ std::string CSteam::GetCurrentGameLanguage() {
 	return std::string(SteamApps()->GetCurrentGameLanguage());
 }
 
+std::string CSteam::GetLaunchQueryParam(std::string key) {
+	if (!m_bInitialized) return "";
+	if (key.empty()) return "";
+
+	const char* value = SteamApps()->GetLaunchQueryParam(key.c_str());
+	return value ? std::string(value) : std::string("");
+}
+
 std::string CSteam::GetPersonaName() {
 	if (!m_bInitialized) return "";
 

@@ -1657,6 +1657,15 @@ AIR_FUNC(AIRSteam_MicroTxnResult) {
  * other
  */
 
+AIR_FUNC(AIRSteam_GetLaunchQueryParam) {
+	ARG_CHECK(1, FREString(""));
+
+	std::string key;
+	if (!FREGetString(argv[0], key)) return FREString("");
+
+	return FREString(g_Steam->GetLaunchQueryParam(key));
+}
+
 AIR_FUNC(AIRSteam_GetEnv) {
 	ARG_CHECK(1, FREString(""));
 

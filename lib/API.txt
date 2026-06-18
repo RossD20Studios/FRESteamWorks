@@ -989,6 +989,10 @@ public function getEnv(name:String):String
 // process, not the AIR process itself.
 public function setEnv(name:String, value:String):Boolean
 
+// ISteamApps#GetLaunchQueryParam
+// @default ""
+public function getLaunchQueryParam(key:String):String
+
 // The Steam overlay requires the application to constantly redraw the screen
 // when the overlay is triggered to display the fade in/out animation. However,
 // under some circumstances, the Adobe AIR runtime doesn't do this, causing the

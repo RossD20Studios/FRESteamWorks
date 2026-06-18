@@ -38,6 +38,7 @@ public:
 	uint32 GetAppID();
 	std::string GetAvailableGameLanguages();
 	std::string GetCurrentGameLanguage();
+	std::string GetLaunchQueryParam(std::string key);
 	std::string GetPersonaName();
 	std::string GetIPCountry();
 
