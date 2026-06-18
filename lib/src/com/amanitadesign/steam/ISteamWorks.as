@@ -226,7 +226,6 @@ package com.amanitadesign.steam {
 		function getEnv(name:String):String
 		function setEnv(name:String, value:String):Boolean
 		function getLaunchQueryParam(key:String):String
-		function getLaunchQueryParam(key:String):String
 		// END GENERATED CODE
 	}
 }
