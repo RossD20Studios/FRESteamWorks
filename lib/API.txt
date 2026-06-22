@@ -993,6 +993,11 @@ public function setEnv(name:String, value:String):Boolean
 // @default ""
 public function getLaunchQueryParam(key:String):String
 
+// ISteamApps::NewUrlLaunchParameters_t — fired when the user executes a steam:// URL
+// with query or command-line parameters while the game is already running.
+// Read query params via getLaunchQueryParam (e.g. Game Notifications _sessionid).
+// @event RESPONSE_OnNewUrlLaunchParameters, response = SteamResults.OK
+
 // The Steam overlay requires the application to constantly redraw the screen
 // when the overlay is triggered to display the fade in/out animation. However,
 // under some circumstances, the Adobe AIR runtime doesn't do this, causing the

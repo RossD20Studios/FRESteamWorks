@@ -43,7 +43,8 @@ enum ResponseTypes {
 	RESPONSE_OnMicroTxnAuthorizationResponse,
 	RESPONSE_OnEncryptedAppTicketResponse,
 	RESPONSE_OnUserAchievementIconFetched,
-	RESPONSE_OnAvatarImageLoaded
+	RESPONSE_OnAvatarImageLoaded,
+	RESPONSE_OnNewUrlLaunchParameters
 };
 
 #endif

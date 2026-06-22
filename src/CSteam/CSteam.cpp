@@ -33,6 +33,7 @@ CSteam::CSteam():
 	m_CallbackGetAuthSessionTicketResponse(this, &CSteam::OnGetAuthSessionTicketResponse),
 	m_OnValidateAuthTicketResponse(this, &CSteam::OnValidateAuthTicketResponse),
 	m_CallbackGameOverlayActivated(this, &CSteam::OnGameOverlayActivated),
+	m_CallbackNewUrlLaunchParameters(this, &CSteam::OnNewUrlLaunchParameters),
 	m_CallbackDLCInstalled(this, &CSteam::OnDLCInstalled),
 	m_CallbackMicroTxnAuthorizationResponse(this, &CSteam::OnMicroTxnAuthorizationResponse)
 {
@@ -1291,6 +1292,10 @@ void CSteam::OnSetUserPublishedFileAction(RemoteStorageSetUserPublishedFileActio
 
 void CSteam::OnGameOverlayActivated(GameOverlayActivated_t *pCallback) {
 	DispatchEvent(RESPONSE_OnGameOverlayActivated, pCallback->m_bActive ? k_EResultOK : k_EResultFail);
+}
+
+void CSteam::OnNewUrlLaunchParameters(NewUrlLaunchParameters_t *pCallback) {
+	DispatchEvent(RESPONSE_OnNewUrlLaunchParameters, k_EResultOK);
 }
 
 void CSteam::OnGetAuthSessionTicketResponse(GetAuthSessionTicketResponse_t *pCallback) {
