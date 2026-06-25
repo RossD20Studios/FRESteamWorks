@@ -162,6 +162,10 @@ package com.amanitadesign.steam {
 		function userHasLicenseForApp(steamID:String, appID:uint):int
 		function requestEncryptedAppTicket(secretData:ByteArray):Boolean
 		function getEncryptedAppTicket(ticket:ByteArray):Boolean
+		function getAuthTicketForWebApi(identity:String = ""):uint
+		function getAuthTicketForWebApiResultHandle():uint
+		function getAuthTicketForWebApiResultHexString():String
+
 		/***********/
 		/* Overlay */
 		/***********/

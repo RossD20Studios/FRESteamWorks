@@ -46,6 +46,7 @@ package com.amanitadesign.steam {
 		public static const RESPONSE_OnUserAchievementIconFetched:int = 30;
 		public static const RESPONSE_OnAvatarImageLoaded:int = 31;
 		public static const RESPONSE_OnNewUrlLaunchParameters:int = 32;
+		public static const RESPONSE_OnGetAuthTicketForWebApiResponse:int = 33;
 		// END GENERATED CODE
 	}
 }

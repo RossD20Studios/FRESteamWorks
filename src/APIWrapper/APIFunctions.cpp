@@ -1232,6 +1232,25 @@ bool AIRSteam_GetEncryptedAppTicket() {
 	return ret;
 }
 
+uint32 AIRSteam_GetAuthTicketForWebApi() {
+	if (!g_Steam) return k_HAuthTicketInvalid;
+
+	std::string identity = g_Steam->get_string();
+	return g_Steam->GetAuthTicketForWebApi(identity);
+}
+
+uint32 AIRSteam_GetAuthTicketForWebApiResultHandle() {
+	if (!g_Steam) return k_HAuthTicketInvalid;
+
+	return g_Steam->GetAuthTicketForWebApiResultHandle();
+}
+
+std::string AIRSteam_GetAuthTicketForWebApiResultHexString() {
+	if (!g_Steam) return "";
+
+	return g_Steam->GetAuthTicketForWebApiResultHexString();
+}
+
 /*
  * overlay
  */

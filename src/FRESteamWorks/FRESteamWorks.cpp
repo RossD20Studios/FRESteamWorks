@@ -1491,6 +1491,32 @@ AIR_FUNC(AIRSteam_GetEncryptedAppTicket) {
 	return FREBool(ret);
 }
 
+AIR_FUNC(AIRSteam_GetAuthTicketForWebApi) {
+	ARG_CHECK(1, FREUint(k_HAuthTicketInvalid));
+
+	std::string identity;
+	if (!FREGetString(argv[0], identity))
+		return FREUint(k_HAuthTicketInvalid);
+
+	HAuthTicket ticket = g_Steam->GetAuthTicketForWebApi(identity);
+    
+	return FREUint(ticket);
+}
+
+AIR_FUNC(AIRSteam_GetAuthTicketForWebApiResultHandle) {
+	ARG_CHECK(0, FREUint(k_HAuthTicketInvalid));
+
+	HAuthTicket ticket = g_Steam->GetAuthTicketForWebApiResultHandle();
+	return FREUint(ticket);
+}
+
+AIR_FUNC(AIRSteam_GetAuthTicketForWebApiResultHexString) {
+	ARG_CHECK(0, FREString(""));
+
+	std::string hexString = g_Steam->GetAuthTicketForWebApiResultHexString();
+	return FREString(hexString);
+}
+
 /*
  * overlay
  */
