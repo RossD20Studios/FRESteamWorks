@@ -13,6 +13,7 @@
 #include <algorithm>
 #include <stdio.h>
 #include <sstream>
+#include <iomanip>
 
 #include "ResponseTypes.h"
 
@@ -24,6 +25,7 @@ CSteam::CSteam():
 	m_FileHandle(k_UGCHandleInvalid),
 	m_PublishedFileId(0),
 	m_ActualAuthTicket(k_HAuthTicketInvalid),
+	m_ActualWebApiAuthTicket(k_HAuthTicketInvalid),
 	m_DLCInstalled(0),
 	m_CallbackUserStatsReceived(this, &CSteam::OnUserStatsReceived),
 	m_CallbackUserStatsStored(this, &CSteam::OnUserStatsStored),
@@ -32,6 +34,7 @@ CSteam::CSteam():
     m_CallbackAvatarImageLoaded(this, &CSteam::OnAvatarImageLoaded),
 	m_CallbackGetAuthSessionTicketResponse(this, &CSteam::OnGetAuthSessionTicketResponse),
 	m_OnValidateAuthTicketResponse(this, &CSteam::OnValidateAuthTicketResponse),
+	m_CallbackGetAuthTicketForWebApiResponse(this, &CSteam::OnGetAuthTicketForWebApiResponse),
 	m_CallbackGameOverlayActivated(this, &CSteam::OnGameOverlayActivated),
 	m_CallbackNewUrlLaunchParameters(this, &CSteam::OnNewUrlLaunchParameters),
 	m_CallbackDLCInstalled(this, &CSteam::OnDLCInstalled),
@@ -933,6 +936,23 @@ bool CSteam::GetEncryptedAppTicket(char** data, uint32* length) {
 	return ret;
 }
 
+HAuthTicket CSteam::GetAuthTicketForWebApi(std::string pchIdentity) {
+	if (!m_bInitialized) return k_HAuthTicketInvalid;
+	return SteamUser()->GetAuthTicketForWebApi(pchIdentity.c_str());
+}
+
+HAuthTicket CSteam::GetAuthTicketForWebApiResultHandle() {
+	if (!m_bInitialized) return k_HAuthTicketInvalid;
+
+	return m_ActualWebApiAuthTicket;
+}
+
+std::string CSteam::GetAuthTicketForWebApiResultHexString() {
+	if (!m_bInitialized) return "";
+
+	return m_WebApiAuthTicketHexString;
+}
+
 // overlay
 bool CSteam::ActivateGameOverlay(std::string dialog) {
 	if (!m_bInitialized) return false;
@@ -1312,7 +1332,19 @@ void CSteam::OnEncryptedAppTicketResponse(EncryptedAppTicketResponse_t* pCallbac
 	DispatchEvent(RESPONSE_OnEncryptedAppTicketResponse, pCallback->m_eResult);
 }
 
+void CSteam::OnGetAuthTicketForWebApiResponse(GetTicketForWebApiResponse_t* pCallback) {
+	m_ActualWebApiAuthTicket = pCallback->m_hAuthTicket;
+	// Copy the bytes from pCallback->m_rgubTicket (which are of max length k_nCubTicketMaxLength) 
+	// and actual length of pCallback->m_cubTicket into the string m_WebApiAuthTicketHexString 
+	// as a hexadecimal string 
+	std::stringstream ss;
+	for (int i = 0; i < pCallback->m_cubTicket; i++) {
+		ss << std::hex << std::setw(2) << std::setfill('0') << static_cast<int>(pCallback->m_rgubTicket[i]);
+	}
+	m_WebApiAuthTicketHexString = ss.str();
 
+	DispatchEvent(RESPONSE_OnGetAuthTicketForWebApiResponse, pCallback->m_eResult);
+}
 
 void CSteam::OnDLCInstalled(DlcInstalled_t *pCallback) {
 	m_DLCInstalled = pCallback->m_nAppID;

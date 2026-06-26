@@ -44,7 +44,8 @@ enum ResponseTypes {
 	RESPONSE_OnEncryptedAppTicketResponse,
 	RESPONSE_OnUserAchievementIconFetched,
 	RESPONSE_OnAvatarImageLoaded,
-	RESPONSE_OnNewUrlLaunchParameters
+	RESPONSE_OnNewUrlLaunchParameters,
+	RESPONSE_OnGetAuthTicketForWebApiResponse
 };
 
 #endif

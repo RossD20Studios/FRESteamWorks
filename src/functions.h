@@ -193,4 +193,10 @@ X(AIRSteam_DismissFloatingGamepadTextInput) /* = 153 */
 X(AIRSteam_GetEnv) /* = 154 */
 X(AIRSteam_SetEnv) /* = 155 */
 X(AIRSteam_GetLaunchQueryParam) /* = 156 */
+/******************************/
+/* WebAPI Authentication      */
+/******************************/
+X(AIRSteam_GetAuthTicketForWebApi) /* = 157 */
+X(AIRSteam_GetAuthTicketForWebApiResultHandle) /* = 158 */
+X(AIRSteam_GetAuthTicketForWebApiResultHexString) /* = 159 */
 /* END GENERATED CODE */

@@ -187,6 +187,9 @@ public:
 	EUserHasLicenseForAppResult UserHasLicenseForApp(CSteamID steamId, AppId_t appId);
 	bool RequestEncryptedAppTicket(void *pDataToInclude, int cbDataToInclude);
 	bool GetEncryptedAppTicket(char** data, uint32* length);
+	HAuthTicket GetAuthTicketForWebApi(std::string pchIdentity);
+	HAuthTicket GetAuthTicketForWebApiResultHandle();
+	std::string GetAuthTicketForWebApiResultHexString();
 
 	// overlay
 	bool ActivateGameOverlay(std::string dialog);
@@ -252,6 +255,9 @@ private:
 	UGCHandle_t m_FileHandle;
 	PublishedFileId_t m_PublishedFileId;
 	HAuthTicket m_ActualAuthTicket;
+	HAuthTicket m_ActualWebApiAuthTicket;
+	std::string m_WebApiAuthTicketHexString;
+
 	AppId_t m_DLCInstalled;
 
 	std::map<UGCHandle_t, RemoteStorageDownloadUGCResult_t> m_DownloadResults;
@@ -365,6 +371,8 @@ private:
 	               m_OnValidateAuthTicketResponse);
 	STEAM_CALLRESULT(CSteam, OnEncryptedAppTicketResponse, EncryptedAppTicketResponse_t,
 		m_CallbackEncryptedAppTicketResponse);
+	STEAM_CALLBACK(CSteam, OnGetAuthTicketForWebApiResponse, GetTicketForWebApiResponse_t,
+		m_CallbackGetAuthTicketForWebApiResponse);
 
 
 	// overlay

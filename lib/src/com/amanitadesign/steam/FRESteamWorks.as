@@ -596,6 +596,18 @@ package com.amanitadesign.steam {
 			return _ExtensionContext.call("AIRSteam_GetEncryptedAppTicket", ticket) as Boolean;
 		}
 
+		public function getAuthTicketForWebApi(identity:String = ""):uint {
+			return _ExtensionContext.call("AIRSteam_GetAuthTicketForWebApi", identity) as uint;
+		}
+
+		public function getAuthTicketForWebApiResultHandle():uint {
+			return _ExtensionContext.call("AIRSteam_GetAuthTicketForWebApiResultHandle") as uint;
+		}
+
+		public function getAuthTicketForWebApiResultHexString():String {
+			return _ExtensionContext.call("AIRSteam_GetAuthTicketForWebApiResultHexString") as String;
+		}
+
 		/***********/
 		/* Overlay */
 		/***********/
